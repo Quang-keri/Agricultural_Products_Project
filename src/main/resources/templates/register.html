@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h2>Register</h2>
+
+<form th:action="@{/register}" th:object="${user}" method="post">
+    <div class="form-group">
+        <label>Tên đăng nhập:</label>
+        <input type="text" th:field="*{userName}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Họ tên:</label>
+        <input type="text" th:field="*{userFullName}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('userFullName')}" th:errors="*{userFullName}" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Mật khẩu:</label>
+        <input type="password" th:field="*{password}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Địa chỉ:</label>
+        <input type="text" th:field="*{address}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Số điện thoại:</label>
+        <input type="text" th:field="*{phoneNumber}" class="form-control"/>
+        <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit">Đăng kí</button>
+</form>
+
+</body>
+</html>

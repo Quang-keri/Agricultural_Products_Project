@@ -56,6 +56,13 @@
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
                     <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                    <li>    <!--logout-->
+                        <form action="/logout" method="post" >
+                            <button type="submit" >
+                                Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -96,6 +103,12 @@
     </nav>
 
 
+
+    <!--  Welcome name  -->
+    <p th:if="${user != null}">Welcome,
+        <span th:text="${user.userFullName}">User</span>!,
+    </p>
+    <p th:unless="${user != null}">Welcome, Guest!</p>
     <!-- Nội dung chính -->
     <div class="container mt-5 text-center">
         <h1>Chào mừng đến với Nông Sản Sạch!</h1>

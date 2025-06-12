@@ -41,16 +41,7 @@ public class AdminController {
 
     @GetMapping("/update-status/{id}")
     public String updateStatus(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-        if (user != null) {
-            String currentStatus = user.getStatus();
-            if ("active".equalsIgnoreCase(currentStatus)) {
-                user.setStatus("deactive");
-            } else {
-                user.setStatus("active");
-            }
-            userService.save(user);
-        }
+        userService.updateStatus(id);
         return "redirect:/admin/";
     }
 }

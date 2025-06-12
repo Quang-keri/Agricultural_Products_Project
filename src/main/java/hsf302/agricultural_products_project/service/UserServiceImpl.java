@@ -51,8 +51,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    public void updateStatus(Long id) {
+        User user = findById(id);
+        if (user != null) {
+            String currentStatus = user.getStatus();
+            if ("active".equalsIgnoreCase(currentStatus)) {
+                user.setStatus("deactive");
+            } else {
+                user.setStatus("active");
+            }
+            save(user);
+        }
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
 
- private  User user;
+    private User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
@@ -37,6 +37,7 @@ public class CustomUserDetails implements UserDetails {
     public User getUser() {
         return user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th ="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <!-- phần này ko clear là có làm fragment ra ko để chia layout ra cho việc tái sử dụng-->
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- Link Bootstrap CSS từ WebJars -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
 
     <!-- Link file CSS từ static/css -->
-    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
 
     <!-- Link Bootstrap JS từ WebJars -->
     <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}" defer></script>
@@ -18,8 +18,41 @@
 </head>
 <body>
 <!--  Welcome name  -->
-<p th:if="${user != null}">Welcome, <span th:text="${user.userFullName}">User</span>!</p>
+<p th:if="${user != null}">Welcome,
+    <span th:text="${user.userFullName}">User</span>!,
+</p>
 <p th:unless="${user != null}">Welcome, Guest!</p>
+
+
+<table>
+    <!-- Danh sách kết quả -->
+    <table border="1" cellpadding="20" cellspacing="2">
+        <thead>
+        <tr>
+            <th>userId</th>
+            <th>Username</th>
+            <th>userFullName</th>
+            <th>address</th>
+            <th>phoneNumber</th>
+            <th>status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.userId}"></td>
+            <td th:text="${member.userName}"></td>
+            <td th:text="${member.userFullName}"></td>
+            <td th:text="${member.address}"></td>
+            <td th:text="${member.phoneNumber}"></td>
+            <td>
+                <a th:href="@{'/admin/update-status/' + ${member.userId}}"
+                   th:text="${member.status}" class="btn btn-link">
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</table>
 
 </body>
 </html>

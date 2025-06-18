@@ -7,14 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Override
     public User save(UserDTO userDTO) {
         User newUser = new User();
@@ -33,5 +36,31 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByUserName(userName);
     }
 
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public void updateStatus(Long id) {
+        User user = findById(id);
+        if (user != null) {
+            String currentStatus = user.getStatus();
+            if ("active".equalsIgnoreCase(currentStatus)) {
+                user.setStatus("deactive");
+            } else {
+                user.setStatus("active");
+            }
+            save(user);
+        }
+    }
 }

@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/","/index","/login", "/register", "/css/**", "/js/**", "/images/**").permitAll() // cho phép truy cập không cần xác thực
+                        .requestMatchers("/","/index","/login", "/register", "/css/**", "/js/**", "/images/**", "/product-detail").permitAll() // cho phép truy cập không cần xác thực
                         .requestMatchers("/member/**").hasRole("MEMBER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

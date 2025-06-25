@@ -148,9 +148,17 @@
       </div>
   </div>
     <!--  Welcome name  tạm để day check-->
-    <p th:if="${user != null}">Welcome,
-        <span th:text="${user.userFullName}">User</span>!,
-    </p>
+    <span th:if="${#authentication != null}">
+    <h2>Xin chào, <span th:text="${#authentication.principal.fullName}">Member</span></h2>
+    <p>Tài khoản: <span th:text="${#authentication.principal.username}"></span></p>
+    <p>Vai trò: <span th:text="${#authentication.principal.authorities}"></span></p>
+    <p>Số điện thoại: <span th:text="${#authentication.principal.phoneNumber}"></span></p>
+    <p>Địa chỉ: <span th:text="${#authentication.principal.address}"></span></p>
+</span>
+
+    <span th:unless="${#authentication != null}">
+    <h2>Xin chào, Guest</h2>
+</span>
     <p th:unless="${user != null}">Welcome, Guest!</p>
     <section class="features-section mt-3 py-5 text-white">
         <div class="container">

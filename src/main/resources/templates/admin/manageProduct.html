@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Management</title>
+    <head th:replace="~{admin/layout :: common-styles}"></head>
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar(currentPage='products')}"></nav>
+
+    <main>
+        <div class="card">
+            <h2>Product List</h2>
+            <a href="/admin/products/add" class="add-user-button">Add New Product</a>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Organic Apples</td>
+                    <td>Fruits</td>
+                    <td>$2.50</td>
+                    <td>150</td>
+                    <td class="action-links">
+                        <a href="/admin/products/edit/1">Edit</a>
+                        <a href="/admin/products/delete/1" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Fresh Milk (1L)</td>
+                    <td>Dairy</td>
+                    <td>$3.00</td>
+                    <td>200</td>
+                    <td class="action-links">
+                        <a href="/admin/products/edit/2">Edit</a>
+                        <a href="/admin/products/delete/2" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

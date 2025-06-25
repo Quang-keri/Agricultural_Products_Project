@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <head th:replace="~{admin/layout :: common-styles}"></head>
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>
+
+    <main>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <p class="blue">1,234</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p class="green">567</p>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <p class="orange">$12,345</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Activity</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Action</th>
+                    <th>User</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#123</td>
+                    <td>New Order</td>
+                    <td>John Doe</td>
+                    <td>2025-06-13</td>
+                </tr>
+                <tr>
+                    <td>#124</td>
+                    <td>User Registration</td>
+                    <td>Jane Smith</td>
+                    <td>2025-06-13</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

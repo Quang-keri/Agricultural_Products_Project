@@ -2,19 +2,196 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #a8e063, #56ab2f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+            background: url('https://img.icons8.com/color/48/000000/leaf.png') no-repeat center center / contain;
+            opacity: 0.3;
+            transform: rotate(-15deg);
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: url('https://img.icons8.com/color/48/000000/leaf.png') no-repeat center center / contain;
+            opacity: 0.2;
+            transform: rotate(25deg);
+        }
+
+
+        h2 {
+            color: #338a00;
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #56ab2f;
+            outline: none;
+            box-shadow: 0 0 5px rgba(86, 171, 47, 0.5);
+        }
+
+        input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        button { /* Áp dụng cho cả nút submit và nút đăng ký mới */
+            background-color: #56ab2f;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(86, 171, 47, 0.4);
+            margin-bottom: 15px; /* Khoảng cách dưới nút */
+        }
+
+        button:hover {
+            background-color: #338a00;
+            transform: translateY(-2px);
+        }
+
+        /* Style riêng cho nút Register để phân biệt */
+        .register-button {
+            background-color: #f7931e; /* Màu cam đất hoặc màu nâu gợi nhớ hạt cà phê, đất... */
+            box-shadow: 0 4px 10px rgba(247, 147, 30, 0.4);
+        }
+
+        .register-button:hover {
+            background-color: #e08316; /* Màu cam đậm hơn khi hover */
+        }
+
+        .message-container {
+            margin-top: 20px;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+
+        .message-success {
+            color: #28a745;
+        }
+
+        .message-error {
+            color: #dc3545;
+        }
+
+        .link-back {
+            margin-top: 20px;
+            display: block; /* Đảm bảo link nằm trên dòng riêng */
+            font-size: 0.95em;
+        }
+
+        .link-back a {
+            color: #56ab2f; /* Màu xanh lá cây cho link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link-back a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            button {
+                padding: 12px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>Login</h2>
+<div class="login-container">
+    <h2>Đăng nhập</h2>
 
+    <div th:if="${messageRegisterSuccess}" th:text="${messageRegisterSuccess}" class="message-container message-success"></div>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Tên đăng nhập:</label>
+        <input type="text" id="username" name="username" placeholder="Nhập tên tài khoản của bạn" required/><br/>
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" name="password" placeholder="Nhập mật khẩu của bạn" required/><br/>
+        <button type="submit">Đăng nhập</button>
+    </form>
+    <div th:if="${errorMessage}" class="message-container message-error" th:text="${errorMessage}"></div>
 
-<div th:if="${messageRegisterSuccess}" th:text="${messageRegisterSuccess}" style="color:green;"></div>
-<form th:action="@{/login}" method="post">
-    <label for="username">Tên đăng nhập:</label>
-    <input type="text" id="username" name="username" placeholder="Quang nhập ten username di" required/><br/><br/>
-    <label for="password">Mật khẩu:</label>
-    <input type="password" id="password" name="password" required/><br/><br/>
-    <button type="submit">Đăng nhập</button>
-</form>
-<div th:if="${errorMessage}" style="color:red;" th:text="${errorMessage}"></div>
+    <a th:href="@{/register}" class="register-button button">Đăng ký</a>
+
+    <div class="link-back">
+        <a th:href="@{/}" >Quay lại trang chủ</a>
+    </div>
+</div>
 </body>
 </html>

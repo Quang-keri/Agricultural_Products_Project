@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Management</title>
+    <head th:replace="~{admin/layout :: common-styles}"></head>
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar(currentPage='orders')}"></nav>
+
+    <main>
+        <div class="card">
+            <h2>Order List</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Order Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#ORD001</td>
+                    <td>Alice Wonderland</td>
+                    <td>2025-06-12</td>
+                    <td>$55.00</td>
+                    <td>Pending</td>
+                    <td class="action-links">
+                        <a href="/admin/orders/details/1">View Details</a>
+                        <a href="/admin/orders/update-status/1">Update Status</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#ORD002</td>
+                    <td>Bob The Builder</td>
+                    <td>2025-06-11</td>
+                    <td>$30.00</td>
+                    <td>Completed</td>
+                    <td class="action-links">
+                        <a href="/admin/orders/details/2">View Details</a>
+                        <a href="/admin/orders/update-status/2">Update Status</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

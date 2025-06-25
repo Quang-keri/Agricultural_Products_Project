@@ -112,10 +112,26 @@
 
 
     <!--  Welcome name  -->
-    <p th:if="${user != null}">Welcome,
-        <span th:text="${user.userFullName}">User</span>!,
-    </p>
-    <p th:unless="${user != null}">Welcome, Guest!</p>
+    <div th:with="user=${session.acc}">
+        <div th:if="${session.acc != null}" class="welcome-container">
+            <p th:if="${session.acc.role != 'ROLE_MEMBER'}" class="access-denied">
+                <span th:text="'Truy cập bị từ chối - Hãy đăng nhập lại...'"></span>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = '/login';
+                    }, 1000);
+                </script>
+            </p>
+        </div>
+        <!-- For guests -->
+        <div th:unless="${session.LOGIN_USER != null}" class="welcome-container">
+            <p class="welcome-text">
+                Welcome, Guest! <a href="@{/login}" class="btn btn-primary btn-sm">Login</a>
+            </p>
+        </div>
+    </div>
+
+
     <!-- Nội dung chính -->
     <div class="container mt-5 text-center">
         <h1>Chào mừng đến với Nông Sản Sạch!</h1>

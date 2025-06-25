@@ -1,5 +1,6 @@
 package hsf302.agricultural_products_project.service;
 
+import hsf302.agricultural_products_project.config.MyPasswordUtil;
 import hsf302.agricultural_products_project.dto.UserDTO;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
@@ -15,8 +16,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+  MyPasswordUtil passwordEncoder;
 
     @Override
     public User save(UserDTO userDTO) {

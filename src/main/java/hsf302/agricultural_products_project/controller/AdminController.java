@@ -1,7 +1,10 @@
 package hsf302.agricultural_products_project.controller;
 
+import hsf302.agricultural_products_project.config.SecurityUtil;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.CustomUserDetails;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,30 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // import hsf302.agricultural_products_project.service.OrderService;
 // import java.util.List;
 
+@Slf4j
 @Controller
+
 @RequestMapping("/admin")
 public class AdminController {
 
-    // Inject your services if needed (uncomment if you have them)
-    // private final ProductService productService;
-    // private final OrderService orderService;
 
-    // public AdminController(ProductService productService, OrderService orderService) {
-    //     this.productService = productService;
-    //     this.orderService = orderService;
-    // }
 
     @GetMapping("/dashboard")
     public String adminDashboard(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()
-                && authentication.getPrincipal() instanceof CustomUserDetails) {
+        // này là demo 2 cái lấy thông tin user lun ae nào ko bik nhìn qua đây
+//        String username = SecurityUtil.getSessionUsername();
+        User user = SecurityUtil.getUserWithoutPassword();
+        System.out.println("User: " + user.getUserName() + ", Role: " + user.getRole());
+        log.info("Authentication: {}", user);
 
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            User user = userDetails.getUser();
-            System.out.println("User: " + user.getUserName() + ", Role: " + user.getRole());
-            model.addAttribute("user", user);
-        }
         return "admin/admindashboard";
     }
 

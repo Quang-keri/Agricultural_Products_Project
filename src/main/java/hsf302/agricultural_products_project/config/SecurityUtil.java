@@ -35,5 +35,11 @@ public class SecurityUtil {
         }
         return null;
     }
+
+    public static Long getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        return userDetails.getUser().getUserId(); // tuỳ thuộc cấu trúc project
+    }
 }
 

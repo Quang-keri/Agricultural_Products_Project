@@ -2,42 +2,60 @@ package hsf302.agricultural_products_project.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
+import java.util.List;
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "users")
-
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name",unique = true, length = 50)
     private String userName;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", length = 100)
     private String userFullName;
 
     @Column(name = "password")
+    @Size(min = 8, message = "Mật khẩu ít nhất 8 ký tự")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
+            message = "Password must be at least 8 characters and include uppercase, lowercase, and a number")
+    @NotBlank(message = "Password is required")
     private  String password;
 
-    @Column(name = "address")
+    @Column(name = "address", length = 255)
     private String address;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private boolean status;
 
     @Column(name = "phone_number")
-    private String phoneNumber;
+    @Pattern(
+            regexp = "^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$",
+            message = "Số điện thoại không hợp lệ"
+    )
+    private int phoneNumber;
 
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    private List<Order> orders;
 
-    public User(String userName, String userFullName, String password, String address, String status, String phoneNumber, String role) {
+    public User(String userName, String userFullName, String password, String address, boolean status, int phoneNumber, Role role) {
         this.userName = userName;
         this.userFullName = userFullName;
         this.password = password;
@@ -47,67 +65,4 @@ public class User {
         this.role = role;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserFullName() {
-        return userFullName;
-    }
-
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

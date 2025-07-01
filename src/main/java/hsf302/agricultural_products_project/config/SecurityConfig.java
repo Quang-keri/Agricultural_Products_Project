@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/","/index","/login", "/register", "/css/**", "/js/**", "/images/**").permitAll() // cho phép truy cập không cần xác thực
+                        .requestMatchers("/","/index","/login", "/register", "/css/**", "/js/**", "/images/**", "/product-detail").permitAll() // cho phép truy cập không cần xác thực
                         .requestMatchers("/member/**").hasRole("MEMBER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -46,7 +46,7 @@ public class SecurityConfig {
                                             .anyMatch(a -> a.getAuthority().equals("ROLE_MEMBER"));
 
                                     if (isAdmin) {
-                                        response.sendRedirect("/admin/");
+                                        response.sendRedirect("/admin/dashboard");
                                     } else if (isMember) {
                                         response.sendRedirect("/index");
                                     }

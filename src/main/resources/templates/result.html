@@ -1,0 +1,17 @@
+<!-- member/payment/result.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment Result</title>
+</head>
+<body>
+<h2 th:text="${message}"></h2>
+<div th:if="${success}">
+    <h2>Thành công</h2>
+    <h3>Transaction Details:</h3>
+    <pre th:text="${apiResponse}"></pre>
+</div>
+<a href="/" th:if="${success}">Back to Home</a>
+<a href="/member/payment/checkout" th:if="!${success}">Retry Payment</a>
+</body>
+</html>

@@ -31,4 +31,20 @@ public class HomePageController {
         return "index";
     }
 
+    @GetMapping("/about-us")
+    public String aboutUs(Model model) {
+//        // Lấy thông tin người dùng đã đăng nhập từ SecurityContextHolder
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.isAuthenticated()
+//                && authentication.getPrincipal() instanceof CustomUserDetails) {
+//
+//            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+//            User user = userDetails.getUser();
+//            System.out.println("User: " + user.getUserName() + ", Role: " + user.getRole());
+//            model.addAttribute("user", user);
+//        }
+
+        return "about_us";
+    }
+
 }

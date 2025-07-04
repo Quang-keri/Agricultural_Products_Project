@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>VNPay Payment</title>
+    <style>
+        .payment-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<!--phần này là cart mua hàng tren -->
+<div class="payment-container">
+    <h2>Pay with VNPay</h2>
+    <form th:action="@{/payment/create}" method="post">
+        <!-- Gán cứng amount tạm ỏ day -->
+        <input type="text" name="amount" value="20000"/>
+
+        <!-- Không cần chọn bankCode để mặc định là null → VNPay show hết -->
+        <input type="hidden" name="bankCode" value=""/>
+
+        <button type="submit" class="submit-btn">Thanh toán ngay</button>
+    </form>
+</div>
+</body>
+</html>

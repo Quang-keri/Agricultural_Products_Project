@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.util.Date;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

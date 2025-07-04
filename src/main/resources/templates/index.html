@@ -23,6 +23,7 @@
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+
     <!-- css link   -->
     <link href="./css/index.css" rel="stylesheet">
 </head>
@@ -31,14 +32,13 @@
         height: 40px;
         margin-right: 10px;
     }
-
-    .navbar-center {
-        justify-content: center;
-    }
 </style>
 <body>
 <div class="main">
     <!-- Header -->
+
+
+    <!-- Navbar trên cùng -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <a class="navbar-brand d-flex align-items-center" href="/index">
             <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
@@ -58,7 +58,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> Tài khoản
+                    <i class="bi bi-person-circle"></i> Đăng nhập
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
@@ -78,169 +78,276 @@
         </ul>
     </nav>
 
-    <!-- Navbar dưới -->
+
+    <!-- Thanh menu xanh lá -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <div class="collapse navbar-collapse w-100 justify-content-center show">
-                <ul class="navbar-nav">
-                    <li class="nav-item mx-3">
-                        <a class="nav-link text-white" href="/index"><i class="bi bi-house-door"></i> Trang chủ</a>
+        <div class="container d-flex justify-content-between">
+            <!-- Menu bên trái -->
+            <div class="collapse navbar-collapse show">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                     </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Cửa hàng</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Sản phẩm</a>
                     </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-people"></i> Về chúng tôi</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
                     </li>
-                    <li class="nav-item dropdown mx-3">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="categoryDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-list-ul"></i> Danh mục
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                            <li><a class="dropdown-item" href="#">Lương thực</a></li>
-                            <li><a class="dropdown-item" href="#">Rau củ quả</a></li>
-                            <li><a class="dropdown-item" href="#">Cây công nghiệp</a></li>
-                            <li><a class="dropdown-item" href="#">Hạt & đậu</a></li>
-                            <li><a class="dropdown-item" href="#">Gia vị & dược liệu</a></li>
-                        </ul>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên hệ</a>
                     </li>
+
                 </ul>
+            </div>
+
+            <!-- Hotline bên phải -->
+            <div class="text-white d-none d-lg-block">
+                <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
             </div>
         </div>
     </nav>
 
+  <div class="introduction">
 
-    <!--  Welcome name  -->
-    <p th:if="${user != null}">Welcome,
-        <span th:text="${user.userFullName}">User</span>!,
-    </p>
+      <!-- Nội dung chính -->
+      <div class="container header-content">
+          <h1>Chào mừng bạn đến với Nông Sản Sạch!</h1>
+
+          <h3>
+              Chúng tôi cung cấp những sản phẩm nông sản tươi, sạch và an toàn cho sức khỏe. Trực tiếp từ nông trại đến bàn ăn của bạn.
+          </h3>
+          <div class="info-header-btn">
+              <form action="/mua-sam">
+                  <button type="submit" class="btn btn-success btn-buy-now">Mua sắm ngay</button>
+              </form>
+
+              <form action="/about-us" class="">
+                  <button type="submit" class="btn btn-success btn-info">Tìm hiểu ngay</button>
+              </form>
+          </div>
+
+      </div>
+
+      <!-- Auto Slide   -->
+      <div class="auto-slide">
+          <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide"><img src="https://shopnongsansach.com/wp-content/uploads/thuc-pham-sach-nong-san-sach.jpg" alt="ảnh quảng cáo 1"/></div>
+                  <div class="swiper-slide"><img src="https://shopnongsansach.com/wp-content/uploads/slide1b.jpg" alt="ảnh quảng cáo 2"/></div>
+                  <div class="swiper-slide"><img src="https://thegioinongsan.com/wp-content/uploads/2024/08/tra-xanh.jpg" alt="ảnh quảng cáo 3"/></div>
+                  <div class="swiper-slide"><img  src="https://thegioinongsan.com/wp-content/uploads/2024/08/tieu-xanh.jpg" alt="ảnh quảng cáo 4"/></div>
+                  <div class="swiper-slide"><img  src="https://thegioinongsan.com/wp-content/uploads/2024/08/cafe.jpg" alt="ảnh quảng cáo 5"/></div>
+
+              </div>
+              <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+              <div class="swiper-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+              <div class="swiper-pagination"></div>
+          </div>
+
+      </div>
+  </div>
+    <!--  Welcome name  tạm để day check-->
+    <span th:if="${#authentication != null}">
+    <h2>Xin chào, <span th:text="${#authentication.principal.fullName}">Member</span></h2>
+    <p>Tài khoản: <span th:text="${#authentication.principal.username}"></span></p>
+    <p>Vai trò: <span th:text="${#authentication.principal.authorities}"></span></p>
+    <p>Số điện thoại: <span th:text="${#authentication.principal.phoneNumber}"></span></p>
+    <p>Địa chỉ: <span th:text="${#authentication.principal.address}"></span></p>
+</span>
+
+    <span th:unless="${#authentication != null}">
+    <h2>Xin chào, Guest</h2>
+</span>
     <p th:unless="${user != null}">Welcome, Guest!</p>
-    <!-- Nội dung chính -->
-    <div class="container mt-5 text-center">
-        <h1>Chào mừng đến với Nông Sản Sạch!</h1>
-        <p>Chúng tôi cung cấp những sản phẩm nông sản tươi, sạch và an toàn cho sức khỏe.</p>
-    </div>
+    <section class="features-section mt-3 py-5 text-white">
+        <div class="container">
+            <h3 class="mb-3 text-black text-center"><strong>Vì sao chọn chúng tôi?</strong> </h3>
 
-    <!-- Auto Slide   -->
-    <div class="auto-slide">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 6</div>
-                <div class="swiper-slide">Slide 7</div>
-                <div class="swiper-slide">Slide 8</div>
-                <div class="swiper-slide">Slide 9</div>
+            <div class="text-center good-point-parent">
+                <!-- Feature 1 -->
+                <div class="good-point">
+                    <div class="feature-icon mx-auto mb-3 icon-advisement">
+                        <i class="fa-solid fa-truck"></i>
+                    </div>
+                    <h4 class="advisement-title">Giao hàng nhanh</h4>
+                    <p class="text-secondary">Giao hàng trong ngày tại TP.HCM và Hà Nội</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="good-point">
+                    <div class="feature-icon mx-auto mb-3 icon-advisement" >
+                        <i  class="fa-solid fa-shield"></i>
+                    </div>
+                    <h4 class="advisement-title">An toàn chất lượng</h4>
+                    <p class="text-secondary">Sản phẩm được kiểm tra nghiêm ngặt</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="good-point">
+                    <div class="feature-icon mx-auto mb-3 icon-advisement">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h4 class="advisement-title">100% tự nhiên</h4>
+                    <p class="text-secondary">Không sử dụng hóa chất độc hại</p>
+                </div>
             </div>
-            <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
-            <div class="swiper-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
-            <div class="swiper-pagination"></div>
         </div>
-        <div class="right-top">right-top</div>
-        <div class="right-bottom">righ-bottom</div>
-    </div>
+    </section>
+
 
     <!-- Nông sản   -->
-    <div class="product">
-        <div class="product-1">
-            <a href="/product-detail" class="text-decoration-none text-dark">
-                <div>
-                    <img class="product-img"
-                         src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                         alt="ảnh cà rốt"/>
+
+    <section class="mt-3 py-5 text-center text-light" style="background-color:white;">
+        <div class="container">
+            <h3 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong> </h3>
+
+
+            <div class="menu-bar">
+                <!-- Rau lá -->
+                <div class="menu-bar-item">
+                    <div class="">
+                        <div class="icon-vegetable"  > <i class="fa-solid fa-leaf"></i></div>
+                         <p>Rau lá</p>
+                        <p class="text-muted">10 sản phẩm</p>
+                    </div>
                 </div>
-                <p>Ớt chuông</p>
-                <p>25.000đ/1 kí</p>
-                <button class="btn btn-success">Mua</button>
-            </a>
-        </div>
-        <div class="product-2">
-            <a href="/product-detail" class="text-decoration-none text-dark">
-                <div>
-                    <img class="product-img"
-                         src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                         alt="ảnh cà rốt"/>
+
+                <!-- Rau củ -->
+                <div class="menu-bar-item">
+                    <div class="">
+                        <div class="icon-vegetable" > <i class="fa-solid fa-carrot"></i></div>
+                        <p>Rau củ</p>
+                        <p class="text-muted">10 sản phẩm</p>
+                    </div>
                 </div>
-                <p>Ớt chuông</p>
-                <p>25.000đ/1 kí</p>
-                <button class="btn btn-success">Mua</button>
-            </a>
-        </div>
-        <div class="product-3">
-            <a href="/product-detail" class="text-decoration-none text-dark">
-                <div>
-                    <img class="product-img"
-                         src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                         alt="ảnh cà rốt"/>
+
+                <!-- Gia vị -->
+                <div class="menu-bar-item">
+                    <div class="">
+                        <div  class="icon-vegetable" ><i class="fa-solid fa-seedling"></i></div>
+                        <p>nông sản khô</p>
+                        <p class="text-muted">10 sản phẩm</p>
+                    </div>
                 </div>
-                <p>Ớt chuông</p>
-                <p>25.000đ/1 kí</p>
-                <button class="btn btn-success">Mua</button>
-            </a>
+            </div>
         </div>
-        <div class="product-4">
-            <a href="/product-detail" class="text-decoration-none text-dark">
-                <div>
-                    <img class="product-img"
-                         src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                         alt="ảnh cà rốt"/>
-                </div>
-                <p>Ớt chuông</p>
-                <p>25.000đ/1 kí</p>
-                <button class="btn btn-success">Mua</button>
-            </a>
+    </section>
+
+    <section class="mt-3 py-5 text-center" style="background-color:white;">
+        <h3 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong> </h3>
+
+        <div class="product">
+            <div class="product-1 clickable-product">
+                <img class="product-img"
+                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335481/bhx/cai-be-xanh-goi-400g_202505151418571429.jpg"
+                     alt="ảnh bẹ xanh"/>
+                <p class="product-name">Cải bẹ xanh </p>
+                <p class="product-price">300.000đ/1 kí</p>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+            </div>
+            <div class="product-2 clickable-product">
+                <img class="product-img"
+                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335480/bhx/rau-muong-nuoc-400gr_202505081440524383.jpg"
+                     alt="ảnh rau muống"/>
+                <p class="product-name">Rau muống</p>
+                <p class="product-price">25.000đ/1 kí</p>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+            </div>
+            <div class="product-3 clickable-product">
+                <img class="product-img"
+                     src="https://cdn.tgdd.vn/Products/Images/2809/227716/bhx/tieu-den-xay-goi-50g-202202121134360066.jpg"
+                     alt="ảnh tiêu xay"/>
+                <p class="product-name">Tiêu đen xay nhiễn 50g
+                <p class="product-price">25.000đ/1 gói</p>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+            </div>
+            <div class="product-4 clickable-product">
+                <img class="product-img"
+                     src="https://cdn.tgdd.vn/Products/Images/8785/233988/bhx/ca-chua-beef-202312281031353659.jpg"
+                     alt="ảnh cà chua"/>
+                <p class="product-name">Cà chua beef</p>
+                <p class="product-price">25.000đ/1 kí</p>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white ">Xem chi tiết</a></button>
+            </div>
+            <div class="product-5 clickable-product">
+                <img class="product-img"
+                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/332871/bhx/cdntgddvnproductsimages8785233895bhxbi-xanh-202312271414509800_202412041906031779.jpg"
+                     alt="ảnh bí xanh "/>
+                <p class="product-name">Bí xanh </p>
+                <p class="product-price">25.000đ/1 kí</p>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none text-white">Xem chi tiết</a></button>
+            </div>
         </div>
-        <div class="product-5">
-            <a href="/product-detail" class="text-decoration-none text-dark">
-                <div>
-                    <img class="product-img"
-                         src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                         alt="ảnh cà rốt"/>
-                </div>
-                <p>Ớt chuông</p>
-                <p>25.000đ/1 kí</p>
-                <button class="btn btn-success">Mua</button>
-            </a>
-        </div>
+    </section>
+
+
+
+    <div class="mt-3 contact-us text-center">
+        <h3><strong>Đăng kí nhận tin tức </strong> </h3>
+        <p>Nhận thông tin về sản phẩm và ưu đãi </p>
+        <form action="#">
+            <input type="email" class="contact-us-mail" name="contact"  placeholder="Nhập email của bạn"/>
+            <input type="submit" class="btn btn-success btn-contact"  value="Gửi mail"/>
+        </form>
     </div>
+
     <!--  footer  -->
     <div class="footer">
+
         <div class="footer-content-top">
+
             <div class="footer-about-us">
                 <p><strong>Về chúng tôi</strong></p>
+                <p>Giới thiệu công ty</p>
+                <p>Tuyển dụng</p>
+                <p>Chính sách bảo mật</p>
             </div>
+
+
             <div class="footer-menu">
                 <p><strong>Danh mục</strong></p>
+                <p><a href="#">Rau củ sạch</a></p>
+                <p><a href="#">Trái cây tươi</a></p>
+                <p><a href="#">Gói combo</a></p>
             </div>
+
+
             <div class="footer-support-customer">
                 <p><strong>Hỗ trợ khách hàng</strong></p>
+                <p>Hướng dẫn mua hàng</p>
+                <p>Chính sách đổi trả</p>
+                <p>Phương thức thanh toán</p>
             </div>
+
+
             <div class="footer-follow-us">
                 <p><strong>Theo dõi chúng tôi</strong></p>
+                <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+                <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
             </div>
         </div>
+
+
         <div class="footer-content-bottom">
             <div class="footer-company">
                 <p>
-                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong> <br/>
-                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh <br/>
+                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
                     Điện thoại: 1800 6821 - Email: cskh@nulti.vn
                 </p>
             </div>
 
             <div>
                 <p>
-                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp lần đầu ngày 05/05/2012.<br/>
-                    GCNDDKKDD: 6782/DDKKDDD-ĐNai ngày cấp 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                    GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
                 </p>
             </div>
-
         </div>
     </div>
+
+
 </div>
 
 </body>

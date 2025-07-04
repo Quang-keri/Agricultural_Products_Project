@@ -39,30 +39,24 @@ public class User {
     @Column(name = "address", length = 255)
     private String address;
 
-    @Column(name = "status", columnDefinition = "boolean default true")
-    private boolean status;
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "phone_number")
     @Pattern(
             regexp = "^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$",
             message = "Số điện thoại không hợp lệ"
     )
-    private int phoneNumber;
+    private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<Order> orders;
 
-    public User(String userName, String userFullName, String password, String address, boolean status, int phoneNumber, Role role) {
-        this.userName = userName;
-        this.userFullName = userFullName;
-        this.password = password;
-        this.address = address;
-        this.status = status;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-    }
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Article> articles;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "user")
+    private Cart cart;
 }

@@ -35,6 +35,12 @@ public class AgriculturalProduct {
     private int quantityAvailable;
 
     @OneToMany(mappedBy = "agriculturalProduct", cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    private List<OrderDetail> orderDetail; // Assuming each product can have one order detail associated with it
+    private List<OrderDetail> orderDetail;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "agriculturalProduct")
+    private List<CartItem> cartItems;
 }

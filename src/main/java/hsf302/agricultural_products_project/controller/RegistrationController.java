@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class RegistrationController {
 @Autowired
-    private UserService userService; // Assuming you have a UserService to handle user operations
+    private UserService userService;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -25,13 +25,10 @@ public class RegistrationController {
         return "register";
     }
 
-    //Bingding này ảnh xạ dựa trên thg validation của spring UserDTO có lỗi gì dồn vô thg này
-    //Dùng Redirect Lưu dữ liệu tạm thời vào session,
-    //  nhưng tự động xóa sau redirect xong.và nó dùng cho redirect,  model dùng trong 1 request
+
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") UserDTO userDTO,
                                BindingResult result,
-                               RedirectAttributes redirectAttributes,
                                Model model) {
         if (result.hasErrors()) {
             return "register";
@@ -39,14 +36,14 @@ public class RegistrationController {
         try {
             User existingUser = userService.findByUserName(userDTO.getUserName());
             if (existingUser != null) {
-                result.rejectValue("userName", "error.user", "Tên đăng nhập đã tồn tại");
+                model.addAttribute("UserNameExist","Tên đăng nhập đã tồn tại,vui lòng chọn tên khác");
                 return "register";
             }
             userService.save(userDTO);
-            redirectAttributes.addFlashAttribute("messageRegisterSuccess", "Đăng ký thành công!,Đăng nhập để tiếp tục");
-            return "redirect:/login?success";
+            model.addAttribute("messageRegisterSuccess", "Đăng ký thành công!,Đăng nhập để tiếp tục");
+            return "redirect:/login";
         } catch (Exception e) {
-            result.rejectValue("userName", "error.user", "Có lỗi xảy ra khi đăng ký");
+            model.addAttribute("messageRegisterError","Đăng ký không thành công, vui lòng thử lại sau");
             return "register";
         }
     }

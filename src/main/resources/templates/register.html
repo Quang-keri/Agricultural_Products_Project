@@ -4,138 +4,10 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #a8e063, #56ab2f); /* Màu nền xanh lá cây tươi mát */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-            overflow: hidden;
-            padding: 20px; /* Thêm padding tổng thể để tránh tràn ở màn hình nhỏ */
-            box-sizing: border-box;
-        }
 
-        .register-container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 100%;
-            max-width: 500px; /* Chiều rộng tối đa lớn hơn cho nhiều trường */
-            box-sizing: border-box;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-        }
 
-        .register-container::before { /* Hiệu ứng lá cây ở góc */
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 80px;
-            height: 80px;
-            background: url('https://img.icons8.com/color/48/000000/leaf.png') no-repeat center center / contain;
-            opacity: 0.3;
-            transform: rotate(-15deg);
-        }
-
-        .register-container::after { /* Hiệu ứng lá cây ở góc khác */
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 100px;
-            height: 100px;
-            background: url('https://img.icons8.com/color/48/000000/leaf.png') no-repeat center center / contain;
-            opacity: 0.2;
-            transform: rotate(25deg);
-        }
-
-        h2 {
-            color: #338a00;
-            margin-bottom: 25px;
-            font-size: 2em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 20px; /* Khoảng cách giữa các nhóm form */
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1em;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #56ab2f;
-            outline: none;
-            box-shadow: 0 0 5px rgba(86, 171, 47, 0.5);
-        }
-
-        .text-danger {
-            color: #dc3545; /* Màu đỏ cho lỗi */
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: block; /* Đảm bảo thông báo lỗi nằm trên dòng riêng */
-        }
-
-        button[type="submit"] {
-            background-color: #56ab2f;
-            color: white;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(86, 171, 47, 0.4);
-            margin-top: 20px; /* Khoảng cách trên nút đăng ký */
-        }
-
-        button[type="submit"]:hover {
-            background-color: #338a00;
-            transform: translateY(-2px);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .register-container {
-                width: 95%;
-                margin: 0 10px; /* Giảm margin ngang */
-                padding: 30px 20px;
-            }
-            h2 {
-                font-size: 1.8em;
-            }
-            button[type="submit"] {
-                padding: 12px 20px;
-            }
-        }
-    </style>
+    <!-- css link   -->
+    <link href="./css/register.css" rel="stylesheet">
 </head>
 <body>
 <div class="register-container">
@@ -174,6 +46,10 @@
 
         <button type="submit">Đăng kí</button>
     </form>
+    <div>
+<!--        UserNameExist-->
+        <span th:if="${userNameExist}"  th:value="UserNameExist" class="text-danger"></span>
+    </div>
 </div>
 </body>
 </html>

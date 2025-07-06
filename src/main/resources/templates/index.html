@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Nông sản sạch</title>
@@ -25,7 +25,8 @@
 
 
     <!-- css link   -->
-    <link href="./css/index.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+
 </head>
 <style>
     .navbar-brand img {
@@ -112,7 +113,11 @@
 
       <!-- Nội dung chính -->
       <div class="container header-content">
-          <h1>Chào mừng bạn đến với Nông Sản Sạch!</h1>
+          <h1>Chào mừng
+          <span th:if="${account != null}" th:text="${account.getUserFullName()}"></span>
+          <span th:unless="${account != null}">bạn</span>
+              đến với Nông Sản Sạch!
+          </h1>
 
           <h3>
               Chúng tôi cung cấp những sản phẩm nông sản tươi, sạch và an toàn cho sức khỏe. Trực tiếp từ nông trại đến bàn ăn của bạn.
@@ -147,22 +152,11 @@
 
       </div>
   </div>
-    <!--  Welcome name  tạm để day check-->
-    <span th:if="${#authentication != null}">
-    <h2>Xin chào, <span th:text="${#authentication.principal.fullName}">Member</span></h2>
-    <p>Tài khoản: <span th:text="${#authentication.principal.username}"></span></p>
-    <p>Vai trò: <span th:text="${#authentication.principal.authorities}"></span></p>
-    <p>Số điện thoại: <span th:text="${#authentication.principal.phoneNumber}"></span></p>
-    <p>Địa chỉ: <span th:text="${#authentication.principal.address}"></span></p>
-</span>
 
-    <span th:unless="${#authentication != null}">
-    <h2>Xin chào, Guest</h2>
-</span>
-    <p th:unless="${user != null}">Welcome, Guest!</p>
-    <section class="features-section mt-3 py-5 text-white">
-        <div class="container">
-            <h3 class="mb-3 text-black text-center"><strong>Vì sao chọn chúng tôi?</strong> </h3>
+
+    <div class="features-section mt-3 py-5 text-white">
+        <div class="">
+            <h2 class="mb-3 text-black text-center"><strong>Vì sao chọn chúng tôi?</strong> </h2>
 
             <div class="text-center good-point-parent">
                 <!-- Feature 1 -->
@@ -193,14 +187,14 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
 
     <!-- Nông sản   -->
 
-    <section class="mt-3 py-5 text-center text-light" style="background-color:white;">
-        <div class="container">
-            <h3 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong> </h3>
+    <div class="mt-3 py-5 text-center text-light" style="background-color:white;">
+        <div class="">
+            <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong> </h2>
 
 
             <div class="menu-bar">
@@ -232,10 +226,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <section class="mt-3 py-5 text-center" style="background-color:white;">
-        <h3 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong> </h3>
+        <h2 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong> </h2>
 
         <div class="product">
             <div class="product-1 clickable-product">

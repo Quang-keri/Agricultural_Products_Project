@@ -1,14 +1,17 @@
 package hsf302.agricultural_products_project.controller;
 
-import hsf302.agricultural_products_project.config.SecurityUtil;
+
 import hsf302.agricultural_products_project.config.VnPayConfig;
 import hsf302.agricultural_products_project.dto.PaymentRequest;
 import hsf302.agricultural_products_project.dto.PaymentResponse;
 import hsf302.agricultural_products_project.dto.PaymentVerification;
+import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +33,20 @@ public class PaymentController {
     public String createPayment(
             @RequestParam("amount") double amount,
             @RequestParam(value = "bankCode", required = false) String bankCode,
-            HttpServletRequest request) {
+            HttpServletRequest request, HttpSession session, Model model) {
 
         try {
             //  Tạo Order trong DB
-            Long userId = SecurityUtil.getCurrentUserId(); // lấy ID người dùng từ session hoặc security context
+            User account = (User) session.getAttribute("account");
+            if (account == null) {
+                System.err.println("User not logged in, redirecting to login page at payment controller line 42.");
+                return "redirect:/login";
+            }
+            Long userId = account.getUserId();
             Long orderId = orderService.createOrder(userId, amount); //
 
             if (orderId == null || orderId < 1) {
-                return "redirect:/cart"; // tạo đơn hàng fail thì quay về giỏ hàng
+                return "redirect:/cart";
             }
 
             // Tạo yêu cầu thanh toán VNPay

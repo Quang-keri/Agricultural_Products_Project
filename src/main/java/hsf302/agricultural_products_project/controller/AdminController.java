@@ -1,6 +1,8 @@
 package hsf302.agricultural_products_project.controller;
 
 
+import hsf302.agricultural_products_project.model.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +19,16 @@ public class AdminController {
 
 
     @GetMapping("/dashboard")
-    public String adminDashboard(Model model) {
+    public String adminDashboard(HttpSession session, Model model) {
+        User account = (User) session.getAttribute("account");
+
+        if (account != null && account.getRole().equals("ROLE_ADMIN")) {
+            model.addAttribute("account", account);
 
 
-
-        return "admin/admindashboard";
+            return "admin/admindashboard";
+        }
+         return "redirect:/403";
     }
 
     @GetMapping("/users")

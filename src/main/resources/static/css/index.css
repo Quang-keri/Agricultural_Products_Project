@@ -187,7 +187,7 @@ button:hover {
 .product {
     display: flex;
     justify-content: space-around;
-    gap: 20px;
+    gap: 32px;
     margin: 16px;
 }
 

@@ -56,18 +56,24 @@
 
         <!-- Tài khoản và giỏ hàng -->
         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
+            <li class="nav-item" th:if="${account == null}">
+                <a class="nav-link login-link" href="/login">
                     <i class="bi bi-person-circle"></i> Đăng nhập
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            </li>
+            <li class="nav-item dropdown"  th:if="${account != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
+                </a>
+                <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
                     <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                    <li>    <!--logout-->
+                    <li th:if="${account != null}">    <!--logout-->
                         <form action="/logout" method="post">
-                            <button type="submit">
-                                Logout
+                            <button class="btn-logout" type="submit">
+                                Đăng xuất
                             </button>
                         </form>
                     </li>
@@ -114,7 +120,7 @@
       <!-- Nội dung chính -->
       <div class="container header-content">
           <h1>Chào mừng
-          <span th:if="${account != null}" th:text="${account.getUserFullName()}"></span>
+          <span th:if="${account != null}" th:text="${account.userName}"></span>
           <span th:unless="${account != null}">bạn</span>
               đến với Nông Sản Sạch!
           </h1>

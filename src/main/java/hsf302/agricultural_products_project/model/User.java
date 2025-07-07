@@ -26,7 +26,7 @@ public class User {
     private String address;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -37,7 +37,7 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String userFullName, String password, String address, String status, String phoneNumber, String role) {
+    public User(String userName, String userFullName, String password, String address, boolean status, String phoneNumber, String role) {
         this.userName = userName;
         this.userFullName = userFullName;
         this.password = password;
@@ -87,11 +87,11 @@ public class User {
         this.address = address;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

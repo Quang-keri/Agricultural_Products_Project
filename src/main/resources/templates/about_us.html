@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Về Chúng Tôi - Nông Sản Sạch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootrap link   -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- link icon cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="./css/aboutus.css" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+<main class="main">
+    <!-- Navbar trên cùng -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4 nav-header">
+        <a class="navbar-brand d-flex align-items-center" href="/index">
+            <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
+            <strong>Nông Sản Sạch</strong>
+        </a>
+
+        <!-- Thanh tìm kiếm -->
+        <form class="d-flex ms-auto me-3 w-50">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <!-- Tài khoản và giỏ hàng -->
+        <ul class="navbar-nav nav-header">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> Đăng nhập
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                    <li>    <!--logout-->
+                        <form action="/logout" method="post">
+                            <button type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Giỏ hàng</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <!-- Thanh menu xanh lá -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container d-flex justify-content-between">
+            <!-- Menu bên trái -->
+            <div class="collapse navbar-collapse show">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Sản phẩm</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên hệ</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Hotline bên phải -->
+            <div class="text-white d-none d-lg-block">
+                <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
+            </div>
+        </div>
+    </nav>
+<!--    <div class="line">-->
+
+<!--    </div>-->
+    <!-- Giới thiệu Hero -->
+    <section class="text-white text-center py-5" style="background-color: #136c34;">
+        <div class="container">
+            <h1 class="display-4">Về Chúng Tôi</h1>
+            <p class="lead">Hành trình mang nông sản sạch, an toàn đến mọi gia đình Việt Nam</p>
+        </div>
+    </section>
+
+    <!-- Nội dung chính -->
+    <section class="py-5 "  style="background-color: #136c34;color: white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="mb-4">Sứ mệnh của chúng tôi</h2>
+                    <p>Nông Sản Sạch được thành lập với sứ mệnh mang đến cho mọi gia đình Việt Nam, phân bố ở các tỉnh thành lớn như Thành phố
+                        Hờ Chí Minh, Hà Nội, Thái Bình,Đà Nẵng với  những sản phẩm nông sản tươi ngon, an toàn và giàu dinh dưỡng.</p>
+                    <p>Với hơn 6 năm kinh nghiệm, chúng tôi đã hợp tác cùng hơn 10 nông trại trên toàn quốc theo tiêu chuẩn hữu cơ và bền vững.</p>
+                    <a href="#" class="btn btn-custom">Tìm hiểu thêm về cơ sở  </a>
+                </div>
+                <div class="col-md-6">
+                    <img style="width: 550px;height: 255px" src="https://danviet.ex-cdn.com/files/f1/upload/2-2017/images/2017-05-14/149472359895770-cau-dat-1.jpg" alt="Nông trại hữu cơ" class="img-fluid rounded shadow" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="line">
+
+    </div>
+<!--    -->
+    <section class="py-5 text-white" style="background-color: #136c34;">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-3">Thành tựu của chúng tôi</h2>
+            <p class="mb-5">Những con số ấn tượng sau 6 năm hoạt động</p>
+            <div class="row row-cols-2 row-cols-md-4 g-4">
+                <div class="col">
+                    <div>
+                        <div class=" d-flex justify-content-center align-items-center mx-auto mb-3 icon-quanlity" >
+                            <i class="bi bi-people text-white"></i>
+                        </div>
+                        <h4 class="text-white fw-bold">2,000+</h4>
+                        <p class="text-white">Khách hàng tin tưởng</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <div class=" d-flex justify-content-center align-items-center mx-auto mb-3 icon-quanlity" >
+                            <i class="bi bi-award text-white "></i>
+                        </div>
+                        <h4 class="text-white fw-bold">100+</h4>
+                        <p class="text-white">Sản phẩm chất lượng</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <div class="d-flex justify-content-center align-items-center mx-auto mb-3 icon-quanlity">
+                            <i  class="fa-solid fa-house"></i>
+
+                        </div>
+                        <h4 class="text-white fw-bold">10+</h4>
+                        <p class="text-white">Nông trại hợp tác</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <div class=" d-flex justify-content-center align-items-center mx-auto mb-3 icon-quanlity" >
+                            <i class="bi bi-heart text-white "></i>
+                        </div>
+                        <h4 class="text-white fw-bold">90%</h4>
+                        <p class="text-white">Khách hàng hài lòng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!---->
+    <div class="line">
+
+    </div>
+    <section class="py-5 text-white" style="background-color:#136c34;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Khách hàng nói gì về chúng tôi</h2>
+                <p>Những phản hồi chân thực từ khách hàng</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="bg-dark p-4 rounded shadow-sm h-100">
+                        <i class="bi bi-quote text-success fs-3"></i>
+                        <p class="fst-italic">"Tôi đã mua rau củ ở Nông Sản Sạch được 2 năm. Rau luôn tươi ngon, an toàn cho cả gia đình."</p>
+                        <div class="text-warning mb-2">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <strong>Chị Nguyễn Thị Lan</strong><br>
+                        <small class="text-muted">TP. Hồ Chí Minh</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-dark p-4 rounded shadow-sm h-100">
+                        <i class="bi bi-quote text-success fs-3"></i>
+                        <p class="fst-italic">"Chất lượng sản phẩm rất tốt, giao hàng nhanh chóng. Tôi rất tin tưởng vào thương hiệu này."</p>
+                        <div class="text-warning mb-2">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <strong>Anh Trần Văn Hùng</strong><br>
+                        <small class="text-muted">Hà Nội</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-dark p-4 rounded shadow-sm h-100">
+                        <i class="bi bi-quote text-success fs-3"></i>
+                        <p class="fst-italic">"Dịch vụ khách hàng tuyệt vời, sản phẩm đúng như mô tả. Sẽ tiếp tục ủng hộ."</p>
+                        <div class="text-warning mb-2">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <strong>Chị Phạm Thị Mai</strong><br>
+                        <small class="text-muted">Đà Nẵng</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="line">
+
+    </div>
+
+    <section class="py-5  text-white text-center"  style="background-color:#136c34;">
+        <div class="container">
+            <h2 class="mb-3">Cùng chúng tôi xây dựng tương lai xanh</h2>
+            <p class="mb-4">Hãy trở thành một phần của cộng đồng yêu thích nông sản sạch và sống khỏe mạnh</p>
+            <a href="/san-pham" class="btn btn-light btn-custom me-3">Mua sắm ngay</a>
+            <a href="https://www.facebook.com/quangwashi" class="btn btn-outline-light btn-custom">Liên hệ hợp tác</a>
+        </div>
+    </section>
+    <!-- CTA cuối trang -->
+    <div class="line">
+
+    </div>
+    <div class="footer">
+
+        <div class="footer-content-top">
+
+            <div class="footer-about-us">
+                <p><strong>Về chúng tôi</strong></p>
+                <p>Giới thiệu công ty</p>
+                <p>Tuyển dụng</p>
+                <p>Chính sách bảo mật</p>
+            </div>
+
+
+            <div class="footer-menu">
+                <p><strong>Danh mục</strong></p>
+                <p><a href="#">Rau củ sạch</a></p>
+                <p><a href="#">Trái cây tươi</a></p>
+                <p><a href="#">Gói combo</a></p>
+            </div>
+
+
+            <div class="footer-support-customer">
+                <p><strong>Hỗ trợ khách hàng</strong></p>
+                <p>Hướng dẫn mua hàng</p>
+                <p>Chính sách đổi trả</p>
+                <p>Phương thức thanh toán</p>
+            </div>
+
+
+            <div class="footer-follow-us">
+                <p><strong>Theo dõi chúng tôi</strong></p>
+                <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+                <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
+            </div>
+        </div>
+
+
+        <div class="footer-content-bottom">
+            <div class="footer-company">
+                <p>
+                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                    Điện thoại: 1800 6821 - Email: cskh@nulti.vn
+                </p>
+            </div>
+
+            <div>
+                <p>
+                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                    GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

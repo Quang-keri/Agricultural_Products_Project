@@ -18,22 +18,6 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-    public String getFullName() {
-        return user.getUserFullName();
-    }
-
-    public String getUserName() {
-        return user.getUserName();
-    }
-
-    public String getAddress() {
-        return user.getAddress();
-    }
-
-    public String getPhoneNumber() {
-        return user.getPhoneNumber();
-    }
-
     public User getUser() {
         return user;
     }

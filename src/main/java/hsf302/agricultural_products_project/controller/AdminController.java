@@ -9,26 +9,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-
-
 @Controller
 
 @RequestMapping("/admin")
 public class AdminController {
 
 
-
-    @GetMapping("/dashboard")
+    @GetMapping("/admindashboard")
     public String adminDashboard(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
 
-        if (account != null && account.getRole().equals("ROLE_ADMIN")) {
-            model.addAttribute("account", account);
-
-
+        if (account != null) {
+            if( account.getRole().equals("ROLE_ADMIN")){
+                model.addAttribute("account", account);
+            }
             return "admin/admindashboard";
         }
-         return "redirect:/403";
+        return "redirect:/403";
     }
 
     @GetMapping("/users")

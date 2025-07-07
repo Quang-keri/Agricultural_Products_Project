@@ -3,7 +3,10 @@ package hsf302.agricultural_products_project.service;
 import hsf302.agricultural_products_project.dto.UserDTO;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
+import hsf302.agricultural_products_project.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +15,21 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public User save(UserDTO userDTO) {
         User newUser = new User();
+
         newUser.setUserName(userDTO.getUserName());
         newUser.setUserFullName(userDTO.getUserFullName());
-        newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        newUser.setPassword(PasswordUtils.hashPassword(userDTO.getPassword()));
         newUser.setRole("ROLE_MEMBER");
-        newUser.setStatus("active");
+        newUser.setStatus(true);
         newUser.setAddress(userDTO.getAddress());
         newUser.setPhoneNumber(userDTO.getPhoneNumber());
         return userRepository.save(newUser);
@@ -51,16 +55,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
     public void updateStatus(Long id) {
-        User user = findById(id);
-        if (user != null) {
-            String currentStatus = user.getStatus();
-            if ("active".equalsIgnoreCase(currentStatus)) {
-                user.setStatus("deactive");
-            } else {
-                user.setStatus("active");
-            }
-            save(user);
-        }
+        // update code
     }
+
+
 }

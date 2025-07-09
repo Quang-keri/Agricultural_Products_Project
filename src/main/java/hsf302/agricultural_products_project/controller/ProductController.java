@@ -18,7 +18,7 @@ public class ProductController {
         return "product-detail"; // Trả về tên file .html trong /templates
     }
 
-    @GetMapping("/product-list")
+    @GetMapping("/products")
     public String showProductList(Model model) {
         List<AgriculturalProduct> productList = productService.getProducts();
         model.addAttribute("productList", productList); // Thêm danh sách sản phẩm vào mô hình

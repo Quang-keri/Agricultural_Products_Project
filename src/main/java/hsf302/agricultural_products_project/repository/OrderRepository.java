@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    Optional<Order> findTopByUserIdOrderByCreatedAtDesc(Long userId);
 
+    Optional<Order> findTopByUser_UserIdOrderByCreateAtDesc(Long userUserId);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
+    @Query("UPDATE Order o SET o.statusOrder = :status WHERE o.orderID = :orderId")
     void updateOrderStatus(@Param("orderId") Long orderId, @Param("status") String status);
 }
 

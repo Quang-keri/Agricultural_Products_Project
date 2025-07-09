@@ -45,7 +45,7 @@ public class LoginController {
         if (account.getRole().equals("ROLE_ADMIN")) {
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(24*60 * 60);
-            return "redirect:/admin/admindashboard";
+            return "redirect:/admin/dashboard";
         } else if (account.getRole().equals("ROLE_MEMBER")) {
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(24*60 * 60);

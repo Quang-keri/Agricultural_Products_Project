@@ -15,20 +15,25 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepo;
 
+//    @Override
+//    public Long createOrder(Long userId,double amount) {
+//        Order order = new Order();
+//        order.setUserId(userId);
+//        order.setTotalAmount(amount);
+//        order.setPaymentMethod("pay card");
+//        order.setStatus("Pending");
+//        order.setCreatedAt(new Date());
+//        return orderRepo.save(order).getId();
+//    }
+
     @Override
-    public Long createOrder(Long userId,double amount) {
-        Order order = new Order();
-        order.setUserId(userId);
-        order.setTotalAmount(amount);
-        order.setPaymentMethod("pay card");
-        order.setStatus("Pending");
-        order.setCreatedAt(new Date());
-        return orderRepo.save(order).getId();
+    public Long createOrder(Long userId, double amount) {
+        return 0L;
     }
 
     @Override
     public Optional<Order> findLatestOrderByUser(Long userId) {
-        return orderRepo.findTopByUserIdOrderByCreatedAtDesc(userId);
+        return orderRepo.findTopByUser_UserIdOrderByCreateAtDesc(userId);
     }
 
     @Override

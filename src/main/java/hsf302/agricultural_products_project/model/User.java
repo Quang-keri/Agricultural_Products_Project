@@ -1,11 +1,9 @@
 package hsf302.agricultural_products_project.model;
 
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-
 
 public class User {
     @Id

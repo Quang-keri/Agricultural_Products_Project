@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
 
-    @GetMapping("/admindashboard")
+    @GetMapping("/dashboard")
     public String adminDashboard(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
 

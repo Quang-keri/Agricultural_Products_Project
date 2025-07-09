@@ -17,24 +17,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Long createOrder(Long userId,double amount) {
-        Order order = new Order();
-        order.setUserId(userId);
-        order.setTotalAmount(amount);
-        order.setPaymentMethod("pay card");
-        order.setStatus("Pending");
-        order.setCreatedAt(new Date());
-        return orderRepo.save(order).getId();
+        return 1L;
     }
 
     @Override
     public Optional<Order> findLatestOrderByUser(Long userId) {
-        return orderRepo.findTopByUserIdOrderByCreatedAtDesc(userId);
+        //return orderRepo.findTopByUserIdOrderByCreatedAtDesc(userId);
+        return null;
     }
 
     @Override
     public void updateOrderStatus(Long orderId, String status) {
 
-        orderRepo.updateOrderStatus(orderId, status);
+        //orderRepo.updateOrderStatus(orderId, status);
     }
 
     @Override

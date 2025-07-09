@@ -2,7 +2,19 @@ package hsf302.agricultural_products_project.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
+import java.util.List;
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "users")
 
@@ -13,16 +25,16 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name", columnDefinition = "NVARCHAR(100)")
     private String userName;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")
     private String userFullName;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "NVARCHAR(255)")
     private  String password;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "NVARCHAR(255)")
     private String address;
 
     @Column(name = "status")
@@ -34,80 +46,12 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    private List<Order> orders;
 
-    public User(String userName, String userFullName, String password, String address, boolean status, String phoneNumber, String role) {
-        this.userName = userName;
-        this.userFullName = userFullName;
-        this.password = password;
-        this.address = address;
-        this.status = status;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-    }
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Article> articles;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserFullName() {
-        return userFullName;
-    }
-
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "user")
+    private Cart cart;
 }

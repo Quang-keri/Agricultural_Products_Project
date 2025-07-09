@@ -25,7 +25,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name")
     private String userName;
 
     @Column(name = "full_name")
@@ -34,17 +34,13 @@ public class User {
     @Column(name = "password")
     private  String password;
 
-    @Column(name = "address", length = 255)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "phone_number")
-    @Pattern(
-            regexp = "^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$",
-            message = "Số điện thoại không hợp lệ"
-    )
     private String phoneNumber;
 
     @Column(name = "role")

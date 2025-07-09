@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.math.BigDecimal;
@@ -27,11 +28,7 @@ public class Order {
     private String customerName;
 
     @Column(name = "phone_number")
-    @Pattern(
-            regexp = "^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$",
-            message = "Số điện thoại không hợp lệ"
-    )
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "total_price", precision = 15, scale = 2, nullable = false)
     private BigDecimal totalPrice;
@@ -40,8 +37,9 @@ public class Order {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "create_at", nullable = false)
+    @Column(name = "create_at", nullable = false, updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime createAt;
 
     @Column(name = "update_at")

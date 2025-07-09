@@ -22,13 +22,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> findLatestOrderByUser(Long userId) {
-        return orderRepo.findTopByUserIdOrderByCreatedAtDesc(userId);
+        //return orderRepo.findTopByUserIdOrderByCreatedAtDesc(userId);
+        return null;
     }
 
     @Override
     public void updateOrderStatus(Long orderId, String status) {
 
-        orderRepo.updateOrderStatus(orderId, status);
+        //orderRepo.updateOrderStatus(orderId, status);
     }
 
     @Override

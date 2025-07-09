@@ -19,9 +19,9 @@ public class Category {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String name;
-    @Column(name = "type_article", nullable = false, length = 100)
+    @Column(name = "type_article", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String typeArticle;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)

@@ -24,10 +24,10 @@ public class Order {
     @Column(name = "order_id")
     private Long OrderId;
 
-    @Column(name = "customer_name", length = 100, nullable = false)
+    @Column(name = "customer_name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String customerName;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", columnDefinition = "NVARCHAR(20)")
     private String phoneNumber;
 
     @Column(name = "total_price", precision = 15, scale = 2, nullable = false)

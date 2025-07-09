@@ -25,16 +25,16 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", columnDefinition = "NVARCHAR(100)")
     private String userName;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")
     private String userFullName;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "NVARCHAR(255)")
     private  String password;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "NVARCHAR(255)")
     private String address;
 
     @Column(name = "status")

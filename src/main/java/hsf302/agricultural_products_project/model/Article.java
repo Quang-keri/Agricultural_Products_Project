@@ -21,17 +21,17 @@ public class Article {
     @Column(name = "article_id", nullable = false)
     private Long articleId;
 
-    @Column(name = "title", nullable = false, length = 255)
+    @Column(name = "title", columnDefinition = "NVARCHAR(255)", nullable = false)
     private String title;
 
-    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "content", columnDefinition = "NTEXT", nullable = false)
     private String content;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "image_url", length = 255)
+    @Column(name = "image_url", columnDefinition = "NVARCHAR(255)")
     private String imageUrl;
 
     @Column(name = "is_active", nullable = false, columnDefinition = "BIT DEFAULT 1")

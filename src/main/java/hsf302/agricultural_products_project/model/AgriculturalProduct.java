@@ -19,13 +19,13 @@ public class AgriculturalProduct {
     @Column(name = "agricultural_id")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String name;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "NTEXT")
     private String description;
 
-    @Column(name = "image_url", length = 255)
+    @Column(name = "image_url", columnDefinition = "NVARCHAR(255)")
     private String imageUrl;
 
     @Column(name = "price", precision = 15, scale = 2, nullable = false)

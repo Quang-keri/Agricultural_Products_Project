@@ -171,16 +171,12 @@
             <a href="/admin/users" th:classappend="${currentPage == 'users' ? 'active' : ''}">Users</a>
         </li>
         <li style="margin-bottom: 10px;">
-            <a href="/admin/products" th:classappend="${currentPage == 'products' ? 'active' : ''}">Products</a>
+            <a href="/admin/product" th:classappend="${currentPage == 'products' ? 'active' : ''}">Products</a>
         </li>
         <li style="margin-bottom: 10px;">
             <a href="/admin/orders" th:classappend="${currentPage == 'orders' ? 'active' : ''}">Orders</a>
         </li>
-        <li style="margin-bottom: 10px;">
-            <a href="#" style="color: white; text-decoration: none; display: block; padding: 10px; border-radius: 4px; transition: background-color 0.3s;">Settings</a>
-        </li>
     </ul>
 </nav>
-
 </body>
 </html>

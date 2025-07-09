@@ -14,12 +14,13 @@ import java.util.List;
 @Table(name = "Categorys")
 public class Category {
     @Id
-    private int categoryId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer categoryId;
 
-    private String name_Agricultural;
+    private String categoryName;
 
-    public Category(String name_Agricultural) {
-        this.name_Agricultural = name_Agricultural;
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
 

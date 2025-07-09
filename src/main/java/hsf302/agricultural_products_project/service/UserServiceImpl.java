@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateStatus(Long id) {
-        // update code
+        User user = userRepository.findById(id).orElse(null);
+        user.setStatus(false);
+        userRepository.save(user);
     }
-
-
 }

@@ -14,11 +14,11 @@ import java.util.List;
 @Table(name = "products")
 public class Product {
     @Id
-    private String productID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productID;
 
     private String productName;
 
-    @Column
     private double productPrice;
 
     private int quantity;

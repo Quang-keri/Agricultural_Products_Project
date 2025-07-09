@@ -32,4 +32,9 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<Product> getProductsByCategory(int categoryId) {
+        return productRepository.findAllByCategory_CategoryId(categoryId);
+    }
 }

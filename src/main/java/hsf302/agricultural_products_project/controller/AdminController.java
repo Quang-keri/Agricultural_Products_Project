@@ -2,7 +2,9 @@ package hsf302.agricultural_products_project.controller;
 
 
 import hsf302.agricultural_products_project.model.User;
+import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/dashboard")
     public String adminDashboard(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
 
         if (account != null) {
-            if( account.getRole().equals("ROLE_ADMIN")){
+            if (account.getRole().equals("ROLE_ADMIN")) {
                 model.addAttribute("account", account);
             }
             return "admin/admindashboard";
@@ -30,10 +34,9 @@ public class AdminController {
 
     @GetMapping("/users")
     public String userManagement(Model model) {
-
+        model.addAttribute("users", userService.findAll());
         return "admin/manageUser";
     }
-
 
     @GetMapping("/products")
     public String productManagement(Model model) {

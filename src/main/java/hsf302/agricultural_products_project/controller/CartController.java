@@ -42,7 +42,14 @@ public class CartController {
             CartCheckoutDto checkoutDto = new CartCheckoutDto(cartItems);
             model.addAttribute("checkoutDto", checkoutDto);
         }else {
+            List<AgriculturalProductCartDto> cartItems = cartService.getCartItemsForUser(account);
+            model.addAttribute("cart", cartItems);
+            double totalPrice = cartService.calculateTotalPriceFromUser(account);
+            model.addAttribute("totalPrice", totalPrice);
 
+            // Add command object for form binding
+            CartCheckoutDto checkoutDto = new CartCheckoutDto(cartItems);
+            model.addAttribute("checkoutDto", checkoutDto);
         }
 
         return "cart";
@@ -78,6 +85,8 @@ public class CartController {
         User account = (User) session.getAttribute("account");
         if (account == null) {
             cartService.removeFromCartForCookie(cartCookie, id, response);
+        }else{
+            cartService.removeFromCartForUser(id, account);
         }
         return "redirect:/cart";
     }
@@ -95,9 +104,7 @@ public class CartController {
                 // Update cart in cookie for non-logged-in users
                 cartService.updateQuantityInCookie(cartCookie, productId, quantity, response);
             } else {
-                // Update cart in database for logged-in users
-                // You can implement this method in your CartService
-                // cartService.updateQuantityForUser(account.getId(), productId, quantity);
+                cartService.updateQuantityInUserCart(productId, quantity, account);
             }
         }
 

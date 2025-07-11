@@ -13,4 +13,9 @@ public interface CartService {
     void removeFromCartForCookie(String cartCookie, Long productId, HttpServletResponse response);
     double calculateTotalPriceFromCookie(String cartCookie);
     void addToCartForUser(Long productId, User user);
+    List<AgriculturalProductCartDto> getCartItemsForUser(User user);
+    double calculateTotalPriceFromUser(User user);
+    void updateQuantityInUserCart(Long productId, int quantity, User user);
+    void removeFromCartForUser(Long productId, User user);
+    void transferCartFromCookieToDatabase(String cartCookie, User user, HttpServletResponse response);
 }

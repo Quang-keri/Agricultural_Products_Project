@@ -18,7 +18,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
     @PostMapping("/add-to-cart")
-    public String addToCart(@RequestParam Long productId, HttpSession session, @CookieValue(value = "cart", defaultValue = "") String cartCookie, HttpServletResponse response) {
+    public String addToCart(Model model,@RequestParam Long productId, HttpSession session, @CookieValue(value = "cart", defaultValue = "") String cartCookie, HttpServletResponse response) {
 
     User account = (User) session.getAttribute("account");
     if (account == null) {
@@ -50,6 +50,7 @@ public class CartController {
             // Add command object for form binding
             CartCheckoutDto checkoutDto = new CartCheckoutDto(cartItems);
             model.addAttribute("checkoutDto", checkoutDto);
+            model.addAttribute("account", account);
         }
 
         return "cart";
@@ -74,7 +75,7 @@ public class CartController {
             .mapToDouble(item -> item.getPrice().doubleValue() * item.getQuantity())
             .sum();
         model.addAttribute("total", total);
-
+        model.addAttribute("account", account);
         return "payment-form";
     }
 

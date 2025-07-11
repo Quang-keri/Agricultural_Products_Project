@@ -1,10 +1,7 @@
 package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -13,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@Getter
+@Builder
 @Generated
 @Entity
 @Table(name = "cart")
@@ -26,7 +25,7 @@ public class Cart {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cart")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cart", orphanRemoval = true)
     private List<CartItem> cartItems;
 
     @Column(name = "created_at", nullable = false, updatable = false)

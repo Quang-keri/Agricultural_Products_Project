@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <form th:action="@{/cart/checkout}" th:object="${checkoutDto}" method="post" id="checkout-form">
+                    <form th:action="@{/cart/checkout}" th:object="${checkoutDto}" method="get" id="checkout-form">
                         <!-- Use wrapper class binding with th:field -->
                         <div th:each="item, iterStat : ${cart}">
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].agriculturalProductId}" />

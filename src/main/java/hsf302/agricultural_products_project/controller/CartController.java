@@ -56,7 +56,7 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping("/cart/checkout")
+    @GetMapping("/cart/checkout")
     public String checkout(@ModelAttribute CartCheckoutDto checkoutDto,
                           HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
@@ -64,9 +64,15 @@ public class CartController {
         if (account == null) {
             return "redirect:/login";
         }
+        List<AgriculturalProductCartDto> items = null;
+        if(checkoutDto==null || checkoutDto.getItems() == null || checkoutDto.getItems().isEmpty()) {
+            items = ( List<AgriculturalProductCartDto>) session.getAttribute("cart");
+        }else{
+            items = checkoutDto.getItems();
+            session.setAttribute("cart", items);
+        }
 
         // Get the items from the wrapper object
-        List<AgriculturalProductCartDto> items = checkoutDto.getItems();
         model.addAttribute("cartItems", items);
         model.addAttribute("account", account);
 
@@ -76,7 +82,7 @@ public class CartController {
             .sum();
         model.addAttribute("total", total);
         model.addAttribute("account", account);
-        return "payment-form";
+        return "order";
     }
 
     @PostMapping("/cart/remove")

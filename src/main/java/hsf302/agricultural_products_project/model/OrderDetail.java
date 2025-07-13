@@ -1,10 +1,7 @@
 package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -12,6 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "order_details")
 public class OrderDetail {
@@ -30,7 +28,4 @@ public class OrderDetail {
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
-
-    @Column(name = "price", precision = 15, scale = 2, nullable = false)
-    private BigDecimal price;
 }

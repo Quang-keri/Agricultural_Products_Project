@@ -43,8 +43,8 @@ public class PaymentController {
                 return "redirect:/login";
             }
             Long userId = account.getUserId();
-            Long orderId = orderService.createOrder(userId, amount); //
-
+           // Long orderId = orderService.createOrder(userId, amount); //
+            Long orderId = 1L;
             if (orderId == null || orderId < 1) {
                 return "redirect:/cart";
             }

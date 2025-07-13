@@ -63,11 +63,11 @@
                 <div class="back-link mb-3" onclick="history.back()">
                     <i class="fa fa-arrow-left"></i> <span>Tiếp tục mua sắm</span>
                 </div>
-                <h2 class="mb-4">Giỏ hàng (<span th:text="${#lists.size(cart)}">0</span> sản phẩm)</h2>
-                <div th:if="${#lists.isEmpty(cart)}" class="alert alert-info text-center my-4">
+                <h2 class="mb-4">Giỏ hàng (<span th:text="${#lists.size(checkoutDto.getItems())}">0</span> sản phẩm)</h2>
+                <div th:if="${#lists.isEmpty(checkoutDto.getItems())}" class="alert alert-info text-center my-4">
                     Không có sản phẩm nào trong giỏ hàng.
                 </div>
-                <div th:if="${!#lists.isEmpty(cart)}">
+                <div th:if="${!#lists.isEmpty(checkoutDto.getItems())}">
                     <div class="cart-header bg-light rounded px-3 py-2 mb-2">
                         <div class="item-info">Sản phẩm</div>
                         <div class="cart-header-price">Giá thành</div>
@@ -75,7 +75,7 @@
                         <div style="width: 24px;"></div>
                     </div>
                     <div id="cart-items">
-                        <div th:each="item,iterStat : ${cart}" class="cart-item">
+                        <div th:each="item,iterStat : ${checkoutDto.getItems()}" class="cart-item">
                             <div class="cart-item-info">
                                 <a th:href="@{/products/detail/{id}(id=${item.agriculturalProductId})}">
                                     <img th:src="${item.imageUrl != null ? item.imageUrl : '/img/placeholder.png'}" alt="">
@@ -123,30 +123,30 @@
                             <span class="text-muted fw-bold" style="font-size: 1.5rem;">
                                 <i class="fas fa-box me-2 text-primary"></i>Tổng số sản phẩm:
                             </span>
-                            <span class="badge bg-primary fs-3 px-3 py-2" id="selected-count" th:text="${#lists.size(cart)}">0</span>
+                            <span class="badge bg-primary fs-3 px-3 py-2" id="selected-count" th:text="${#lists.size(checkoutDto.getItems())}">0</span>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-4 p-4" style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">
                             <span style="font-size: 1.3rem; font-weight: 600;">
                                 <i class="fas fa-money-bill-wave me-2"></i>Tổng tiền:
                             </span>
-                            <strong style="font-size: 1.5rem; text-shadow: 0 1px 3px rgba(0,0,0,0.3);" id="selected-total" th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</strong>
+                            <strong style="font-size: 1.5rem; text-shadow: 0 1px 3px rgba(0,0,0,0.3);" id="selected-total" th:text="${#numbers.formatDecimal(checkoutDto.getTotal(), 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</strong>
                         </div>
                     </div>
 
                     <form th:action="@{/cart/checkout}" th:object="${checkoutDto}" method="get" id="checkout-form">
                         <!-- Use wrapper class binding with th:field -->
-                        <div th:each="item, iterStat : ${cart}">
+                        <div th:each="item, iterStat : ${checkoutDto.getItems()}">
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].agriculturalProductId}" />
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].name}" />
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].price}" />
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].quantity}" />
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].imageUrl}" />
                         </div>
-
+                        <input type="hidden" th:field="*{total}" />
 
                         <button class="btn btn-success w-100 py-3 mb-3" type="submit" id="checkout-btn"
-                                th:disabled="${#lists.isEmpty(cart)}"
+                                th:disabled="${#lists.isEmpty(checkoutDto.getItems())}"
                                 style="font-size: 1.4rem; font-weight: 700; border-radius: 15px; background: linear-gradient(135deg, #28a745, #20c997); border: none; box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;"
                                 onmouseover="this.style.transform='translateY(-3px) scale(1.03)'; this.style.boxShadow='0 8px 25px rgba(40, 167, 69, 0.5)'; this.style.background='linear-gradient(135deg, #20c997, #17a2b8)'"
                                 onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)'; this.style.background='linear-gradient(135deg, #28a745, #20c997)'">

@@ -35,14 +35,14 @@
                     </h2>
                 </div>
                 <div class="card-content">
-                    <form id="orderForm" th:action="@{/order/submit}" method="post" >
+                    <form id="orderForm" th:action="@{/order/submit}" th:object="${orderCheckout}" method="post" >
                         <div class="form-group">
                             <label for="username">
                                 <i class="fas fa-user"></i>
                                 Họ và tên *
                             </label>
                             <input type="text" id="username" name="username" required
-                                   placeholder="Nhập họ và tên" th:value="${account.userName}">
+                                   placeholder="Nhập họ và tên" th:field="*{name}">
                         </div>
 
                         <div class="form-group">
@@ -51,7 +51,7 @@
                                 Số điện thoại *
                             </label>
                             <input type="tel" id="phone" name="phone" required
-                                   placeholder="Nhập số điện thoại" th:value="${account.phoneNumber}">
+                                   placeholder="Nhập số điện thoại" th:field="*{phoneNumber}">
                         </div>
 
                         <div class="form-group">
@@ -60,7 +60,7 @@
                                 Địa chỉ giao hàng *
                             </label>
                             <textarea id="address" name="address" required rows="3"
-                                      placeholder="Nhập địa chỉ chi tiết" th:text="${account.address}"></textarea>
+                                      placeholder="Nhập địa chỉ chi tiết" th:field="*{address}"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -91,8 +91,19 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- START: Hidden fields for cart items -->
+                        <div th:each="item, iterStat : ${orderCheckout.getItems()}">
+                            <input type="hidden" th:field="*{items[__${iterStat.index}__].agriculturalProductId}" />
+                            <input type="hidden" th:field="*{items[__${iterStat.index}__].name}" />
+                            <input type="hidden" th:field="*{items[__${iterStat.index}__].price}" />
+                            <input type="hidden" th:field="*{items[__${iterStat.index}__].quantity}" />
+                            <input type="hidden" th:field="*{items[__${iterStat.index}__].imageUrl}" />
+                        </div>
+                        <input type="hidden" th:field="*{total+30000}" />
+                        <input type="hidden" th:field="*{paymentStatus}" />
+                        <!-- END: Hidden fields for cart items -->
                         <!-- Hidden fields dùng cho VNPay -->
-                        <input type="hidden" id="amount" name="amount" th:value="${total + 30000}" />
+                        <input type="hidden" id="amount" name="amount" th:value="${orderCheckout.getTotal() + 30000}" />
                         <input type="hidden" id="bankCode" name="bankCode" value=""/>
                         <button type="submit" class="submit-btn">
                             <i class="fas fa-check-circle"></i>

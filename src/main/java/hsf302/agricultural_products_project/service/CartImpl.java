@@ -157,7 +157,7 @@ public class CartImpl implements  CartService {
             if (product != null) {
                 CartItemId cartItemId = new CartItemId();
                 cartItemId.setCartId(newCart.getCartId());
-                cartItemId.setAgriculturalProductId(product.getId());
+                cartItemId.setAgriculturalProductId(product.getAgriculturalProductId());
                 CartItem cartItem = CartItem.builder()
                         .id(cartItemId)
                         .cart(newCart)
@@ -179,7 +179,7 @@ public class CartImpl implements  CartService {
             // Product does not exist in the cart, add new item
             CartItemId cartItemId = new CartItemId();
             cartItemId.setCartId(existingCart.get().getCartId());
-            cartItemId.setAgriculturalProductId(product.getId());
+            cartItemId.setAgriculturalProductId(product.getAgriculturalProductId());
             CartItem cartItem = CartItem.builder()
                     .id(cartItemId)
                     .cart(existingCart.get())
@@ -200,7 +200,7 @@ public class CartImpl implements  CartService {
                 for (CartItem item : existingCart.get().getCartItems()) {
                     AgriculturalProduct product = item.getAgriculturalProduct();
                     AgriculturalProductCartDto cartRes = AgriculturalProductCartDto.builder()
-                            .agriculturalProductId(product.getId())
+                            .agriculturalProductId(product.getAgriculturalProductId())
                             .name(product.getName())
                             .price(product.getPrice())
                             .imageUrl(product.getImageUrl())
@@ -288,7 +288,7 @@ public class CartImpl implements  CartService {
                         // Product does not exist in the cart, add new item
                         CartItemId cartItemId = new CartItemId();
                         cartItemId.setCartId(existingCart.get().getCartId());
-                        cartItemId.setAgriculturalProductId(product.getId());
+                        cartItemId.setAgriculturalProductId(product.getAgriculturalProductId());
                         CartItem cartItem = CartItem.builder()
                                 .id(cartItemId)
                                 .cart(existingCart.get())
@@ -314,7 +314,7 @@ public class CartImpl implements  CartService {
                 if (product != null) {
                     CartItemId cartItemId = new CartItemId();
                     cartItemId.setCartId(newCart.getCartId());
-                    cartItemId.setAgriculturalProductId(product.getId());
+                    cartItemId.setAgriculturalProductId(product.getAgriculturalProductId());
                     CartItem cartItem = CartItem.builder()
                             .id(cartItemId)
                             .cart(newCart)

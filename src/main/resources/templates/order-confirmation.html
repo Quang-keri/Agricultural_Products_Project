@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đơn hàng - Nông sản sạch</title>
+    <link rel="stylesheet" th:href="@{/css/order-confirmation.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="confirmation-container">
+    <!-- Success Case -->
+    <div th:if="${success != null and  success == true}" class="success-header">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1>Đặt hàng thành công!</h1>
+        <p>Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xác nhận.</p>
+
+        <!-- Payment Success Message -->
+        <div th:if="${paymentMessage}" class="payment-info">
+            <i class="fas fa-credit-card"></i>
+            <span th:text="${paymentMessage}">Thanh toán thành công</span>
+            <div th:if="${transactionNo}">
+                <small>Mã giao dịch: <span th:text="${transactionNo}"></span></small>
+            </div>
+            <div th:if="${bankCode}">
+                <small>Ngân hàng: <span th:text="${bankCode}"></span></small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Case -->
+    <div th:if="${success != null and success == false}" class="error-header">
+        <i class="fas fa-times-circle error-icon"></i>
+        <h1>Đặt hàng thất bại!</h1>
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span th:text="${errorMessage}">Tạo đơn hàng không thành công</span>
+        </div>
+        <p>Vui lòng thử lại hoặc liên hệ với chúng tôi để được hỗ trợ.</p>
+    </div>
+
+    <!-- Order Details (only show if success and order exists) -->
+    <div th:if="${success != null and success == true and order !=null}" class="order-details">
+        <h2><i class="fas fa-receipt"></i> Thông tin đơn hàng</h2>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-hashtag"></i>
+                    Mã đơn hàng:
+                </span>
+            <span class="detail-value" th:text="${order.orderId}">ORD001</span>
+        </div>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-user"></i>
+                    Họ và tên:
+                </span>
+            <span class="detail-value" th:text="${order.customerName}">Nguyễn Văn A</span>
+        </div>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-phone"></i>
+                    Số điện thoại:
+                </span>
+            <span class="detail-value" th:text="${order.phoneNumber}">0123456789</span>
+        </div>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Địa chỉ giao hàng:
+                </span>
+            <span class="detail-value" th:text="${order.address}">123 Đường ABC, Quận 1, TP.HCM</span>
+        </div>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-calendar"></i>
+                    Ngày đặt hàng:
+                </span>
+            <span class="detail-value" th:text="${#temporals.format(order.createAt, 'dd/MM/yyyy HH:mm')}">01/01/2024 14:30</span>
+        </div>
+
+        <div class="detail-row">
+                <span class="detail-label">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Tổng tiền:
+                </span>
+            <span class="detail-value total-price" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + '₫'">305,000₫</span>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <div th:if="${success != null and  success == true}">
+            <a th:href="@{/orders}" class="btn btn-primary">
+                <i class="fas fa-list"></i>
+                Xem đơn hàng của tôi
+            </a>
+            <a th:href="@{/}" class="btn btn-secondary">
+                <i class="fas fa-home"></i>
+                Về trang chủ
+            </a>
+        </div>
+        <div th:if="${success != null and  success == false}">
+            <a th:href="@{/cart}" class="btn btn-danger">
+                <i class="fas fa-shopping-cart"></i>
+                Thử lại
+            </a>
+            <a th:href="@{/}" class="btn btn-secondary">
+                <i class="fas fa-home"></i>
+                Về trang chủ
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

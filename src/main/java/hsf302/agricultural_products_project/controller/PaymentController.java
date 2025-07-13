@@ -99,7 +99,8 @@ public class PaymentController {
 
                     model.addAttribute("success", true);
                     model.addAttribute("message", "Payment successful");
-                    model.addAttribute("orderId", orderId);
+                    //Thay orderId bằng Order
+                    model.addAttribute("order", orderId);
                     model.addAttribute("amount", String.format("%,.0f", actualAmount));
                     model.addAttribute("transactionNo", vnp_TransactionNo);
                     model.addAttribute("bankCode", vnp_BankCode);
@@ -117,13 +118,13 @@ public class PaymentController {
                 model.addAttribute("message", "Payment verification failed");
             }
 
-            return "result";
+            return "order-confirmation";
 
         } catch (Exception e) {
             log.error("Error processing payment return", e);
             model.addAttribute("success", false);
             model.addAttribute("message", "System error occurred");
-            return "result";
+            return "order-confirmation";
         }
     }
     @GetMapping("/payment-form.html")

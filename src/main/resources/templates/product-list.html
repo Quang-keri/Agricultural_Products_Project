@@ -99,10 +99,10 @@
                         <p class="card-text text-success fw-bold" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">Giá</p>
                         <div class="mt-auto d-flex justify-content-between">
                             <form th:action="@{/add-to-cart}" method="post" class="add-to-cart-form">
-                                <input type="hidden" name="productId" th:value="${product.id}"/>
+                                <input type="hidden" name="productId" th:value="${product.getAgriculturalProductId()}"/>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-cart-plus"></i> Thêm vào giỏ</button>
                             </form>
-                            <a th:href="@{/product-detail(id=${product.id})}" class="btn btn-info text-white"><i class="fa fa-eye"></i> Xem chi tiết</a>
+                            <a th:href="@{/product-detail(id=${product.getAgriculturalProductId()})}" class="btn btn-info text-white"><i class="fa fa-eye"></i> Xem chi tiết</a>
                         </div>
                     </div>
                 </div>

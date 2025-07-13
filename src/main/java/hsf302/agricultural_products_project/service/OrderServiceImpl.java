@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
@@ -19,9 +20,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepo;
     @Autowired
-    private ProductService roductService;
+    private ProductService productService;
     @Override
-    public Long createOrder(User user, CustomerOrderDto order) {
+    @Transactional
+    public Order createOrder(User user, CustomerOrderDto order) {
 
         Order newOrder = orderRepo.save(Order.builder()
                 .customerName(order.getName())
@@ -32,19 +34,31 @@ public class OrderServiceImpl implements OrderService {
                 .orderStatus(OrderStatus.PENDING)
                 .user(user)
                 .build());
-        //List<AgriculturalProduct> productList =
-        for(AgriculturalProductCartDto item : order.getItems()) {
+        List<Long> productIds = order.getItems().stream()
+                .map(AgriculturalProductCartDto::getAgriculturalProductId)
+                .toList();
+
+        Map<Long, Integer> productQuantities = order.getItems().stream()
+                .collect(Collectors.toMap(AgriculturalProductCartDto::getAgriculturalProductId, AgriculturalProductCartDto::getQuantity));
+
+        List<AgriculturalProduct> productList = productService.getAllProductsById(productIds);
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for( AgriculturalProduct item :productList){
             OrderDetailId orderDetailId = new OrderDetailId();
             orderDetailId.setOrderId(newOrder.getOrderId());
             orderDetailId.setAgriculturalProductId(item.getAgriculturalProductId());
+            Integer quantity = productQuantities.get(item.getAgriculturalProductId());
             OrderDetail orderDetail = OrderDetail.builder()
                     .orderDetailId(orderDetailId)
                     .order(newOrder)
+                    .agriculturalProduct(item)
+                    .quantity(quantity)
                     .build();
+            orderDetails.add(orderDetail);
         }
+        newOrder.setOrderDetails(orderDetails);
 
-
-        return 1L;
+        return orderRepo.save(newOrder);
     }
 
     @Override

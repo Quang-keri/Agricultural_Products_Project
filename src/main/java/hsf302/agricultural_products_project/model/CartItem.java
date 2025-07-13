@@ -22,7 +22,7 @@ public class CartItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("agriculturalProductId")
-    @JoinColumn(name = "agricultural_product_id", referencedColumnName = "agricultural_id")
+    @JoinColumn(name = "agricultural_product_id", referencedColumnName = "agricultural_product_id")
     private AgriculturalProduct agriculturalProduct;
 
     @Column(name = "quantity", nullable = false)

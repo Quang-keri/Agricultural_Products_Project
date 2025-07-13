@@ -19,6 +19,6 @@ public class ProductImpl implements  ProductService {
 
     @Override
     public List<AgriculturalProduct> getAllProductsById(List<Long> ids) {
-        return List.of();
+        return  productRepo.findAllById(ids);
     }
 }

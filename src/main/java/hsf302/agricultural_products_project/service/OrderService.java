@@ -8,7 +8,7 @@ import hsf302.agricultural_products_project.model.User;
 import java.util.Optional;
 
 public interface OrderService {
-    Long createOrder(User user, CustomerOrderDto order);
+    Order createOrder(User user, CustomerOrderDto order);
     Optional<Order> findLatestOrderByUser(Long userId);
     void updateOrderStatus(Long orderId, String status);
 

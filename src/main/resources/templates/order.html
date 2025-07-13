@@ -99,7 +99,7 @@
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].quantity}" />
                             <input type="hidden" th:field="*{items[__${iterStat.index}__].imageUrl}" />
                         </div>
-                        <input type="hidden" th:field="*{total+30000}" />
+                        <input type="hidden" th:field="*{total}" />
                         <input type="hidden" th:field="*{paymentStatus}" />
                         <!-- END: Hidden fields for cart items -->
                         <!-- Hidden fields dùng cho VNPay -->
@@ -127,7 +127,7 @@
                     <!-- Product List Container -->
                     <div class="product-list-container">
                         <div class="product-list">
-                            <div class="product-item" th:each="item : ${cartItems}">
+                            <div class="product-item" th:each="item : ${orderCheckout.getItems()}">
                                 <div class="product-image-wrapper">
                                     <img th:src="@{${item.imageUrl != null ? item.imageUrl : '/img/placeholder.png'}}"
                                          th:alt="${item.name}" class="product-image">
@@ -151,7 +151,7 @@
                         <div class="order-summary">
                             <div class="summary-row">
                                 <span class="summary-label">Tạm tính:</span>
-                                <span class="summary-value" th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + '₫'">275,000₫</span>
+                                <span class="summary-value" th:text="${#numbers.formatDecimal(orderCheckout.getTotal(), 0, 'COMMA', 0, 'POINT')} + '₫'">275,000₫</span>
                             </div>
                             <div class="summary-row">
                                 <span class="summary-label">Phí vận chuyển:</span>
@@ -160,7 +160,7 @@
                             <div class="separator"></div>
                             <div class="summary-row total-row">
                                 <span class="summary-label">Tổng cộng:</span>
-                                <span class="summary-value total-amount" th:text="${#numbers.formatDecimal(total+30000, 0, 'COMMA', 0, 'POINT')} + '₫'">305,000₫</span>
+                                <span class="summary-value total-amount" th:text="${#numbers.formatDecimal(orderCheckout.getTotal()+30000, 0, 'COMMA', 0, 'POINT')} + '₫'">305,000₫</span>
                             </div>
                         </div>
 

@@ -42,6 +42,8 @@ public class PaymentController {
                 System.err.println("User not logged in, redirecting to login page at payment controller line 42.");
                 return "redirect:/login";
             }
+            //Khi qua trang thanh toán thì thông tin như: tên, địa chỉ, số điện thoại sẽ được lấy từ CustomerOrderDto
+            //Nên thêm @ModelAttribute CustomerOrderDto customerOrderDto vào hàm createPayment
             //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
             //createOrder lai roi, check lai
             Long userId = account.getUserId();
@@ -102,7 +104,10 @@ public class PaymentController {
 
                     model.addAttribute("success", true);
                     model.addAttribute("message", "Payment successful");
-                    //Thay orderId bằng Order
+                    //Thay orderId bằng Order,
+                    //Trang thông báo nhận một object Order để hiển thị thông tin
+                    // Thông tin orderId, amount, transactionNo, bankCode sẽ được hiển thị trong order-confirmation.html
+                    //Nhớ check  xem trên ui có hiển thị đúng thông tin không
                     model.addAttribute("order", orderId);
                     model.addAttribute("amount", String.format("%,.0f", actualAmount));
                     model.addAttribute("transactionNo", vnp_TransactionNo);

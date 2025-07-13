@@ -42,6 +42,8 @@ public class PaymentController {
                 System.err.println("User not logged in, redirecting to login page at payment controller line 42.");
                 return "redirect:/login";
             }
+            //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
+            //createOrder lai roi, check lai
             Long userId = account.getUserId();
            // Long orderId = orderService.createOrder(userId, amount); //
             Long orderId = 1L;
@@ -66,6 +68,7 @@ public class PaymentController {
             return "redirect:/error?message=system_error";
         }
     }
+    //cap nhat lai phuong thuc nay de xu ly thanh toan tra ve tu VNPay, order-confirmation.html
     @GetMapping("/vnpayReturn")
     public String paymentReturn(@RequestParam Map<String, String> queryParams, Model model) {
         try {

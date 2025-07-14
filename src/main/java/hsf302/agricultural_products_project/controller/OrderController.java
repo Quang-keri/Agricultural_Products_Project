@@ -22,7 +22,6 @@ public class OrderController {
             // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
             return "redirect:/login";
         }
-        customerOrderDto.setTotal(customerOrderDto.getTotal()+30000);
         Order order = orderService.createOrder(account, customerOrderDto);
         model.addAttribute("order", order);
         model.addAttribute("success", true);

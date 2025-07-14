@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
                 .customerName(order.getName())
                 .phoneNumber(order.getPhoneNumber())
                 .address(order.getAddress())
-                .totalPrice(BigDecimal.valueOf(order.getTotal()))
+                .totalPrice(BigDecimal.valueOf(order.getTotal()+30000))
                 .paymentStatus(order.getPaymentStatus())
                 .orderStatus(OrderStatus.PENDING)
                 .user(user)

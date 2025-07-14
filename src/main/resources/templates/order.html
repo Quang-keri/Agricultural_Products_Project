@@ -103,7 +103,7 @@
                         <input type="hidden" th:field="*{paymentStatus}" />
                         <!-- END: Hidden fields for cart items -->
                         <!-- Hidden fields dùng cho VNPay -->
-                        <input type="hidden" id="amount" name="amount" th:value="${orderCheckout.getTotal() + 30000}" />
+                        <input type="hidden" id="amount" name="amount" th:value="${orderCheckout.getTotal()}" />
                         <input type="hidden" id="bankCode" name="bankCode" value=""/>
                         <button type="submit" class="submit-btn">
                             <i class="fas fa-check-circle"></i>

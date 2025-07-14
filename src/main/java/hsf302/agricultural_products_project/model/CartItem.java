@@ -1,14 +1,13 @@
 package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@Getter
+@Builder
 @Generated
 @Entity
 @Table(name = "cart_items")
@@ -23,7 +22,7 @@ public class CartItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("agriculturalProductId")
-    @JoinColumn(name = "agricultural_product_id", referencedColumnName = "agricultural_id")
+    @JoinColumn(name = "agricultural_product_id", referencedColumnName = "agricultural_product_id")
     private AgriculturalProduct agriculturalProduct;
 
     @Column(name = "quantity", nullable = false)

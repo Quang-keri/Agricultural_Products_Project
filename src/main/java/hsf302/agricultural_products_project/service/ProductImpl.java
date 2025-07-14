@@ -16,4 +16,9 @@ public class ProductImpl implements  ProductService {
     public List<AgriculturalProduct> getProducts() {
         return productRepo.findAll();
     }
+
+    @Override
+    public List<AgriculturalProduct> getAllProductsById(List<Long> ids) {
+        return  productRepo.findAllById(ids);
+    }
 }

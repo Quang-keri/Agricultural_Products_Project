@@ -38,12 +38,10 @@ public class Order {
     private PaymentStatus paymentStatus;
 
     @Column(name = "create_at", nullable = false, updatable = false)
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime createAt;
 
     @Column(name = "update_at")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime updateAt;
 
     @Enumerated(EnumType.STRING)
@@ -57,7 +55,7 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;
     // Additional fields and methods can be added as needed
 }

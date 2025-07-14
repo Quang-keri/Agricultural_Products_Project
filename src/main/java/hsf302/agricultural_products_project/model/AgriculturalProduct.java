@@ -16,8 +16,8 @@ import java.util.List;
 public class AgriculturalProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "agricultural_id")
-    private Long id;
+    @Column(name = "agricultural_product_id")
+    private Long agriculturalProductId;
 
     @Column(name = "name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String name;

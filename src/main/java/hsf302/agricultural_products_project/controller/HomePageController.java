@@ -20,8 +20,6 @@ public class HomePageController {
         System.out.println("Session Account: " + account);
         if (account != null) {
             model.addAttribute("account", account);
-            System.out.println("Account: " + account.getUserName());
-            System.out.println(session.getAttribute("account"));
             return "index";
         }
         return "index";

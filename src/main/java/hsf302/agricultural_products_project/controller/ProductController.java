@@ -88,4 +88,12 @@ public class ProductController {
         model.addAttribute("products", products);
         return "/product/list";
     }
+
+    @GetMapping("/products/{id}")
+    public String viewProductDetail(@PathVariable("id") Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "product/detail";
+    }
+
 }

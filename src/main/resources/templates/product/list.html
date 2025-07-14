@@ -117,26 +117,65 @@
     </div>
 </nav>
 
+<div class="mt-3 py-5 text-center text-light" style="background-color:white;">
+    <div class="">
+        <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
+
+
+        <div class="menu-bar">
+            <!-- Rau lá -->
+            <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
+                <div>
+                    <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
+                    <p>Rau lá</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
+
+
+            <!-- Rau củ -->
+            <a th:href="@{/product/rau-cu}" class="menu-bar-item">
+                <div class="">
+                    <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
+                    <p>Rau củ</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
+
+            <!-- Gia vị -->
+            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
+                <div class="">
+                    <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
+                    <p>nông sản khô</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
 <!-- Danh sách sản phẩm -->
 <div class="container py-5">
     <h2 class="text-center mb-4 text-success">🌿 Danh sách sản phẩm Rau Lá</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col" th:each="product : ${products}">
             <div class="product-card h-100 d-flex flex-column">
-                <img th:src="@{${product.img}}" alt="Ảnh sản phẩm"
-                     class="product-img mb-2"
-                     onerror="this.src='/images/default.png'"/>
-                <div class="product-name" th:text="${product.productName}">Tên sản phẩm</div>
-                <div class="product-price"
-                     th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ
-                </div>
-                <div class="product-desc" th:text="${product.describe}">Mô tả sản phẩm</div>
-                <div class="mt-auto">
-                    <span class="badge bg-secondary" th:text="'SL: ' + ${product.quantity}">Số lượng</span>
-                    <button class="btn btn-outline-primary w-100 btn-cart mt-2">
-                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                    </button>
-                </div>
+                <a th:href="@{'/products/' + ${product.productID}}" class="text-decoration-none">
+                    <img th:src="${product.img}" alt="Ảnh sản phẩm"
+                         class="product-img"
+                         onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'"/>
+                    <div class="product-name" th:text="${product.productName}">Tên sản phẩm</div>
+                    <div class="product-price"
+                         th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ
+                    </div>
+                    <div class="product-desc" th:text="${product.describe}">Mô tả sản phẩm</div>
+                    <div class="mt-auto">
+                        <span class="badge bg-secondary" th:text="'SL: ' + ${product.quantity}">Số lượng</span>
+                        <button class="btn btn-outline-primary w-100 btn-cart mt-2">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                        </button>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

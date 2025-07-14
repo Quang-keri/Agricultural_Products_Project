@@ -23,7 +23,6 @@ public class Product {
 
     private int quantity;
 
-    @Column(length = 150)
     private String describe;
 
     private String img;

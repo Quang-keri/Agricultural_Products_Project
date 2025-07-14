@@ -14,7 +14,7 @@
     <main>
         <div class="card">
             <h2>Chỉnh sửa sản phẩm</h2>
-            <form th:action="@{/edit}" th:object="${product}" method="post">
+            <form th:action="@{/admin/product/edit}" th:object="${product}" method="post">
                 <input type="hidden" th:field="*{productID}"/>
 
                 <table class="form-table">

@@ -1,93 +1,105 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Chi tiết sản phẩm - Ớt Chuông</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Link Swiper's CSS -->
+    <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-    <script src="./js/index.js" defer></script>
 
-    <!-- link icon cdn  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/index.css">
 
-    <!-- css link   -->
-    <link href="./css/index.css" rel="stylesheet">
     <style>
-        .product-detail {
-            max-width: 900px;
-            margin: 50px auto;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
         .product-img {
             width: 100%;
-            height: auto;
+            height: 260px;
             object-fit: cover;
+            border-radius: 8px;
         }
 
-        .btn-buy {
+        .product-name {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #0d6efd;
+        }
+
+        .product-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .product-desc {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .btn-cart {
             background-color: #28a745;
             color: white;
             font-weight: bold;
+            border-radius: 20px;
+            width: 100%;
         }
 
-        .btn-buy:hover {
+        .btn-cart:hover {
             background-color: #218838;
         }
-        .navbar-brand img {
-            height: 40px;
-            margin-right: 10px;
-        }
 
-        .navbar-center {
-            justify-content: center;
+        .footer {
+            background: #f2f2f2;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
+
+<!-- Navbar trên -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <a class="navbar-brand d-flex align-items-center" href="/index">
-        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
-        <strong>Nông Sản Sạch</strong>
+        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo" style="height: 40px;"/>
+        <strong class="ms-2">Nông Sản Sạch</strong>
     </a>
-
-    <!-- Thanh tìm kiếm -->
     <form class="d-flex ms-auto me-3 w-50">
-        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">
-            <i class="bi bi-search"></i>
-        </button>
+        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."/>
+        <button class="btn btn-outline-success"><i class="bi bi-search"></i></button>
     </form>
-
-    <!-- Tài khoản và giỏ hàng -->
     <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <i class="bi bi-person-circle"></i> Tài khoản
+        <li class="nav-item" th:if="${account == null}">
+            <a class="nav-link" href="/login"><i class="bi bi-person-circle"></i> Đăng nhập</a>
+        </li>
+        <li class="nav-item dropdown" th:if="${account != null}">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+                <span th:text="${account.userName}">Tài khoản</span>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                <li>    <!--logout-->
+                <li>
                     <form action="/logout" method="post">
-                        <button type="submit">
-                            Logout
-                        </button>
+                        <button class="dropdown-item" type="submit">Đăng xuất</button>
                     </form>
                 </li>
             </ul>
@@ -98,54 +110,100 @@
     </ul>
 </nav>
 
-<!-- Navbar dưới -->
+<!-- Navbar xanh lá -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <div class="container">
-        <div class="collapse navbar-collapse w-100 justify-content-center show">
-            <ul class="navbar-nav">
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-white" href="/index"><i class="bi bi-house-door"></i> Trang chủ</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Cửa hàng</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-people"></i> Về chúng tôi</a>
-                </li>
-                <li class="nav-item dropdown mx-3">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="categoryDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-list-ul"></i> Danh mục
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <li><a class="dropdown-item" href="#">Lương thực</a></li>
-                        <li><a class="dropdown-item" href="#">Rau củ quả</a></li>
-                        <li><a class="dropdown-item" href="#">Cây công nghiệp</a></li>
-                        <li><a class="dropdown-item" href="#">Hạt & đậu</a></li>
-                        <li><a class="dropdown-item" href="#">Gia vị & dược liệu</a></li>
-                    </ul>
-                </li>
-            </ul>
+    <div class="container d-flex justify-content-between">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item mx-2"><a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a></li>
+            <li class="nav-item mx-2"><a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Sản phẩm</a></li>
+            <li class="nav-item mx-2"><a class="nav-link text-white" href="#"><i class="bi bi-people-fill"></i> Về chúng tôi</a></li>
+            <li class="nav-item mx-2"><a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill"></i> Liên hệ</a></li>
+        </ul>
+        <div class="text-white d-none d-lg-block">
+            <i class="bi bi-telephone-fill"></i> Hotline: 1900-1234
         </div>
     </div>
 </nav>
-<div class="container product-detail bg-white p-4">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="https://nongsandungha.com/wp-content/uploads/2024/07/ot-chuong-da-lat-nong-san-dung-ha.jpg"
-                 alt="Ớt chuông" class="product-img">
-        </div>
-        <div class="col-md-6">
-            <h2>Ớt Chuông Đà Lạt</h2>
-            <p><strong>Giá:</strong> 25.000đ / 1kg</p>
-            <p><strong>Mô tả:</strong></p>
-            <p>
-                Ớt chuông Đà Lạt – giòn ngọt, mọng nước, giàu vitamin A và C. Được trồng theo phương pháp hữu cơ tại
-                vùng cao nguyên Đà Lạt, sản phẩm đảm bảo an toàn và tươi ngon cho mọi bữa ăn.
-            </p>
-            <button class="btn btn-buy mt-3">Thêm vào giỏ hàng</button>
+
+<div class="mt-3 py-5 text-center text-light" style="background-color:white;">
+    <div class="">
+        <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
+
+
+        <div class="menu-bar">
+            <!-- Rau lá -->
+            <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
+                <div>
+                    <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
+                    <p>Rau lá</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
+
+
+            <!-- Rau củ -->
+            <a th:href="@{/product/rau-cu}" class="menu-bar-item">
+                <div class="">
+                    <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
+                    <p>Rau củ</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
+
+            <!-- Gia vị -->
+            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
+                <div class="">
+                    <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
+                    <p>nông sản khô</p>
+                    <p class="text-muted">10 sản phẩm</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>
+
+<!-- Chi tiết sản phẩm -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="product-card bg-white shadow-sm p-4">
+                <div class="row g-4">
+                    <!-- Cột trái: Ảnh sản phẩm -->
+                    <div class="col-md-6">
+                        <img class="product-img" th:src="${product.img}" alt="Ảnh sản phẩm"/>
+                    </div>
+
+                    <!-- Cột phải: Thông tin sản phẩm -->
+                    <div class="col-md-6 d-flex flex-column justify-content-between">
+                        <div>
+                            <h2 class="product-name" th:text="${product.productName}">Tên sản phẩm</h2>
+                            <div class="product-desc" th:text="${product.describe}">Mô tả sản phẩm</div>
+                        </div>
+
+                        <div>
+                            <div class="product-price mb-2" th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + 'đ / kg'">0đ</div>
+
+                            <form action="/cart/add" method="post" class="d-flex align-items-center">
+                                <input type="number" name="quantity" value="1" min="1" class="form-control w-25 me-2"/>
+                                <input type="hidden" name="productId" th:value="${product.productID}"/>
+                                <button type="submit" class="btn btn-cart d-flex align-items-center">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ hàng
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer text-center mt-5">
+    <p><strong>Công Ty Cổ Phần Nông sản Nulti</strong></p>
+    <p>248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.HCM | 1800 6821 | cskh@nulti.vn</p>
+    <p>GCNDKDN: 0311770883 - Cấp ngày 05/05/2012</p>
+</div>
+
 </body>
 </html>

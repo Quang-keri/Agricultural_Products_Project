@@ -5,6 +5,7 @@ import hsf302.agricultural_products_project.config.VnPayConfig;
 import hsf302.agricultural_products_project.dto.PaymentRequest;
 import hsf302.agricultural_products_project.dto.PaymentResponse;
 import hsf302.agricultural_products_project.dto.PaymentVerification;
+import hsf302.agricultural_products_project.model.PaymentStatus;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -97,7 +98,7 @@ public class PaymentController {
                 try {
                     String[] parts = vnp_TxnRef.split("_");
                     Long orderId = Long.parseLong(parts[0]);
-                    orderService.updateOrderStatus(orderId, "PAID");
+                    orderService.updatePaymentStatus(orderId, PaymentStatus.COMPLETED);
 
                     // Convert amount from VNPay format (x100)
                     double actualAmount = Double.parseDouble(vnp_Amount) / 100;

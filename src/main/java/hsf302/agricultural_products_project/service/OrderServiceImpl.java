@@ -68,9 +68,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrderStatus(Long orderId, String status) {
-
-        //orderRepo.updateOrderStatus(orderId, status);
+    public void updatePaymentStatus(Long orderId, PaymentStatus status) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with id: " + orderId));
+        order.setPaymentStatus(status);
+        orderRepo.save(order);
     }
 
     @Override

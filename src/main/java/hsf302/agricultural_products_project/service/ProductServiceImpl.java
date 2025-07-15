@@ -1,7 +1,7 @@
 package hsf302.agricultural_products_project.service;
 
-import hsf302.agricultural_products_project.model.Product;
-import hsf302.agricultural_products_project.repository.ProductRepository;
+import hsf302.agricultural_products_project.model.AgriculturalProduct;
+import hsf302.agricultural_products_project.repository.AgriculturalProdcutRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +11,20 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
 
     @Autowired
-    private ProductRepository productRepository;
+    private AgriculturalProdcutRepo productRepository;
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<AgriculturalProduct> getAllProducts() {
         return productRepository.findAll();
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public AgriculturalProduct saveProduct(AgriculturalProduct product) {
         return productRepository.save(product);
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public AgriculturalProduct getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
 
@@ -34,7 +34,12 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductsByCategory(int categoryId) {
+    public List<AgriculturalProduct> getProductsByCategory(int categoryId) {
         return productRepository.findAllByCategory_CategoryId(categoryId);
+    }
+
+    @Override
+    public List<AgriculturalProduct> getAllProductsById(List<Long> productIds) {
+        return productRepository.findAllById(productIds);
     }
 }

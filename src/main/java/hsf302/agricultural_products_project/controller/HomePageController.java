@@ -29,15 +29,4 @@ public class HomePageController {
     public String aboutUs(Model model) {
         return "about_us";
     }
-
-    @GetMapping("/profile")
-    public String profile(HttpSession session, Model model) {
-        User account = (User) session.getAttribute("account");
-        if (account != null) {
-            model.addAttribute("account", account);
-            return "profile";
-        }
-        return "redirect:/login";
-    }
-
 }

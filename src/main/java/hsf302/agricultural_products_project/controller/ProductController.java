@@ -96,4 +96,11 @@ public class ProductController {
         return "product/detail";
     }
 
+    @GetMapping("/product/all-product")
+    public String showAllProducts(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "product/all-product"; // trỏ tới file all-product.html trong thư mục templates/product
+    }
+
 }

@@ -28,12 +28,6 @@
     <link th:href="@{/css/index.css}" rel="stylesheet">
 
 </head>
-<style>
-    .navbar-brand img {
-        height: 40px;
-        margin-right: 10px;
-    }
-</style>
 <body>
 <div class="main">
     <!-- Header -->
@@ -68,7 +62,7 @@
                     <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
                 </a>
                 <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
                     <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                     <li th:if="${account != null}">    <!--logout-->
                         <form action="/logout" method="post">

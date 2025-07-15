@@ -2,6 +2,7 @@ package hsf302.agricultural_products_project.controller;
 
 
 import hsf302.agricultural_products_project.config.VnPayConfig;
+import hsf302.agricultural_products_project.dto.CustomerOrderDto;
 import hsf302.agricultural_products_project.dto.PaymentRequest;
 import hsf302.agricultural_products_project.dto.PaymentResponse;
 import hsf302.agricultural_products_project.dto.PaymentVerification;
@@ -34,8 +35,7 @@ public class PaymentController {
     public String createPayment(
             @RequestParam("amount") double amount,
             @RequestParam(value = "bankCode", required = false) String bankCode,
-            HttpServletRequest request, HttpSession session, Model model) {
-
+            HttpServletRequest request, HttpSession session, Model model ) {
         try {
             //  Tạo Order trong DB
             User account = (User) session.getAttribute("account");
@@ -48,8 +48,8 @@ public class PaymentController {
             //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
             //createOrder lai roi, check lai
             Long userId = account.getUserId();
+            Long orderId = (Long) request.getAttribute("orderId");
            // Long orderId = orderService.createOrder(userId, amount); //
-            Long orderId = 1L;
             if (orderId == null || orderId < 1) {
                 return "redirect:/cart";
             }

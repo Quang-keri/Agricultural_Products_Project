@@ -15,6 +15,7 @@ public class CustomerOrderDto {
     private String phoneNumber;
     private String address;
     private PaymentStatus paymentStatus;
+    private String paymentMethod;
     private double total;
     List<AgriculturalProductCartDto> items;
 }

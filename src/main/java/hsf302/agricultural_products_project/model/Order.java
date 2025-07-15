@@ -37,6 +37,9 @@ public class Order {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
+    @Column(name = "payment_method", columnDefinition = "NVARCHAR(50)", nullable = false)
+    private String paymentMethod;
+
     @Column(name = "create_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createAt;

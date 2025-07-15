@@ -95,12 +95,13 @@
 
     <!-- Action Buttons -->
     <div class="action-buttons">
+
         <div th:if="${success != null and  success == true}">
             <a th:href="@{/orders}" class="btn btn-primary">
                 <i class="fas fa-list"></i>
                 Xem đơn hàng của tôi
             </a>
-            <a th:href="@{/}" class="btn btn-secondary">
+            <a th:href="@{/index}" class="btn btn-secondary">
                 <i class="fas fa-home"></i>
                 Về trang chủ
             </a>

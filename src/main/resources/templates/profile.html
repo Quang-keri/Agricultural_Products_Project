@@ -2,12 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hồ sơ người dùng</title>
+    <!-- bootrap link   -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- link icon cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- link css  -->
+    <link rel="stylesheet" th:href="@{/css/profile.css}" type="text/css"/>
 </head>
 <body>
-<h2>Thông tin tài khoản</h2>
-<p><strong>Tên đăng nhập:</strong> <span th:text="${account.userName}"></span></p>
+<div class="main">
+    <!-- Navbar trên cùng -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand d-flex align-items-center" href="/index">
+            <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
+            <strong>Nông Sản Sạch</strong>
+        </a>
+
+        <!-- Thanh tìm kiếm -->
+        <form class="d-flex ms-auto me-3 w-50">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <!-- Tài khoản và giỏ hàng -->
+        <ul class="navbar-nav">
+            <li class="nav-item" th:if="${account == null}">
+                <a class="nav-link login-link" href="/login">
+                    <i class="bi bi-person-circle"></i> Đăng nhập
+                </a>
+            </li>
+            <li class="nav-item dropdown"  th:if="${account != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
+                </a>
+                <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                    <li th:if="${account != null}">    <!--logout-->
+                        <form action="/logout" method="post">
+                            <button class="btn-logout" type="submit">
+                                Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a>
+            </li>
+        </ul>
+    </nav>
 
 
+    <!-- Thanh menu xanh lá -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container d-flex justify-content-between">
+            <!-- Menu bên trái -->
+            <div class="collapse navbar-collapse show">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" th:href="@{/products}" ><i class="bi bi-shop"></i> Sản phẩm</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên hệ</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Hotline bên phải -->
+            <div class="text-white d-none d-lg-block">
+                <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile">
+        <!-- Bên trái -->
+        <div class="profile-left">
+            <div class="profile-avatar">
+                <div class="avatar-circle"><i class="fa-solid fa-user-tie" style="font-size: 20px"></i></div>
+                <p th:text="${account.userName}"></p>
+            </div>
+
+            <ul class="profile-menu">
+                <li class="active">Thông tin tài khoản</li>
+                <li>Lịch sử mua hàng</li>
+                <li>Cài đặt</li>
+            </ul>
+        </div>
+
+        <!-- Bên phải -->
+        <div class="profile-right">
+            <h3 class="profile-title"Hồ sơ người dùng</h3>
+            <div class="profile-detail">
+                <div class="profile-detail-row">
+                    <label>Tên đăng nhập</label>
+                    <p th:text="${account.userName}"></p>
+                </div>
+                <div class="profile-detail-row">
+                    <label>Số điện thoại</label>
+                    <p th:text="${account.phoneNumber}"></p>
+                </div>
+                <div class="profile-detail-row">
+                    <label>Địa chỉ</label>
+                    <p th:text="${account.address}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 </body>
 </html>

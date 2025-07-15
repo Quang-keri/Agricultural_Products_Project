@@ -5,23 +5,24 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @Builder
+@Generated
 @Entity
-@Table(name = "order_details")
-public class OrderDetail {
+@Table(name = "cart_items")
+public class CartItem {
     @EmbeddedId
-    private OrderDetailId orderDetailId;
+    private CartItemId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("orderId")
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @MapsId("cartId")
+    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
+    private Cart cart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("agriculturalProductId")
-    @JoinColumn(name = "agricultural_product_id")
+    @JoinColumn(name = "agricultural_product_id", referencedColumnName = "agricultural_product_id")
     private AgriculturalProduct agriculturalProduct;
 
     @Column(name = "quantity", nullable = false)

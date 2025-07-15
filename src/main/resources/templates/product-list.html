@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <style>
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <!-- Navbar trên cùng -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand d-flex align-items-center" href="/index">
+            <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
+            <strong>Nông Sản Sạch</strong>
+        </a>
+        <form class="d-flex ms-auto me-3 w-50">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+        <ul class="navbar-nav">
+            <li class="nav-item" th:if="${account == null}">
+                <a class="nav-link login-link" href="/login">
+                    <i class="bi bi-person-circle"></i> Đăng nhập
+                </a>
+            </li>
+            <li class="nav-item dropdown"  th:if="${account != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
+                </a>
+                <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                    <li th:if="${account != null}">
+                        <form action="/logout" method="post">
+                            <button class="btn-logout" type="submit">
+                                Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Thanh menu xanh lá -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container d-flex justify-content-between">
+            <div class="collapse navbar-collapse show">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" th:href="@{/products}" ><i class="bi bi-shop"></i> Sản phẩm</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-white d-none d-lg-block">
+                <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
+            </div>
+        </div>
+    </nav>
+    <!-- Product List Content -->
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Danh sách sản phẩm</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="product : ${productList}">
+                <div class="card h-100">
+                    <img th:src="${product.imageUrl}" class="card-img-top" th:alt="${product.name}" style="height: 220px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${product.name}"></h5>
+                        <p class="card-text text-success fw-bold" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">Giá</p>
+                        <div class="mt-auto d-flex justify-content-between">
+                            <form th:action="@{/add-to-cart}" method="post" class="add-to-cart-form">
+                                <input type="hidden" name="productId" th:value="${product.getAgriculturalProductId()}"/>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-cart-plus"></i> Thêm vào giỏ</button>
+                            </form>
+                            <a th:href="@{/product-detail(id=${product.getAgriculturalProductId()})}" class="btn btn-info text-white"><i class="fa fa-eye"></i> Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(productList)}" class="alert alert-warning text-center mt-4">
+            Không có sản phẩm nào để hiển thị.
+        </div>
+    </div>
+    <!--  footer  -->
+    <div class="footer">
+        <div class="footer-content-top">
+            <div class="footer-about-us">
+                <p><strong>Về chúng tôi</strong></p>
+                <p>Giới thiệu công ty</p>
+                <p>Tuyển dụng</p>
+                <p>Chính sách bảo mật</p>
+            </div>
+            <div class="footer-menu">
+                <p><strong>Danh mục</strong></p>
+                <p><a href="#">Rau củ sạch</a></p>
+                <p><a href="#">Trái cây tươi</a></p>
+                <p><a href="#">Gói combo</a></p>
+            </div>
+            <div class="footer-support-customer">
+                <p><strong>Hỗ trợ khách hàng</strong></p>
+                <p>Hướng dẫn mua hàng</p>
+                <p>Chính sách đổi trả</p>
+                <p>Phương thức thanh toán</p>
+            </div>
+            <div class="footer-follow-us">
+                <p><strong>Theo dõi chúng tôi</strong></p>
+                <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+                <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
+            </div>
+        </div>
+        <div class="footer-content-bottom">
+            <div class="footer-company">
+                <p>
+                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                    Điện thoại: 1800 6821 - Email: cskh@nulti.vn
+                </p>
+            </div>
+            <div>
+                <p>
+                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                    GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const productId = form.querySelector('input[name="productId"]').value;
+            fetch('/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'productId=' + encodeURIComponent(productId)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Đã thêm vào giỏ hàng!');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

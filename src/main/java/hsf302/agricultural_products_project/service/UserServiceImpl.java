@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.service;
 
 import hsf302.agricultural_products_project.dto.UserDTO;
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUserName(userDTO.getUserName());
         newUser.setUserFullName(userDTO.getUserFullName());
         newUser.setPassword(PasswordUtils.hashPassword(userDTO.getPassword()));
-        newUser.setRole("ROLE_MEMBER");
+        newUser.setRole(Role.ROLE_MEMBER);
         newUser.setStatus(true);
         newUser.setAddress(userDTO.getAddress());
         newUser.setPhoneNumber(userDTO.getPhoneNumber());

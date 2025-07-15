@@ -23,7 +23,8 @@ public class VnPayConfig {
     public static final String vnp_Version = "2.1.0";
     public static final String vnp_Command = "pay";
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static final String vnp_ReturnUrl = "http://localhost:8333/payment/vnpayReturn";
+    //public static final String vnp_ReturnUrl = "http://localhost:8333/payment/vnpayReturn";
+    public static final String vnp_ReturnUrl = "http://localhost:8080/cart/checkout";
     public static final String vnp_TmnCode = "4YUP19I4";
     public static final String vnp_HashSecret = "MDUIFDCRAKLNBPOFIAFNEKFRNMFBYEPX";
 

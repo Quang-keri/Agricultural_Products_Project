@@ -6,10 +6,16 @@
     <head th:replace="~{admin/layout :: common-styles}"></head>
 </head>
 <body>
-<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+<!--<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>-->
+<h2>Profile Admin</h2>
+<div th:if="${account != null}" >
+    Tên tài khoản<span th:text="${account.userName}">Tài khoản</span>
+    Số điện thoại:<span th:text="${account.phoneNumber}">Chưa có sđt</span>
+    Địa chỉ:<span th:text="${account.address}">Chưa có địa chỉ</span>
+</div>
 
 <div class="container-wrapper">
-    <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>
+<!--    <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>-->
 
     <main>
         <div class="stats-grid">

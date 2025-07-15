@@ -1,36 +1,47 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const orderForm = document.getElementById('orderForm');
+    const bankPaymentForm = document.getElementById('bankPaymentForm');
+    const submitBtn = document.querySelector('.submit-btn');
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("orderForm");
-    let isSubmitting = false;
+    // Handle form submission
+    orderForm.addEventListener('submit', function(e) {
+        const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
 
-    form.addEventListener("submit", function (e) {
-    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
-    if (!selectedMethod) {
-    e.preventDefault();
-    alert("Vui lòng chọn phương thức thanh toán!");
-    return;
-}
+        if (selectedPayment && selectedPayment.value === 'bank') {
+            e.preventDefault();
 
-    if (isSubmitting) {
-    e.preventDefault();
-    return;
-}
+            // Update bank payment form with current values
+            updateBankFormData();
 
-    isSubmitting = true;
+            // Submit the bank payment form
+            bankPaymentForm.submit();
+        }
+        // For COD, let the form submit normally to /order/submit
+    });
 
-    if (selectedMethod.value === "bank") {
-    e.preventDefault(); // Ngăn submit mặc định
+    function updateBankFormData() {
+        // Get current form values
+        const name = document.getElementById('username').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const total = document.querySelector('input[name="total"]').value;
 
-    // Chuyển action của form sang /payment/create
-    form.action = "/payment/create";
+        // Update hidden form fields
+        bankPaymentForm.querySelector('input[name="name"]').value = name;
+        bankPaymentForm.querySelector('input[name="phoneNumber"]').value = phone;
+        bankPaymentForm.querySelector('input[name="address"]').value = address;
+        bankPaymentForm.querySelector('input[name="total"]').value = total;
+        bankPaymentForm.querySelector('input[name="amount"]').value = total;
 
-    // Sau một chút delay để loading
-    setTimeout(() => {
-    form.submit();
-}, 300); // hoặc dùng hiệu ứng loading tùy bạn
-}
-
-    // Nếu là COD, form sẽ submit bình thường (action = "/order/submit")
+        // Update cart items in bank form
+        const mainFormItems = orderForm.querySelectorAll('input[name*="items["]');
+        mainFormItems.forEach(item => {
+            const name = item.name;
+            const value = item.value;
+            const bankFormItem = bankPaymentForm.querySelector(`input[name="${name}"]`);
+            if (bankFormItem) {
+                bankFormItem.value = value;
+            }
+        });
+    }
 });
-});
-

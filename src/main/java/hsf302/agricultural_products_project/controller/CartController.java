@@ -70,7 +70,7 @@ public class CartController {
             return "redirect:/login";
         }
         CustomerOrderDto orderCheckout = null;
-        if(checkoutDto==null ) {
+        if(checkoutDto==null || checkoutDto.getItems() == null || checkoutDto.getItems().isEmpty()) {
             orderCheckout = (CustomerOrderDto) session.getAttribute("orderCheckout");
         }else{
             orderCheckout = CustomerOrderDto.builder()
@@ -79,6 +79,7 @@ public class CartController {
                     .address(account.getAddress())
                     .total(checkoutDto.getTotal())
                     .paymentStatus(PaymentStatus.PENDING)
+                    .paymentMethod("COD") // Default payment method
                     .items(checkoutDto.getItems())
                     .build();
             session.setAttribute("orderCheckout", orderCheckout);

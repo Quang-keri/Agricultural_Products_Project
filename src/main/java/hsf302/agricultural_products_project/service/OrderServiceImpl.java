@@ -31,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
                 .address(order.getAddress())
                 .totalPrice(BigDecimal.valueOf(order.getTotal()+30000))
                 .paymentStatus(order.getPaymentStatus())
+                .paymentMethod(order.getPaymentMethod())
                 .orderStatus(OrderStatus.PENDING)
                 .user(user)
                 .build());

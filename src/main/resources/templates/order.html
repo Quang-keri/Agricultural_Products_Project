@@ -70,7 +70,7 @@
                             </label>
                             <div class="payment-methods">
                                 <div class="payment-option">
-                                    <input type="radio" id="cod" name="paymentMethod" value="cod" checked>
+                                    <input type="radio" id="cod" th:field="*{paymentMethod}" value="COD" >
                                     <label for="cod" class="payment-label">
                                         <i class="fas fa-truck"></i>
                                         <div class="payment-info">
@@ -80,7 +80,7 @@
                                     </label>
                                 </div>
                                 <div class="payment-option">
-                                    <input type="radio" id="bank" name="paymentMethod" value="bank">
+                                    <input type="radio" id="bank"  th:field="*{paymentMethod}" value="Chuyển khoản ngân hàng">
                                     <label for="bank" class="payment-label" >
                                         <i class="fas fa-university"></i>
                                         <div class="payment-info">
@@ -101,15 +101,14 @@
                         </div>
                         <input type="hidden" th:field="*{total}" />
                         <input type="hidden" th:field="*{paymentStatus}" />
+
                         <!-- END: Hidden fields for cart items -->
-                        <!-- Hidden fields dùng cho VNPay -->
-                        <input type="hidden" id="amount" name="amount" th:value="${orderCheckout.getTotal()}" />
-                        <input type="hidden" id="bankCode" name="bankCode" value=""/>
                         <button type="submit" class="submit-btn">
                             <i class="fas fa-check-circle"></i>
                             Hoàn tất đặt hàng
                         </button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -175,43 +174,8 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const bankRadio = document.querySelector('input[name="paymentMethod"][value="bank"]');
-
-        bankRadio?.addEventListener("change", function () {
-            if (bankRadio.checked) {
-                const amount = document.getElementById("amount").value;
-                const bankCode = document.getElementById("bankCode").value;
-
-                // Tạo form tạm để POST dữ liệu
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "/payment/create"; // ← đổi theo route thực sự bạn dùng để gọi VNPay
-
-                // Tạo input hidden cho amount
-                const amountInput = document.createElement("input");
-                amountInput.type = "hidden";
-                amountInput.name = "amount";
-                amountInput.value = amount;
-                form.appendChild(amountInput);
-
-                // Tạo input hidden cho bankCode
-                const bankCodeInput = document.createElement("input");
-                bankCodeInput.type = "hidden";
-                bankCodeInput.name = "bankCode";
-                bankCodeInput.value = bankCode;
-                form.appendChild(bankCodeInput);
-
-                // Đưa form vào DOM và submit
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    });
-</script>
 
 
-<!--//<script th:src="@{/js/order.js}"></script>-->
+<!--<script th:src="@{/js/order.js}"></script>-->
 </body>
 </html>

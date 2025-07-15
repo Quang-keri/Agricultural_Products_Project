@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CartController {
@@ -63,7 +65,7 @@ public class CartController {
 
     @GetMapping("/cart/checkout")
     public String checkout(@ModelAttribute CustomerOrderDto checkoutDto,
-                          HttpSession session, Model model) {
+                           HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         User account = (User) session.getAttribute("account");
 
         if (account == null) {
@@ -73,6 +75,13 @@ public class CartController {
         if(checkoutDto==null || checkoutDto.getItems() == null || checkoutDto.getItems().isEmpty()) {
             orderCheckout = (CustomerOrderDto) session.getAttribute("orderCheckout");
         }else{
+
+            Map<String, String> stockErrors = cartService.checkStockDetails(checkoutDto.getItems());
+            if (!stockErrors.isEmpty()) {
+                redirectAttributes.addFlashAttribute("stockErrors", stockErrors);
+                return "redirect:/cart";
+            }
+
             orderCheckout = CustomerOrderDto.builder()
                     .name(account.getUserName())
                     .phoneNumber(account.getPhoneNumber())

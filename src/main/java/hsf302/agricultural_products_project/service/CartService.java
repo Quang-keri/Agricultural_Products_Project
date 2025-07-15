@@ -5,6 +5,7 @@ import hsf302.agricultural_products_project.model.User;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CartService {
     void addToCartForCookie(String cart, Long productId, HttpServletResponse response);
@@ -18,4 +19,5 @@ public interface CartService {
     void updateQuantityInUserCart(Long productId, int quantity, User user);
     void removeFromCartForUser(Long productId, User user);
     void transferCartFromCookieToDatabase(String cartCookie, User user, HttpServletResponse response);
+    Map<String, String> checkStockDetails(List<AgriculturalProductCartDto> cartItems);
 }

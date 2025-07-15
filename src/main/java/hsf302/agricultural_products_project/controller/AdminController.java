@@ -37,6 +37,7 @@ public class AdminController {
         return "admin/manageUser";
     }
 
+
     @GetMapping("/products")
     public String productManagement(Model model) {
         return "admin/manageProduct";

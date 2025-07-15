@@ -40,6 +40,11 @@ button:hover {
     background-color: #449d44;
 }
 
+.navbar-brand img {
+    height: 40px;
+    margin-right: 10px;
+}
+
 .menu-profile {
     min-width: 180px;
     padding: 10px 0;

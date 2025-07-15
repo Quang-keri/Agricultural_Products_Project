@@ -1,6 +1,5 @@
 package hsf302.agricultural_products_project.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -18,14 +17,13 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)")
+    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)",unique = true)
     private String userName;
 
     @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")

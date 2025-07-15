@@ -55,7 +55,7 @@
                     <i class="bi bi-person-circle"></i> Đăng nhập
                 </a>
             </li>
-            <li class="nav-item dropdown"  th:if="${account != null}">
+            <li class="nav-item dropdown" th:if="${account != null}">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
                     <i class="bi bi-person-circle"></i>
@@ -90,7 +90,7 @@
                         <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" th:href="@{/products}" ><i class="bi bi-shop"></i> Sản phẩm</a>
+                        <a class="nav-link text-white" href="/product/all-product"><i class="bi bi-shop"></i> Sản phẩm</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
@@ -109,7 +109,7 @@
         </div>
     </nav>
 
-  <div class="introduction">
+    <div class="introduction">
 
       <!-- Nội dung chính -->
       <div class="container header-content">
@@ -132,7 +132,7 @@
               </form>
           </div>
 
-      </div>
+        </div>
 
       <!-- Auto Slide   -->
       <div class="auto-slide">
@@ -150,13 +150,13 @@
               <div class="swiper-pagination"></div>
           </div>
 
-      </div>
-  </div>
+        </div>
+    </div>
 
 
     <div class="features-section mt-3 py-5 text-white">
         <div class="">
-            <h2 class="mb-3 text-black text-center"><strong>Vì sao chọn chúng tôi?</strong> </h2>
+            <h2 class="mb-3 text-black text-center"><strong>Vì sao chọn chúng tôi?</strong></h2>
 
             <div class="text-center good-point-parent">
                 <!-- Feature 1 -->
@@ -170,8 +170,8 @@
 
                 <!-- Feature 2 -->
                 <div class="good-point">
-                    <div class="feature-icon mx-auto mb-3 icon-advisement" >
-                        <i  class="fa-solid fa-shield"></i>
+                    <div class="feature-icon mx-auto mb-3 icon-advisement">
+                        <i class="fa-solid fa-shield"></i>
                     </div>
                     <h4 class="advisement-title">An toàn chất lượng</h4>
                     <p class="text-secondary">Sản phẩm được kiểm tra nghiêm ngặt</p>
@@ -194,42 +194,43 @@
 
     <div class="mt-3 py-5 text-center text-light" style="background-color:white;">
         <div class="">
-            <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong> </h2>
+            <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
 
 
             <div class="menu-bar">
                 <!-- Rau lá -->
-                <div class="menu-bar-item">
-                    <div class="">
-                        <div class="icon-vegetable"  > <i class="fa-solid fa-leaf"></i></div>
-                         <p>Rau lá</p>
+                <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
+                    <div>
+                        <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
+                        <p>Rau lá</p>
                         <p class="text-muted">10 sản phẩm</p>
                     </div>
-                </div>
+                </a>
+
 
                 <!-- Rau củ -->
-                <div class="menu-bar-item">
+                <a th:href="@{/product/rau-cu}" class="menu-bar-item">
                     <div class="">
-                        <div class="icon-vegetable" > <i class="fa-solid fa-carrot"></i></div>
+                        <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
                         <p>Rau củ</p>
                         <p class="text-muted">10 sản phẩm</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Gia vị -->
-                <div class="menu-bar-item">
+                <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
                     <div class="">
-                        <div  class="icon-vegetable" ><i class="fa-solid fa-seedling"></i></div>
+                        <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
                         <p>nông sản khô</p>
                         <p class="text-muted">10 sản phẩm</p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
 
     <section class="mt-3 py-5 text-center" style="background-color:white;">
-        <h2 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong> </h2>
+        <h2 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong></h2>
 
         <div class="product">
             <div class="product-1 clickable-product">

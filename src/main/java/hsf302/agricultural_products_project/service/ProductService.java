@@ -5,6 +5,10 @@ import hsf302.agricultural_products_project.model.AgriculturalProduct;
 import java.util.List;
 
 public interface ProductService {
-    List<AgriculturalProduct> getProducts();
-    List<AgriculturalProduct> getAllProductsById(List<Long> ids);
+    List<AgriculturalProduct> getAllProducts();
+    AgriculturalProduct saveProduct(AgriculturalProduct product);
+    AgriculturalProduct getProductById(Long id);
+    void deleteProduct(Long id);
+    List<AgriculturalProduct> getProductsByCategory(int categoryId);
+    List<AgriculturalProduct> getAllProductsById(List<Long> productIds);
 }

@@ -6,9 +6,11 @@ import hsf302.agricultural_products_project.dto.CustomerOrderDto;
 import hsf302.agricultural_products_project.dto.PaymentRequest;
 import hsf302.agricultural_products_project.dto.PaymentResponse;
 import hsf302.agricultural_products_project.dto.PaymentVerification;
+import hsf302.agricultural_products_project.model.Order;
 import hsf302.agricultural_products_project.model.PaymentStatus;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.OrderService;
+import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +32,15 @@ public class PaymentController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create")
     public String createPayment(
             @RequestParam("amount") double amount,
             @RequestParam(value = "bankCode", required = false) String bankCode,
-            HttpServletRequest request, HttpSession session, Model model ) {
+            HttpServletRequest request, HttpSession session, Model model,@ModelAttribute CustomerOrderDto customerOrderDto
+    ) {
         try {
             //  Tạo Order trong DB
             User account = (User) session.getAttribute("account");
@@ -47,15 +52,16 @@ public class PaymentController {
             //Nên thêm @ModelAttribute CustomerOrderDto customerOrderDto vào hàm createPayment
             //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
             //createOrder lai roi, check lai
-            Long userId = account.getUserId();
-            Long orderId = (Long) request.getAttribute("orderId");
-           // Long orderId = orderService.createOrder(userId, amount); //
-            if (orderId == null || orderId < 1) {
+            //ok xem lại gùm t
+            User user =  userService.findById(account.getUserId());
+            //Long orderId = (Long) request.getAttribute("orderId"); này bỏ
+           Order order = orderService.createOrder(user, customerOrderDto); // tui lấy cái này nè theo cái ô nói
+            if ( order.getOrderId() == null || order.getOrderId() < 1) {
                 return "redirect:/cart";
             }
 
             // Tạo yêu cầu thanh toán VNPay
-            PaymentRequest paymentRequest = new PaymentRequest(amount, orderId, bankCode, request);
+            PaymentRequest paymentRequest = new PaymentRequest(amount, order.getOrderId() , bankCode, request);
             PaymentResponse response = vnPayConfig.createPaymentUrl(paymentRequest);
 
             if (!response.isSuccess()) {
@@ -99,9 +105,10 @@ public class PaymentController {
                     String[] parts = vnp_TxnRef.split("_");
                     Long orderId = Long.parseLong(parts[0]);
                     orderService.updatePaymentStatus(orderId, PaymentStatus.COMPLETED);
-
+                    Order order = orderService.findOrderById(orderId);
                     // Convert amount from VNPay format (x100)
                     double actualAmount = Double.parseDouble(vnp_Amount) / 100;
+
 
                     model.addAttribute("success", true);
                     model.addAttribute("message", "Payment successful");
@@ -109,7 +116,7 @@ public class PaymentController {
                     //Trang thông báo nhận một object Order để hiển thị thông tin
                     // Thông tin orderId, amount, transactionNo, bankCode sẽ được hiển thị trong order-confirmation.html
                     //Nhớ check  xem trên ui có hiển thị đúng thông tin không
-                    model.addAttribute("order", orderId);
+                    model.addAttribute("order", order);
                     model.addAttribute("amount", String.format("%,.0f", actualAmount));
                     model.addAttribute("transactionNo", vnp_TransactionNo);
                     model.addAttribute("bankCode", vnp_BankCode);

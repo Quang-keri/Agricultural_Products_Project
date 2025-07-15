@@ -13,6 +13,6 @@ public interface OrderService {
     Optional<Order> findLatestOrderByUser(Long userId);
     void updatePaymentStatus(Long orderId, PaymentStatus status);
 
-
+   Order findOrderById(Long orderId);
     boolean existsById(Long orderId);
 }

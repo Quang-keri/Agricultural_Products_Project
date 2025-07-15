@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.CartService;
 import hsf302.agricultural_products_project.service.UserService;
@@ -47,11 +48,11 @@ public class LoginController {
             return "redirect:/login";
         }
 
-        if (account.getRole().equals("ROLE_ADMIN")) {
+        if (account.getRole().equals(Role.ROLE_ADMIN)) {
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(24*60 * 60);
             return "redirect:/admin/dashboard";
-        } else if (account.getRole().equals("ROLE_MEMBER")) {
+        } else if (account.getRole().equals(Role.ROLE_MEMBER)) {
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(24*60 * 60);
             cartService.transferCartFromCookieToDatabase(cartCookie, account, response);

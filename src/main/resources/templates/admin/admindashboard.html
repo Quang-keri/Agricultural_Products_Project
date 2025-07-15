@@ -7,13 +7,13 @@
 </head>
 <body>
 <!--<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>-->
-<span>
-     <h2>Xin chào, <span th:text="${#authentication.principal.fullName}">Admin</span></h2>
-    <p>Tài khoản: <span th:text="${#authentication.principal.username}"></span></p>
-    <p>Vai trò: <span th:text="${#authentication.principal.authorities}"></span></p>
-    <p>Số điện thoại: <span th:text="${#authentication.principal.phoneNumber}"></span></p>
-    <p>Địa chỉ: <span th:text="${#authentication.principal.address}"></span></p>
-</span>
+<h2>Profile Admin</h2>
+<div th:if="${account != null}" >
+    Tên tài khoản<span th:text="${account.userName}">Tài khoản</span>
+    Số điện thoại:<span th:text="${account.phoneNumber}">Chưa có sđt</span>
+    Địa chỉ:<span th:text="${account.address}">Chưa có địa chỉ</span>
+</div>
+
 <div class="container-wrapper">
 <!--    <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>-->
 

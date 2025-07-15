@@ -1,5 +1,6 @@
 package hsf302.agricultural_products_project;
 
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
@@ -24,7 +25,7 @@ public class AgriculturalProductsProjectApplication {
                 User admin = new User();
                 admin.setUserName("admin");
                 admin.setPassword(PasswordUtils.hashPassword("12345678"));
-                admin.setRole("ROLE_ADMIN");
+                admin.setRole(Role.ROLE_ADMIN);
                 admin.setUserFullName("Administrator");
                 admin.setPhoneNumber("0123456789");
                 admin.setAddress("Admin Address");

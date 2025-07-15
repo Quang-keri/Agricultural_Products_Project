@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,8 @@ public class AdminController {
     public String adminDashboard(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
 
-        if (account != null && account.getRole().equals("ROLE_ADMIN")) {
+        if (account != null && account.getRole().equals(Role.ROLE_ADMIN)) {
             model.addAttribute("account", account);
-
-
             return "admin/admindashboard";
         }
          return "redirect:/403";

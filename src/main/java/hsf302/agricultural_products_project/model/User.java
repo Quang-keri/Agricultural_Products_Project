@@ -25,7 +25,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name", columnDefinition = "NVARCHAR(100)")
+    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)")
     private String userName;
 
     @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")
@@ -43,8 +43,9 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<Order> orders;

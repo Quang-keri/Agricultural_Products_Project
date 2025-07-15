@@ -29,7 +29,4 @@ public class HomePageController {
     public String aboutUs(Model model) {
         return "about_us";
     }
-
-
-
 }

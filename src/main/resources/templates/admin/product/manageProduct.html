@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{admin/layout :: common-styles}">
+    <meta charset="UTF-8">
+    <title>Product Management</title>
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar(currentPage='products')}"></nav>
+
+    <main>
+        <div class="card">
+            <h2>Danh sách sản phẩm</h2>
+            <a th:href="@{/admin/product/add}" class="add-user-button">➕ Thêm sản phẩm mới</a>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Danh mục</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Mô tả</th>
+                    <th>Ảnh</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.productID}">1</td>
+                    <td th:text="${product.productName}">Tên</td>
+                    <td th:text="${product.category.categoryName}">Danh mục</td>
+                    <td th:text="${product.productPrice}">0.0</td>
+                    <td th:text="${product.quantity}">0</td>
+                    <td th:text="${product.describe}">Mô tả</td>
+                    <td><img th:src="${product.img}" alt="Ảnh" width="50"/></td>
+                    <td class="action-links">
+                        <a th:href="@{'/admin/product/edit/' + ${product.productID}}">Sửa</a>
+                        <a th:href="@{'/admin/product/delete/' + ${product.productID}}"
+                           onclick="return confirm('Bạn chắc chắn muốn xoá sản phẩm này?');">Xoá</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

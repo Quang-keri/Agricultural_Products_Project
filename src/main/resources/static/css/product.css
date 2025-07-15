@@ -1,0 +1,26 @@
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.form-table td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.form-table input, .form-table select {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.form-actions {
+    margin-top: 20px;
+}
+
+.form-actions button,
+.form-actions a {
+    padding: 8px 16px;
+    text-decoration: none;
+    margin-right: 10px;
+}

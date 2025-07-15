@@ -1,6 +1,5 @@
 package hsf302.agricultural_products_project.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -17,7 +16,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
-
 
 public class User {
     @Id

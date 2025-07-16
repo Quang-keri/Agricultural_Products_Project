@@ -116,6 +116,11 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll();
+    }
+
     private OrderProcessDTO convertToDto(Order order) {
         return new OrderProcessDTO(
                 order.getOrderId(),

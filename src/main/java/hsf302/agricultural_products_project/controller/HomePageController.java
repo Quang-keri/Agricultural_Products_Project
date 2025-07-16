@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomePageController {
     @Autowired
     private UserService userService;
+
     @GetMapping("/index")
     public String index(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
@@ -26,7 +28,13 @@ public class HomePageController {
     }
 
     @GetMapping("/about-us")
-    public String aboutUs(Model model) {
-        return "about_us";
+    public String aboutUs(Model model, HttpSession session) {
+        User account = (User) session.getAttribute("account");
+
+        if (account != null) {
+            model.addAttribute("account", account);
+            return "about_us";
+        }
+        return "redirect:/403";
     }
 }

@@ -60,7 +60,7 @@ public class AdminController {
         User user = (User) session.getAttribute("account");
         model.addAttribute("user", user);
 
-        List<Order> orders = orderService.findAll();
+        List<Order> orders = orderService.getAllOrders();
         Map<Long, String> orderDates = new HashMap<>();
         for (Order order : orders) {
             orderDates.put(order.getOrderId(), order.getCreateAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));

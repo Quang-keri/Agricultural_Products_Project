@@ -63,7 +63,7 @@
                 </a>
                 <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
-                    <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                    <li><a class="dropdown-item" href="/orderManagement">Đơn hàng</a></li>
                     <li th:if="${account != null}">    <!--logout-->
                         <form action="/logout" method="post">
                             <button class="btn-logout" type="submit">

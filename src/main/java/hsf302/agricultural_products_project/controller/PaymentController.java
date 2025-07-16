@@ -39,7 +39,7 @@ public class PaymentController {
     public String createPayment(
             @RequestParam("amount") double amount,
             @RequestParam(value = "bankCode", required = false) String bankCode,
-            HttpServletRequest request, HttpSession session, Model model,@ModelAttribute CustomerOrderDto customerOrderDto
+            HttpServletRequest request, HttpSession session, Model model
     ) {
         try {
             //  Tạo Order trong DB
@@ -53,15 +53,15 @@ public class PaymentController {
             //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
             //createOrder lai roi, check lai
             //ok xem lại gùm t
-            User user =  userService.findById(account.getUserId());
-            //Long orderId = (Long) request.getAttribute("orderId"); này bỏ
-           Order order = orderService.createOrder(user, customerOrderDto); // tui lấy cái này nè theo cái ô nói
-            if ( order.getOrderId() == null || order.getOrderId() < 1) {
+          //  User user =  userService.findById(account.getUserId());
+            Long orderId = (Long) request.getAttribute("orderId");
+         //  Order order = orderService.createOrder(user, customerOrderDto); // tui lấy cái này nè theo cái ô nói
+            if ( orderId == null ||orderId < 1) {
                 return "redirect:/cart";
             }
 
             // Tạo yêu cầu thanh toán VNPay
-            PaymentRequest paymentRequest = new PaymentRequest(amount, order.getOrderId() , bankCode, request);
+            PaymentRequest paymentRequest = new PaymentRequest(amount, orderId, bankCode, request);
             PaymentResponse response = vnPayConfig.createPaymentUrl(paymentRequest);
 
             if (!response.isSuccess()) {

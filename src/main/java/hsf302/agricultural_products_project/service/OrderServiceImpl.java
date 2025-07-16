@@ -77,6 +77,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAll() {
+        return orderRepo.findAll();
+    }
+
+    @Override
     public boolean existsById(Long orderId) {
         return orderRepo.existsById(orderId);
     }

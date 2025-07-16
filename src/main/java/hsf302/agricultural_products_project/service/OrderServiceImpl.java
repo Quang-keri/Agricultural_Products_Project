@@ -2,6 +2,7 @@ package hsf302.agricultural_products_project.service;
 
 import hsf302.agricultural_products_project.dto.AgriculturalProductCartDto;
 import hsf302.agricultural_products_project.dto.CustomerOrderDto;
+import hsf302.agricultural_products_project.dto.OrderProcessDTO;
 import hsf302.agricultural_products_project.model.*;
 
 import hsf302.agricultural_products_project.repository.OrderRepository;
@@ -77,12 +78,58 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAll() {
-        return orderRepo.findAll();
+    public Order findOrderById(Long orderId) {
+        return orderRepo.findById(orderId).orElse(null);
     }
 
     @Override
     public boolean existsById(Long orderId) {
         return orderRepo.existsById(orderId);
     }
+
+    @Override
+    public List<OrderProcessDTO> getOrderManagement(Long userId) {
+        List<OrderStatus> managementStatuses = List.of(
+                OrderStatus.PENDING,
+                OrderStatus.CONFIRMED,
+                OrderStatus.SHIPPED
+        );
+
+        List<Order> orders = orderRepo.findByUser_UserIdAndOrderStatusIn(userId, managementStatuses);
+
+        return orders.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderProcessDTO> getOrderHistory(Long userId) {
+        List<OrderStatus> historyStatuses = List.of(
+                OrderStatus.DELIVERED,
+                OrderStatus.CANCELLED
+        );
+
+        List<Order> orders = orderRepo.findByUser_UserIdAndOrderStatusIn(userId, historyStatuses);
+
+        return orders.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private OrderProcessDTO convertToDto(Order order) {
+        return new OrderProcessDTO(
+                order.getOrderId(),
+                order.getUser().getUserId(),
+                order.getCustomerName(),
+                order.getPhoneNumber(),
+                order.getCreateAt(),
+                order.getTotalPrice(),
+                order.getOrderStatus().name(),
+                order.getCreateAt(),
+                order.getUpdateAt(),
+                order.getAddress()
+        );
+    }
+
+
 }

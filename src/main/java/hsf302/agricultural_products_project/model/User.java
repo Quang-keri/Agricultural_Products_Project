@@ -23,7 +23,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)")
+    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)",unique = true)
     private String userName;
 
     @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")

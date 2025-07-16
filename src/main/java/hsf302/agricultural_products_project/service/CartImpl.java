@@ -335,4 +335,25 @@ public class CartImpl implements  CartService {
             response.addCookie(clearedCookie);
         }
     }
+
+    @Override
+    public Map<String, String> checkStockDetails(List<AgriculturalProductCartDto> cartItems) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        for (AgriculturalProductCartDto item : cartItems) {
+            Optional<AgriculturalProduct> productOpt = agriculturalProductRepository.findById(item.getAgriculturalProductId());
+            if (productOpt.isEmpty()) {
+                errors.put("Sản phẩm ID " + item.getAgriculturalProductId(), "không tồn tại.");
+                continue;
+            }
+
+            AgriculturalProduct product = productOpt.get();
+            if (product.getQuantityAvailable() < item.getQuantity()) {
+                errors.put(product.getName(), "Chỉ còn " + product.getQuantityAvailable() + " sản phẩm, bạn đã chọn " + item.getQuantity());
+            }
+        }
+
+        return errors;
+    }
+
 }

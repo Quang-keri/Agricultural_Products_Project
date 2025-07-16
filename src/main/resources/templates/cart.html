@@ -64,6 +64,14 @@
                     <i class="fa fa-arrow-left"></i> <span>Tiếp tục mua sắm</span>
                 </div>
                 <h2 class="mb-4">Giỏ hàng (<span th:text="${#lists.size(checkoutDto.getItems())}">0</span> sản phẩm)</h2>
+                <div th:if="${stockErrors != null}">
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li th:each="entry : ${stockErrors.entrySet()}"
+                                th:text="${entry.key + ' - ' + entry.value}"></li>
+                        </ul>
+                    </div>
+                </div>
                 <div th:if="${#lists.isEmpty(checkoutDto.getItems())}" class="alert alert-info text-center my-4">
                     Không có sản phẩm nào trong giỏ hàng.
                 </div>

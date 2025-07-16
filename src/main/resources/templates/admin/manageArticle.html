@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Articles</title>
+    <head th:replace="~{admin/layout :: common-head}"></head>
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar('articles')}"></nav>
+
+    <main>
+        <div class="card">
+            <h2>Article Management</h2>
+            <a href="/admin/articles/addArticle" class="add-user-button">Add New Article</a>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.id}">1</td>
+                    <td th:text="${article.name}">Name</td>
+                    <td th:text="${article.description}">Description</td>
+                    <td>
+                        <img th:if="${article.imageUrl != null}"
+                             th:src="@{${article.imageUrl}}" alt="Image" width="80"/>
+                        <span th:if="${article.imageUrl == null}">No Image</span>
+                    </td>
+                    <td th:text="${article.price}">0.00</td>
+                    <td th:text="${article.quantityAvailable}">0</td>
+                    <td th:text="${article.category.getName()}">Category</td>
+                    <td class="action-links">
+                        <a th:href="@{'/admin/articles/edit/' + ${article.id}}">Edit</a>
+                        <a th:href="@{'/admin/articles/delete/' + ${article.id}}"
+                           onclick="return confirm('Are you sure you want to delete this article?');">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

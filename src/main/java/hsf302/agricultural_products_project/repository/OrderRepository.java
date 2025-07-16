@@ -8,16 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    //Optional<Order> findTopByUserIdOrderByCreatedAtDesc(Long userId);
 
-
-//    @Modifying
-//    @Transactional
-//   // @Query("UPDATE Order o SET o.status = :status WHERE o.id = :orderId")
-//    void updateOrderStatus(@Param("orderId") Long orderId, @Param("status") String status);
 }
 

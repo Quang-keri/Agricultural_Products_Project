@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/users/edit/{id}(id=${user.userId})}" th:object="${user}">
+    <div>
+        <label for="userId">ID:</label>
+        <input type="text" id="userId" th:field="*{userId}" class="form-control" readonly/>
+    </div>
+    <div>
+        <label for="userName">Tên đăng nhập:</label>
+        <input type="text" id="userName" th:field="*{userName}" class="form-control" placeholder="Tên đăng nhập của bạn"/>
+        <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="userFullName">Họ tên:</label>
+        <input type="text" id="userFullName" th:field="*{userFullName}" class="form-control" placeholder="Họ và tên đầy đủ"/>
+        <span th:if="${#fields.hasErrors('userFullName')}" th:errors="*{userFullName}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <input type="hidden" id="password" th:field="*{password}" class="form-control" placeholder="Mật khẩu"/>
+    <div>
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address" th:field="*{address}" class="form-control" placeholder="Địa chỉ của bạn"/>
+        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="phoneNumber">Số điện thoại:</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" placeholder="Số điện thoại của bạn"/>
+        <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="role">Vai trò:</label>
+        <select id="role" th:field="*{role}" class="form-control">
+            <option value="ROLE_MEMBER">Người dùng</option>
+            <option value="ROLE_ADMIN">Quản trị viên</option>
+        </select>
+        <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Cập nhật</button>
+</form>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 import hsf302.agricultural_products_project.model.AgriculturalProduct;
-import hsf302.agricultural_products_project.service.ProductService;
+import hsf302.agricultural_products_project.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private ArticleService productService;
     @GetMapping("/product-detail")
     public String showProductDetail() {
         return "product-detail"; // Trả về tên file .html trong /templates

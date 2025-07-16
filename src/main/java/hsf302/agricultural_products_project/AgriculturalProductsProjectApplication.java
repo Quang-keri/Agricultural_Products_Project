@@ -30,7 +30,7 @@ public class AgriculturalProductsProjectApplication {
                 admin.setAddress("Admin Address");
                 admin.setStatus(true);
 
-                userService.save(admin);
+                userService.saveUser(admin);
                 System.out.println("Admin account created with username = admin, password = 12345678");
             } else {
                 System.out.println("Admin account already exists.");

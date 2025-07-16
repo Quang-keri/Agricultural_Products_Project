@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <head th:replace="~{admin/layout :: common-styles}"></head>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout :: common-head"></head>
 <body>
-<!--<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>-->
-<span>
-     <h2>Xin chào, <span th:text="${#authentication.principal.fullName}">Admin</span></h2>
-    <p>Tài khoản: <span th:text="${#authentication.principal.username}"></span></p>
-    <p>Vai trò: <span th:text="${#authentication.principal.authorities}"></span></p>
-    <p>Số điện thoại: <span th:text="${#authentication.principal.phoneNumber}"></span></p>
-    <p>Địa chỉ: <span th:text="${#authentication.principal.address}"></span></p>
-</span>
+<header th:replace="admin/layout :: admin-header(${user})"></header>
+
 <div class="container-wrapper">
-<!--    <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>-->
+    <nav th:replace="admin/layout :: sidebar('dashboard')"></nav>
 
     <main>
         <div class="stats-grid">

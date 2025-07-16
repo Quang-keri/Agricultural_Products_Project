@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Article</title>
+</head>
+<body>
+<form th:action="@{addArticle}" method="post" th:object="${articles}">
+    <div>
+        <label for="articleId">ID:</label>
+        <input type="text" id="articleId" th:field="*{id}" class="form-control" readonly/>
+    </div>
+
+    <div>
+        <label for="name">Tên:</label>
+        <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Tên bài viết của bạn"/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="description">Mô tả:</label>
+        <input type="text" id="description" th:field="*{description}" class="form-control" placeholder="Mô tả bài viết của bạn"/>
+        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="imageUrl">Ảnh:</label>
+        <input type="text" id="imageUrl" th:field="*{imageUrl}" class="form-control" placeholder="URL ảnh bài viết"/>
+        <span th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="price">Giá:</label>
+        <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="Giá bài viết của bạn"/>
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="quantityAvailable">Số lượng:</label>
+        <input type="text" id="quantityAvailable" th:field="*{quantityAvailable}" class="form-control" placeholder="Số lượng bài viết của bạn"/>
+        <span th:if="${#fields.hasErrors('quantityAvailable')}" th:errors="*{quantityAvailable}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="category">Danh mục:</label>
+        <select id="category" th:field="*{category}" class="form-control">
+            <option value="" disabled selected>-- Chọn danh mục --</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.categoryId}"
+                    th:text="${cat.name}">
+            </option>
+        </select>
+
+        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger"></span>
+    </div>
+
+    <div>
+        <button type="submit">Lưu</button>
+    </div>
+</form>
+</body>
+</html>

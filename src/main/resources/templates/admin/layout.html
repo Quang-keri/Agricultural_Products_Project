@@ -1,9 +1,157 @@
+<!-- src/main/resources/templates/admin/layout.html -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-head">
     <meta charset="UTF-8">
-    <style th:fragment="common-styles">
+    <title>Admin</title>
+    <style>
         /* Basic styling for common elements (sidebar, header, etc.) */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9; /* Light background for main content */
+            color: #333;
+        }
+
+        /* Dark mode adjustments as per your screenshot */
+        body {
+            background-color: #2c2c2c; /* Dark background for overall page */
+            color: #e0e0e0; /* Light text color */
+        }
+        header {
+            background-color: #3d3d3d; /* Darker header */
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            margin: 0;
+            color: white;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logout-btn {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            background-color: #dc3545;
+            border-radius: 4px;
+        }
+        .container-wrapper { /* Renamed from .container to avoid conflict with potential Bootstrap container */
+            display: flex;
+            min-height: calc(100vh - 64px); /* Adjust based on header height */
+        }
+        nav.sidebar { /* Added .sidebar class to nav */
+            width: 250px;
+            background-color: #1e1e1e; /* Even darker sidebar */
+            padding: 20px;
+            color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        }
+        nav.sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav.sidebar ul li {
+            margin-bottom: 10px;
+        }
+        nav.sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        nav.sidebar ul li a:hover,
+        nav.sidebar ul li a.active {
+            background-color: #495057; /* Highlight on hover/active */
+        }
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #2c2c2c; /* Dark background for main content area */
+            color: #e0e0e0; /* Light text for main content */
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background-color: #3d3d3d; /* Darker card background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            color: #a0a0a0; /* Slightly lighter heading in card */
+        }
+        .stat-card p {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .stat-card p.blue { color: #0099ff; } /* Adjusted blue for dark background */
+        .stat-card p.green { color: #5cb85c; } /* Adjusted green for dark background */
+        .stat-card p.orange { color: #ff9933; } /* Adjusted orange for dark background */
+
+        .card {
+            background-color: #3d3d3d; /* Darker card background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin: 0 0 20px 0;
+            color: #a0a0a0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #555; /* Lighter border for dark mode */
+            color: #e0e0e0;
+        }
+        table th {
+            background-color: #494949; /* Slightly lighter header background */
+            border-bottom: 2px solid #666;
+        }
+        /* For User Management Page */
+        .add-user-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .add-user-button:hover {
+            background-color: #0056b3;
+        }
+        .action-links a {
+            margin-right: 10px;
+            color: #87ceeb; /* Lighter blue for links */
+            text-decoration: none;
+        }
+        .action-links a:hover {
+            text-decoration: underline;
+        } /* Basic styling for common elements (sidebar, header, etc.) */
         body {
             margin: 0;
             padding: 0;
@@ -153,34 +301,26 @@
     </style>
 </head>
 <body>
-
+<!-- HEADER -->
 <header th:fragment="admin-header(user)">
     <h1 style="margin: 0;">Admin Dashboard</h1>
     <div class="header-right">
         <span th:if="${user != null}" th:text="${user.userFullName}" style="font-weight: bold;"></span>
-        <a href="/logout" class="logout-btn">Logout</a>
+        <form action="/logout" method="post" style="display:inline;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+
     </div>
 </header>
 
+<!-- SIDEBAR -->
 <nav th:fragment="sidebar(currentPage)" class="sidebar">
-    <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="margin-bottom: 10px;">
-            <a href="/admin/dashboard" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}">Dashboard</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-            <a href="/admin/users" th:classappend="${currentPage == 'users' ? 'active' : ''}">Users</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-            <a href="/admin/products" th:classappend="${currentPage == 'products' ? 'active' : ''}">Products</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-            <a href="/admin/orders" th:classappend="${currentPage == 'orders' ? 'active' : ''}">Orders</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-            <a href="#" style="color: white; text-decoration: none; display: block; padding: 10px; border-radius: 4px; transition: background-color 0.3s;">Settings</a>
-        </li>
+    <ul>
+        <li><a href="/admin/dashboard" th:classappend="${currentPage == 'dashboard'} ? 'active' : ''">Dashboard</a></li>
+        <li><a href="/admin/users" th:classappend="${currentPage == 'users'} ? 'active' : ''">Users</a></li>
+        <li><a href="/admin/articles" th:classappend="${currentPage == 'articles'} ? 'active' : ''">Articles</a></li>
+        <li><a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'active' : ''">Orders</a></li>
     </ul>
 </nav>
-
 </body>
 </html>

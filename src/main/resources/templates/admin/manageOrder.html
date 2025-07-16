@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Management</title>
-    <head th:replace="~{admin/layout :: common-styles}"></head>
+    <head th:replace="~{admin/layout :: common-head}"></head>
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
 
 <div class="container-wrapper">
-    <nav th:replace="~{admin/layout :: sidebar(currentPage='orders')}"></nav>
+    <nav th:replace="~{admin/layout :: sidebar('orders')}"></nav>
 
     <main>
         <div class="card">
@@ -18,37 +18,36 @@
                 <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Order Date</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Total Price</th>
+                    <th>Payment Status</th>
+                    <th>Create At</th>
+                    <th>Update At</th>
+                    <th>Order Status</th>
+                    <th>User Name</th>
+                    <th>Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>#ORD001</td>
-                    <td>Alice Wonderland</td>
-                    <td>2025-06-12</td>
-                    <td>$55.00</td>
-                    <td>Pending</td>
+                <tr th:each="order : ${orders}">
+                    <td th:text="'#ORD' + ${order.orderId}"></td>
+                    <td th:text="${order.customerName}"></td>
+                    <td th:text="${order.phoneNumber}"></td>
+                    <td th:text="${order.totalPrice} + '$'"></td>
+                    <td th:text="${order.paymentStatus}"></td>
+                    <td th:text="${#temporals.format(order.createAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(order.updateAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${order.orderStatus}"></td>
+                    <td th:text="${order.user.getUserName()}"></td>
                     <td class="action-links">
-                        <a href="/admin/orders/details/1">View Details</a>
-                        <a href="/admin/orders/update-status/1">Update Status</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>#ORD002</td>
-                    <td>Bob The Builder</td>
-                    <td>2025-06-11</td>
-                    <td>$30.00</td>
-                    <td>Completed</td>
-                    <td class="action-links">
-                        <a href="/admin/orders/details/2">View Details</a>
-                        <a href="/admin/orders/update-status/2">Update Status</a>
+                        <a th:href="@{/admin/orders/details/{id}(id=${order.orderId})}">View Details</a>
+                        <a th:href="@{/admin/orders/update-status/{id}(id=${order.orderId})}">Update Status</a>
                     </td>
                 </tr>
                 </tbody>
+
             </table>
         </div>
     </main>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private AgriculturalProdcutRepo productRepository;
@@ -26,6 +26,18 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public AgriculturalProduct getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateProduct(AgriculturalProduct product) {
+        AgriculturalProduct existingProduct = productRepository.findById(product.getAgriculturalProductId()).orElse(null);
+        if (existingProduct != null) {
+            existingProduct.setDescription(product.getDescription());
+            existingProduct.setImageUrl(product.getImageUrl());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setQuantityAvailable(product.getQuantityAvailable());
+            productRepository.save(existingProduct);
+        }
     }
 
     @Override

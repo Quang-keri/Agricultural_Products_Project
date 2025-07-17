@@ -30,7 +30,7 @@ public class CartController {
     }else{
         cartService.addToCartForUser(productId, account);
     }
-    return "redirect:/products"; // Trả về trang danh sách sản phẩm sau khi thêm vào giỏ hàng
+    return "redirect:/product/all-product"; // Trả về trang danh sách sản phẩm sau khi thêm vào giỏ hàng
     }
     @GetMapping("/cart")
     public String viewCart(HttpSession session, @CookieValue(value = "cart", defaultValue = "") String cartCookie, Model model) {

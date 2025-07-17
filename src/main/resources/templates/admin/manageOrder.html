@@ -26,26 +26,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>#ORD001</td>
-                    <td>Alice Wonderland</td>
-                    <td>2025-06-12</td>
-                    <td>$55.00</td>
-                    <td>Pending</td>
+                <tr th:each="order : ${orders}">
+                    <td th:text="'#ORD' + ${order.orderId}"></td>
+                    <td th:text="${order.user.userFullName}">Tên KH</td>
+                    <td th:text="${orderDates[order.orderId]}"></td>
+                    <td th:text="${order.totalPrice}"></td>
+                    <td th:text="${order.orderStatus}"></td>
                     <td class="action-links">
-                        <a href="/admin/orders/details/1">View Details</a>
-                        <a href="/admin/orders/update-status/1">Update Status</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>#ORD002</td>
-                    <td>Bob The Builder</td>
-                    <td>2025-06-11</td>
-                    <td>$30.00</td>
-                    <td>Completed</td>
-                    <td class="action-links">
-                        <a href="/admin/orders/details/2">View Details</a>
-                        <a href="/admin/orders/update-status/2">Update Status</a>
+                        <a th:href="@{/admin/orders/details/{id}(id=${order.orderId})}">View Details</a>
+                        <a th:href="@{/admin/orders/update-status/{id}(id=${order.orderId})}">Update Status</a>
                     </td>
                 </tr>
                 </tbody>

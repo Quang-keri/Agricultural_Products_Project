@@ -30,16 +30,16 @@
                 </thead>
                 <tbody>
                 <tr th:each="product : ${products}">
-                    <td th:text="${product.productID}">1</td>
-                    <td th:text="${product.productName}">Tên</td>
-                    <td th:text="${product.category.categoryName}">Danh mục</td>
-                    <td th:text="${product.productPrice}">0.0</td>
-                    <td th:text="${product.quantity}">0</td>
-                    <td th:text="${product.describe}">Mô tả</td>
-                    <td><img th:src="${product.img}" alt="Ảnh" width="50"/></td>
+                    <td th:text="${product.agriculturalProductId}">1</td>
+                    <td th:text="${product.name}">Tên</td>
+                    <td th:text="${product.category.name}">Danh mục</td>
+                    <td th:text="${product.price}">0.0</td>
+                    <td th:text="${product.quantityAvailable}">0</td>
+                    <td th:text="${product.description}">Mô tả</td>
+                    <td><img th:src="${product.imageUrl}" alt="Ảnh" width="50"/></td>
                     <td class="action-links">
-                        <a th:href="@{'/admin/product/edit/' + ${product.productID}}">Sửa</a>
-                        <a th:href="@{'/admin/product/delete/' + ${product.productID}}"
+                        <a th:href="@{'/admin/product/edit/' + ${product.agriculturalProductId}}">Sửa</a>
+                        <a th:href="@{'/admin/product/delete/' + ${product.agriculturalProductId}}"
                            onclick="return confirm('Bạn chắc chắn muốn xoá sản phẩm này?');">Xoá</a>
                     </td>
                 </tr>

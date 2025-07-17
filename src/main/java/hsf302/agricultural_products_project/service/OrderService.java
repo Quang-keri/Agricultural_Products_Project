@@ -18,4 +18,5 @@ public interface OrderService {
     boolean existsById(Long orderId);
     List<OrderProcessDTO> getOrderManagement(Long userId);
     List<OrderProcessDTO> getOrderHistory(Long userId);
+    List<Order> getAllOrders();
 }

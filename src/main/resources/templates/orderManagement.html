@@ -110,6 +110,7 @@
                     <th>Tổng tiền</th>
                     <th>Trạng thái</th>
                     <th>Địa chỉ</th>
+                    <th>Xem chi tiết</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,9 +126,50 @@
                         <span th:case="'SHIPPED'" class="text-success fw-semibold">Đang giao hàng</span>
                     </td>
                     <td th:text="${order.address}"></td>
+                    <td class="text-center">
+                        <a th:href="@{'/orderManagement/detail/' + ${order.orderID}}" class="btn btn-sm btn-info">
+                            <i class="bi bi-eye"></i> Xem chi tiết
+                        </a>
+                    </td>
+
                 </tr>
                 </tbody>
             </table>
+
+            <!-- Dialog xem chi tiết đơn hàng -->
+            <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true"
+                 th:classappend="${showDetailModal} ? 'show d-block' : ''"
+                 th:style="${showDetailModal} ? 'background: rgba(0,0,0,0.5); display: block;' : 'display: none;'">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chi tiết đơn hàng <span th:text="${orderId}"></span></h5>
+                            <a href="/orderManagement" class="btn-close"></a>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="detail : ${orderDetails}">
+                                    <td th:text="${detail.productName}"></td>
+                                    <td th:text="${detail.quantity}"></td>
+                                    <td th:text="${#numbers.formatDecimal(detail.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/orderManagement" class="btn btn-secondary">Đóng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -117,18 +117,21 @@
             <h3 class="profile-title"Hồ sơ người dùng</h3>
             <div class="profile-detail">
                 <div class="profile-detail-row">
-                    <label>Tên đăng nhập</label>
+                    <label>Tên đăng nhập:</label>
                     <p th:text="${account.userName}"></p>
                 </div>
                 <div class="profile-detail-row">
-                    <label>Số điện thoại</label>
+                    <label>Số điện thoại:</label>
                     <p th:text="${account.phoneNumber}"></p>
                 </div>
                 <div class="profile-detail-row">
-                    <label>Địa chỉ</label>
+                    <label>Địa chỉ:</label>
                     <p th:text="${account.address}"></p>
                 </div>
             </div>
+            <form th:action="@{/profile/update}" >
+                <button>Cập nhật hồ sơ</button>
+            </form>
         </div>
     </div>
 

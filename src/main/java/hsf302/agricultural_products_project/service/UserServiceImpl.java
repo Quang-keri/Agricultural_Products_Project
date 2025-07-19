@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.service;
 
 import hsf302.agricultural_products_project.dto.UserDTO;
+import hsf302.agricultural_products_project.dto.UserProfileDTO;
 import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
@@ -61,5 +62,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElse(null);
         user.setStatus(false);
         userRepository.save(user);
+    }
+
+    @Override
+    public void updateProfile(UserProfileDTO user) {
+        User existingUser = userRepository.findById(user.getUserId()).orElse(null);
+        if(existingUser != null) {
+            existingUser.setUserName(user.getUserName());
+            existingUser.setUserFullName(user.getUserFullName());
+            existingUser.setPassword(user.getPassword());
+            existingUser.setAddress(user.getAddress());
+            existingUser.setPhoneNumber(user.getPhoneNumber());
+            userRepository.save(existingUser);
+        }
     }
 }

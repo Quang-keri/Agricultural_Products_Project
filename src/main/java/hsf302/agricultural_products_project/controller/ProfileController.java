@@ -1,6 +1,6 @@
 package hsf302.agricultural_products_project.controller;
 
-import hsf302.agricultural_products_project.dto.UserDTO;
+
 import hsf302.agricultural_products_project.dto.UserProfileDTO;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;

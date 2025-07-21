@@ -23,8 +23,8 @@ public class VnPayConfig {
     public static final String vnp_Version = "2.1.0";
     public static final String vnp_Command = "pay";
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static final String vnp_ReturnUrl = "http://localhost:8080/payment/vnpayReturn";
-//    public static final String vnp_ReturnUrl = "http://localhost:8080/cart/checkout";
+    public static final String vnp_ReturnUrl = "http://localhost:8333/payment/vnpayReturn";
+
     public static final String vnp_TmnCode = "4YUP19I4";
     public static final String vnp_HashSecret = "MDUIFDCRAKLNBPOFIAFNEKFRNMFBYEPX";
 
@@ -167,16 +167,7 @@ public class VnPayConfig {
         return (ip != null && !ip.isEmpty()) ? ip : request.getRemoteAddr();
     }
 
-    private String generateTransactionNo() {
-        return String.valueOf(System.currentTimeMillis()) + generateRandomNumber(3);
-    }
 
-    private String generateRandomNumber(int length) {
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            sb.append(random.nextInt(10));
-        }
-        return sb.toString();
-    }
+
+
 }

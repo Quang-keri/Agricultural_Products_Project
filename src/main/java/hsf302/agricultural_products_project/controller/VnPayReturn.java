@@ -9,9 +9,7 @@ public class VnPayReturn {
     @GetMapping("/vnpayReturn")
     public String vnpayReturn() {
 
-
-
         // Trả về trang thông báo thanh toán thành công
-        return "paymentResult"; // Tên file HTML trong thư mục templates
+        return "paymentResult";
     }
 }

@@ -118,7 +118,7 @@ public class ProductController {
         List<AgriculturalProduct> products = productService.getAllProducts();
         model.addAttribute("products", products);
         model.addAttribute("account", account);
-        return "product/all-product"; // trỏ tới file all-product.html trong thư mục templates/product
+        return "product/all-product";
     }
 
 }

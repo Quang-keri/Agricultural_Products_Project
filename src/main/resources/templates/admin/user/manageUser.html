@@ -13,7 +13,7 @@
 
     <main>
         <div class="card">
-            <h2>User List</h2>
+            <h2>Danh sách người dùng</h2>
             <table>
                 <thead>
                 <tr>
@@ -37,6 +37,7 @@
                     <td th:text="${user.phoneNumber}"></td>
                     <td th:text="${user.role}"></td>
                     <td>
+                        <a th:href="@{'/admin/users/edit/' +${user.userId}}">Sửa</a>
                         <a th:href="@{'/admin/users/delete/' + ${user.userId}}"
                            onclick="return confirm('Xác nhận xoá?')">Xoá</a>
                     </td>

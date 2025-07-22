@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Danh sách sản phẩm Rau Lá</title>
+    <title>Danh sách sản phẩm </title>
     <link rel="icon" type="image/png" href="/image/logo-web.png">
     <!-- Bootstrap + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/index.css}">
+
     <style>
         .product-card {
             border: 1px solid #ddd;
@@ -55,18 +56,14 @@
             font-size: 0.9rem;
         }
 
-        .footer {
-            background: #f2f2f2;
-            padding: 20px;
-        }
+
     </style>
 </head>
 <body>
-
 <!-- Navbar trên cùng -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <a class="navbar-brand d-flex align-items-center" href="/index">
-        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo" style="height: 40px"/>
+        <img src="/image/logo-web.png" alt="Logo" style="height: 40px"/>
         <strong>Nông Sản Sạch</strong>
     </a>
 
@@ -93,7 +90,7 @@
             </a>
             <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
-                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                <li><a class="dropdown-item" href="/orderManagement">Đơn hàng</a></li>
                 <li th:if="${account != null}">    <!--logout-->
                     <form action="/logout" method="post">
                         <button class="btn-logout" type="submit">
@@ -108,6 +105,7 @@
         </li>
     </ul>
 </nav>
+
 
 <!-- Thanh menu xanh lá -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
@@ -140,7 +138,7 @@
 
 <!-- Danh sách sản phẩm -->
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success">🌿 Danh sách sản phẩm Rau Lá</h2>
+    <h2 class="text-center mb-4 text-success"> Danh sách sản phẩm Rau Lá</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div th:each="product : ${products}" th:if="${product.category.name == 'Rau lá'}">
             <div class="product-card h-100 d-flex flex-column">
@@ -169,7 +167,7 @@
 </div>
 
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success">🌿 Danh sách sản phẩm Rau Củ</h2>
+    <h2 class="text-center mb-4 text-success"> Danh sách sản phẩm Rau Củ</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div th:each="product : ${products}" th:if="${product.category.name == 'Rau củ tươi'}">
             <div class="product-card h-100 d-flex flex-column">
@@ -199,9 +197,9 @@
 </div>
 
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success">🌿 Danh sách Nông sản khô</h2>
+    <h2 class="text-center mb-4 text-success"> Danh sách sản phẩm Trái cây</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <div th:each="product : ${products}" th:if="${product.category.name == 'Nông sản khô'}">
+        <div th:each="product : ${products}" th:if="${product.category.name == 'Trái cây'}">
             <div class="product-card h-100 d-flex flex-column">
                 <a th:href="@{'/products/' + ${product.agriculturalProductId}}" class="text-decoration-none">
                     <img th:src="${product.imageUrl}" alt="Ảnh sản phẩm"
@@ -227,49 +225,63 @@
     </div>
 </div>
 
-<div class="mt-3 py-5 text-center text-light" style="background-color:white;">
-    <div class="">
-        <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
+
+<!-- Footer -->
+<!--  footer  -->
+<div class="footer">
+
+    <div class="footer-content-top">
+
+        <div class="footer-about-us">
+            <p><strong>Về chúng tôi</strong></p>
+            <p>Giới thiệu công ty</p>
+            <p>Tuyển dụng</p>
+            <p>Chính sách bảo mật</p>
+        </div>
 
 
-        <div class="menu-bar">
-            <!-- Rau lá -->
-            <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
-                <div>
-                    <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
-                    <p>Rau lá</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+        <div class="footer-menu">
+            <p><strong>Danh mục</strong></p>
+            <p><a href="#">Rau củ sạch</a></p>
+            <p><a href="#">Trái cây tươi</a></p>
+            <p><a href="#">Gói combo</a></p>
+        </div>
 
 
-            <!-- Rau củ -->
-            <a th:href="@{/product/rau-cu}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
-                    <p>Rau củ</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+        <div class="footer-support-customer">
+            <p><strong>Hỗ trợ khách hàng</strong></p>
+            <p>Hướng dẫn mua hàng</p>
+            <p>Chính sách đổi trả</p>
+            <p>Phương thức thanh toán</p>
+        </div>
 
-            <!-- Gia vị -->
-            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
-                    <p>nông sản khô</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+
+        <div class="footer-follow-us">
+            <p><strong>Theo dõi chúng tôi</strong></p>
+            <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+            <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
+        </div>
+    </div>
+
+
+    <div class="footer-content-bottom">
+        <div class="footer-company">
+            <p>
+                <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                Điện thoại: 1800 6821 - Email: cskh@nulti.vn
+            </p>
+        </div>
+
+        <div>
+            <p>
+                GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+            </p>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<div class="footer text-center mt-5">
-    <p><strong>Công Ty Cổ Phần Nông sản Nulti</strong></p>
-    <p>248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.HCM | 1800 6821 | cskh@nulti.vn</p>
-    <p>GCNDKDN: 0311770883 - Cấp ngày 05/05/2012</p>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

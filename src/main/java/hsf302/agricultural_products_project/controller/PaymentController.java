@@ -48,11 +48,7 @@ public class PaymentController {
                 System.err.println("User not logged in, redirecting to login page at payment controller line 42.");
                 return "redirect:/login";
             }
-            //Khi qua trang thanh toán thì thông tin như: tên, địa chỉ, số điện thoại sẽ được lấy từ CustomerOrderDto
-            //Nên thêm @ModelAttribute CustomerOrderDto customerOrderDto vào hàm createPayment
-            //tạo order dùng cái CustomerOrderDto để tạo order, t refactor lại method
-            //createOrder lai roi, check lai
-            //ok xem lại gùm t
+
             User user =  userService.findById(account.getUserId());
             //Long orderId = (Long) request.getAttribute("orderId"); này bỏ
            Order order = orderService.createOrder(user, customerOrderDto); // tui lấy cái này nè theo cái ô nói

@@ -59,4 +59,9 @@ public class ProductServiceImpl implements ProductService {
     public long countProducts() {
         return productRepository.count();
     }
+
+    @Override
+    public void saveAll(List<AgriculturalProduct> products) {
+        productRepository.saveAll(products);
+    }
 }

@@ -20,4 +20,5 @@ public interface ProductService {
     List<AgriculturalProduct> getAllProductsById(List<Long> productIds);
     long countProducts();
 
+    void saveAll(List<AgriculturalProduct> products);
 }

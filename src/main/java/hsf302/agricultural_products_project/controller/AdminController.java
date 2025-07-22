@@ -105,11 +105,6 @@ public class AdminController {
         return "redirect:/error-page";
     }
 
-
-
-
-
-
     @GetMapping("/products")
     public String productManagement(Model model) {
         return "admin/manageProduct";

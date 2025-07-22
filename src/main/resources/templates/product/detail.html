@@ -161,7 +161,7 @@
                         <div>
                             <div class="product-price mb-2" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ / kg'">0đ</div>
 
-                            <form action="/add-to-cart" method="post" class="d-flex align-items-center">
+                            <form th:action="@{/add-to-cart}" method="post" class="d-flex align-items-center">
                                 <input type="number" name="quantity" value="1" min="1" class="form-control w-25 me-2"/>
                                 <input type="hidden" name="productId" th:value="${product.agriculturalProductId}"/>
                                 <button type="submit" class="btn btn-cart d-flex align-items-center">

@@ -24,7 +24,7 @@ public class UserController {
            model.addAttribute("users", userService.findAll());
            return "admin/user/manageUser";
        }
-         return "redirect:/error-page";
+         return "redirect:/403";
     }
     @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable Long id) {

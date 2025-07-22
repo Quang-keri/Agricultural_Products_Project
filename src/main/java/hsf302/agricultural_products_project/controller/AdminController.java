@@ -63,27 +63,60 @@ public class AdminController {
     private OrderDetailService orderDetailService;
 
     @GetMapping("/dashboard")
-    public String adminDashboard(HttpSession session, Model model) {
-        User account = (User) session.getAttribute("account");
+    public String showDashboard(
+            @RequestParam(value = "month", required = false) Integer month,
+            @RequestParam(value = "year", required = false) Integer year,
+            Model model,
+            HttpSession session) {
 
-        if (account != null && account.getRole().equals(Role.ROLE_ADMIN)) {
-            model.addAttribute("account", account);
+        User user = (User) session.getAttribute("account");
+
+        if (user != null && user.getRole().equals(Role.ROLE_ADMIN)) {
+            model.addAttribute("account", user);
+            model.addAttribute("user", user);
+            model.addAttribute("month", month);
+            model.addAttribute("year", year);
+
+            model.addAttribute("userId", userService.countUsers());
+            model.addAttribute("orderId", orderService.countOrders());
+            model.addAttribute("productId", productService.countProducts());
+            model.addAttribute("recentUsers", userService.getRecentUsers(5));
+
+            List<Order> orders = orderService.getAllOrders();
+
+            // Nếu chọn cả tháng và năm thì lọc
+            if (month != null && year != null) {
+                LocalDateTime start = LocalDate.of(year, month, 1).atStartOfDay();
+                LocalDateTime end = start.plusMonths(1).minusDays(1).with(LocalTime.MAX);
+                orders = orders.stream()
+                        .filter(o -> o.getCreateAt() != null &&
+                                !o.getCreateAt().isBefore(start) &&
+                                !o.getCreateAt().isAfter(end))
+                        .toList();
+            }
+
+            // Đếm đơn hàng theo trạng thái
+            model.addAttribute("pendingCount", orders.stream().filter(o -> o.getOrderStatus() == OrderStatus.PENDING).count());
+            model.addAttribute("confirmedCount", orders.stream().filter(o -> o.getOrderStatus() == OrderStatus.CONFIRMED).count());
+            model.addAttribute("shippedCount", orders.stream().filter(o -> o.getOrderStatus() == OrderStatus.SHIPPED).count());
+            model.addAttribute("deliveredCount", orders.stream().filter(o -> o.getOrderStatus() == OrderStatus.DELIVERED).count());
+            model.addAttribute("cancelledCount", orders.stream().filter(o -> o.getOrderStatus() == OrderStatus.CANCELLED).count());
+
+            // Gửi danh sách năm gần đây (ví dụ: 2022 - 2025)
+            List<Integer> years = List.of(2022, 2023, 2024, 2025);
+            model.addAttribute("years", years);
+
             return "admin/admindashboard";
         }
+
         return "redirect:/403";
     }
-
-    @GetMapping("/users")
-    public String userManagement(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "admin/manageUser";
-    }
-
-
-    @GetMapping("/products")
-    public String productManagement(Model model) {
-        return "admin/manageProduct";
-    }
+//
+//    @GetMapping("/users")
+//    public String userManagement(Model model) {
+//        model.addAttribute("users", userService.findAll());
+//        return "admin/manageUser";
+//    }
 
 
     @GetMapping("/orders")

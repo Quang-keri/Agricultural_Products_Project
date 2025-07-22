@@ -54,4 +54,9 @@ public class ProductServiceImpl implements ProductService {
     public List<AgriculturalProduct> getAllProductsById(List<Long> productIds) {
         return productRepository.findAllById(productIds);
     }
+
+    @Override
+    public void saveAll(List<AgriculturalProduct> products) {
+        productRepository.saveAll(products);
+    }
 }

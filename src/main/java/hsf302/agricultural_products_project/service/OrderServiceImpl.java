@@ -127,6 +127,17 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.findAll();
     }
 
+    @Override
+    @Transactional
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        orderRepo.updateOrderStatus(orderId, status);
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        return orderRepo.getOrderByOrderId(orderId);
+    }
+
     private OrderProcessDTO convertToDto(Order order) {
         return new OrderProcessDTO(
                 order.getOrderId(),

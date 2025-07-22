@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Order Management</title>
     <link rel="icon" type="image/png" href="/image/logo-web.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/profile.css}" type="text/css"/>
     <head th:replace="~{admin/layout :: common-styles}"></head>
 </head>
 <body>
@@ -15,15 +19,19 @@
     <main>
         <div class="card">
             <h2>Order List</h2>
-            <table>
+
+            <!-- Success message -->
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+            <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Order Date</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,17 +39,169 @@
                     <td th:text="'#ORD' + ${order.orderId}"></td>
                     <td th:text="${order.user.userFullName}">Tên KH</td>
                     <td th:text="${orderDates[order.orderId]}"></td>
-                    <td th:text="${order.totalPrice}"></td>
-                    <td th:text="${order.orderStatus}"></td>
+                    <td th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+
+                    <td th:switch="${order.orderStatus.name()}">
+                        <span th:case="'PENDING'" class="text-warning fw-semibold">Chờ xác nhận</span>
+                        <span th:case="'CONFIRMED'" class="text-orange fw-semibold">Đã xác nhận</span>
+                        <span th:case="'SHIPPED'" class="text-primary fw-semibold">Đang giao hàng</span>
+                        <span th:case="'DELIVERED'" class="text-success fw-semibold">Đã giao</span>
+                        <span th:case="'CANCELLED'" class="text-danger fw-semibold">Đã hủy</span>
+                    </td>
+
                     <td class="action-links">
-                        <a th:href="@{/admin/orders/details/{id}(id=${order.orderId})}">View Details</a>
-                        <a th:href="@{/admin/orders/update-status/{id}(id=${order.orderId})}">Update Status</a>
+                        <a href="#" class="view-details-link btn  btn-outline-primary"
+                           th:data-order-id="${order.orderId}">Xem chi tiết</a>
+                        <a href="#" class="update-status-link btn  btn-outline-primary"
+                           th:data-order-id="${order.orderId}"
+                           th:data-order-status="${order.orderStatus.name()}">
+                            Cập nhật trạng thái
+                        </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <!-- Modal Xem Chi Tiết Đơn Hàng -->
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsModalLabel">Chi tiết đơn hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                            </tr>
+                            </thead>
+                            <tbody id="orderDetailsTableBody">
+                            <!-- Data sẽ được load bằng JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal cập nhật status -->
+        <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form th:action="@{/admin/orders/update-status}" method="post" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateStatusModalLabel">Cập nhật trạng thái đơn hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="orderId" id="modalOrderId" />
+                        <div class="mb-3">
+                            <label for="modalOrderStatus" class="form-label">Trạng thái mới</label>
+                            <select name="orderStatus" id="modalOrderStatus" class="form-select" required>
+                                <option th:each="status : ${T(hsf302.agricultural_products_project.model.OrderStatus).values()}"
+                                        th:value="${status}"
+                                        th:text="${#strings.equals(status.name(), 'PENDING') ? 'Chờ xác nhận' :
+                          #strings.equals(status.name(), 'CONFIRMED') ? 'Đã xác nhận' :
+                          #strings.equals(status.name(), 'SHIPPED') ? 'Đang giao hàng' :
+                          #strings.equals(status.name(), 'DELIVERED') ? 'Đã giao' :
+                          #strings.equals(status.name(), 'CANCELLED') ? 'Đã hủy' : status}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 </div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const updateLinks = document.querySelectorAll(".update-status-link");
+        const modalElement = document.getElementById('updateStatusModal');
+        const modalOrderIdInput = document.getElementById('modalOrderId');
+        const modalOrderStatusSelect = document.getElementById('modalOrderStatus');
+        const modal = new bootstrap.Modal(modalElement);
+
+        updateLinks.forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // Lấy orderId và trạng thái từ data-attribute
+                const orderId = this.getAttribute("data-order-id");
+                const orderStatus = this.getAttribute("data-order-status");
+
+                // Đổ dữ liệu vào modal
+                modalOrderIdInput.value = orderId;
+                modalOrderStatusSelect.value = orderStatus;
+
+                // Hiển thị modal
+                modal.show();
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const detailLinks = document.querySelectorAll(".view-details-link");
+        const detailsModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
+        const tableBody = document.getElementById('orderDetailsTableBody');
+
+        detailLinks.forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const orderId = this.getAttribute("data-order-id");
+
+                //  Gọi API lấy chi tiết
+                fetch(`/admin/orders/details/${orderId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear table trước
+                        tableBody.innerHTML = "";
+
+                        if (data.length === 0) {
+                            tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Không có sản phẩm</td></tr>`;
+                        } else {
+                            data.forEach(item => {
+                                const row = `
+                                    <tr>
+                                        <td>${item.productName}</td>
+                                        <td>${item.quantity}</td>
+                                        <td>${item.totalPrice.toLocaleString('vi-VN')}đ</td>
+                                    </tr>
+                                `;
+                                tableBody.innerHTML += row;
+                            });
+                        }
+
+                        //  Hiển thị modal
+                        detailsModal.show();
+                    })
+                    .catch(err => {
+                        console.error("Error:", err);
+                        alert("Không thể tải chi tiết đơn hàng.");
+                    });
+            });
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

@@ -128,6 +128,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        orderRepo.updateOrderStatus(orderId, status);
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        return orderRepo.getOrderByOrderId(orderId);
+    }
+
+    @Override
     public long countOrders() {
         return orderRepo.count();
     }

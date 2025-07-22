@@ -1,18 +1,13 @@
 package hsf302.agricultural_products_project.controller;
 
 
-import hsf302.agricultural_products_project.config.VnPayConfig;
 
-import hsf302.agricultural_products_project.dto.PaymentRequest;
-import hsf302.agricultural_products_project.dto.PaymentResponse;
 import hsf302.agricultural_products_project.dto.PaymentResult;
-import hsf302.agricultural_products_project.dto.PaymentVerification;
-import hsf302.agricultural_products_project.model.Order;
-import hsf302.agricultural_products_project.model.PaymentStatus;
+
 import hsf302.agricultural_products_project.model.User;
-import hsf302.agricultural_products_project.service.OrderService;
+
 import hsf302.agricultural_products_project.service.PaymentService;
-import hsf302.agricultural_products_project.service.UserService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;

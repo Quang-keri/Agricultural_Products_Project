@@ -69,7 +69,7 @@
         }
 
         .footer {
-            background: #f2f2f2;
+
             padding: 20px;
         }
     </style>
@@ -79,34 +79,45 @@
 <!-- Navbar trên -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <a class="navbar-brand d-flex align-items-center" href="/index">
-        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo" style="height: 40px;"/>
-        <strong class="ms-2">Nông Sản Sạch</strong>
+        <img src="/image/logo-web.png" alt="Logo" style="height: 40px"/>
+        <strong>Nông Sản Sạch</strong>
     </a>
-    <form class="d-flex ms-auto me-3 w-50">
-        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."/>
-        <button class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+
+    <!-- Thanh tìm kiếm -->
+    <form class="d-flex ms-auto me-3 w-50" th:action="@{/product/search}" method="post">
+        <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" required/>
+        <button class="btn btn-outline-success" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
     </form>
+
+    <!-- Tài khoản và giỏ hàng -->
     <ul class="navbar-nav">
         <li class="nav-item" th:if="${account == null}">
-            <a class="nav-link" href="/login"><i class="bi bi-person-circle"></i> Đăng nhập</a>
+            <a class="nav-link login-link" href="/login">
+                <i class="bi bi-person-circle"></i> Đăng nhập
+            </a>
         </li>
         <li class="nav-item dropdown" th:if="${account != null}">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
                 <i class="bi bi-person-circle"></i>
-                <span th:text="${account.userName}">Tài khoản</span>
+                <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
             </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                <li>
+            <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
+                <li><a class="dropdown-item" href="/orderManagement">Đơn hàng</a></li>
+                <li th:if="${account != null}">    <!--logout-->
                     <form action="/logout" method="post">
-                        <button class="dropdown-item" type="submit">Đăng xuất</button>
+                        <button class="btn-logout" type="submit">
+                            Đăng xuất
+                        </button>
                     </form>
                 </li>
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Giỏ hàng</a>
+            <a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a>
         </li>
     </ul>
 </nav>
@@ -120,8 +131,17 @@
                 <li class="nav-item mx-2">
                     <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-white" href="/product/all-product"><i class="bi bi-shop"></i> Sản phẩm</a>
+                <li class="nav-item dropdown d-flex align-items-center mx-2">
+                    <a class="nav-link text-white" href="/product/all-product">
+                        <i class="bi bi-shop"></i> Sản phẩm
+                    </a>
+                    <a class="nav-link dropdown-toggle text-white ps-1" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-la')}">Rau lá</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-cu')}">Rau củ</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='nong-san-kho')}">Nông sản khô</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
@@ -159,10 +179,13 @@
                         </div>
 
                         <div>
-                            <div class="product-price mb-2" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ / kg'">0đ</div>
+                            <div class="product-price mb-2"
+                                 th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ / 1 sản phẩm'">
+                                0đ
+                            </div>
 
-                            <form th:action="@{/add-to-cart}" method="post" class="d-flex align-items-center">
-                                <input type="number" name="quantity" value="1" min="1" class="form-control w-25 me-2"/>
+                            <form action="/add-to-cart" method="post" class="d-flex align-items-center"
+                            onclick="return confirm('Thêm vào giỏ hàng thành công');">
                                 <input type="hidden" name="productId" th:value="${product.agriculturalProductId}"/>
                                 <button type="submit" class="btn btn-cart d-flex align-items-center">
                                     <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ hàng
@@ -176,49 +199,59 @@
     </div>
 </div>
 
-<div class="mt-3 py-5 text-center text-light" style="background-color:white;">
-    <div class="">
-        <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
+<!-- Footer -->
+<div class="footer">
+
+    <div class="footer-content-top">
+
+        <div class="footer-about-us">
+            <p><strong>Về chúng tôi</strong></p>
+            <p>Giới thiệu công ty</p>
+            <p>Tuyển dụng</p>
+            <p>Chính sách bảo mật</p>
+        </div>
 
 
-        <div class="menu-bar">
-            <!-- Rau lá -->
-            <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
-                <div>
-                    <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
-                    <p>Rau lá</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+        <div class="footer-menu">
+            <p><strong>Danh mục</strong></p>
+            <p><a href="#">Rau củ sạch</a></p>
+            <p><a href="#">Trái cây tươi</a></p>
+            <p><a href="#">Gói combo</a></p>
+        </div>
 
 
-            <!-- Rau củ -->
-            <a th:href="@{/product/rau-cu}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
-                    <p>Rau củ</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+        <div class="footer-support-customer">
+            <p><strong>Hỗ trợ khách hàng</strong></p>
+            <p>Hướng dẫn mua hàng</p>
+            <p>Chính sách đổi trả</p>
+            <p>Phương thức thanh toán</p>
+        </div>
 
-            <!-- Gia vị -->
-            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
-                    <p>nông sản khô</p>
-                    <p class="text-muted">10 sản phẩm</p>
-                </div>
-            </a>
+
+        <div class="footer-follow-us">
+            <p><strong>Theo dõi chúng tôi</strong></p>
+            <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+            <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
+        </div>
+    </div>
+
+
+    <div class="footer-content-bottom">
+        <div class="footer-company">
+            <p>
+                <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                Điện thoại: 1800 6821 - Email: cskh@nulti.vn
+            </p>
+        </div>
+
+        <div>
+            <p>
+                GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+            </p>
         </div>
     </div>
 </div>
-
-<!-- Footer -->
-<div class="footer text-center mt-5">
-    <p><strong>Công Ty Cổ Phần Nông sản Nulti</strong></p>
-    <p>248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.HCM | 1800 6821 | cskh@nulti.vn</p>
-    <p>GCNDKDN: 0311770883 - Cấp ngày 05/05/2012</p>
-</div>
-
 </body>
 </html>

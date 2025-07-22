@@ -13,6 +13,10 @@ public interface UserService {
     User findById(Long id);
     User save(User user);
     void updateStatus(Long id);
+    void updateUser(User user);
+    List<User> getRecentUsers(int count);
+    long  countUsers();
+
     void updateProfile(UserProfileDTO user);
 
 }

@@ -49,7 +49,7 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
-    @Column(name = "address", length = 255, nullable = false,columnDefinition = "NVARCHAR(255)")
+    @Column(name = "address", nullable = false,columnDefinition = "NVARCHAR(255)")
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)

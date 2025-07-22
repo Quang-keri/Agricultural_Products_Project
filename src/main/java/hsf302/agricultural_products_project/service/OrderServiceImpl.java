@@ -50,6 +50,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetailId.setOrderId(newOrder.getOrderId());
             orderDetailId.setAgriculturalProductId(item.getAgriculturalProductId());
             Integer quantity = productQuantities.get(item.getAgriculturalProductId());
+            int currentQuantity = item.getQuantityAvailable(); // ví dụ: tồn kho ban đầu
+            if (currentQuantity < quantity) {
+                throw new IllegalArgumentException("Sản phẩm '" + item.getName() + "' không đủ số lượng tồn kho.");
+            }
+            item.setQuantityAvailable(currentQuantity - quantity);
+            productService.saveProduct(item);
             OrderDetail orderDetail = OrderDetail.builder()
                     .orderDetailId(orderDetailId)
                     .order(newOrder)
@@ -119,6 +125,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderRepo.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
+        orderRepo.updateOrderStatus(orderId, status);
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        return orderRepo.getOrderByOrderId(orderId);
+    }
+
+    @Override
+    public long countOrders() {
+        return orderRepo.count();
     }
 
     private OrderProcessDTO convertToDto(Order order) {

@@ -3,6 +3,7 @@ package hsf302.agricultural_products_project.controller;
 import hsf302.agricultural_products_project.dto.CustomerOrderDto;
 import hsf302.agricultural_products_project.dto.OrderProcessDTO;
 import hsf302.agricultural_products_project.model.Order;
+import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class OrderController {
     public String createOrder(@ModelAttribute CustomerOrderDto customerOrderDto, HttpSession session, Model model, HttpServletRequest request) {
         User account = (User) session.getAttribute("account");
         if (account == null) {
-            // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+
             return "redirect:/login";
         }
         Order order = orderService.createOrder(account, customerOrderDto);
@@ -40,7 +41,7 @@ public class OrderController {
     @GetMapping("/orderManagement")
     public String showOrderManagement(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
-        if (account == null) {
+        if (account == null || !Role.ROLE_MEMBER.equals(account.getRole())) {
             return "redirect:/login";
         }
 

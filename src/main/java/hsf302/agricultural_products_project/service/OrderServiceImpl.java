@@ -121,6 +121,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.findAll();
     }
 
+    @Override
+    public long countOrders() {
+        return orderRepo.count();
+    }
+
     private OrderProcessDTO convertToDto(Order order) {
         return new OrderProcessDTO(
                 order.getOrderId(),

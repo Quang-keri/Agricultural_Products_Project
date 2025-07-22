@@ -19,4 +19,5 @@ public interface OrderService {
     List<OrderProcessDTO> getOrderManagement(Long userId);
     List<OrderProcessDTO> getOrderHistory(Long userId);
     List<Order> getAllOrders();
+    long countOrders();
 }

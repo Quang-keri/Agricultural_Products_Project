@@ -1,11 +1,10 @@
 package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,7 +49,7 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
-    @Column(name = "address", length = 255, nullable = false)
+    @Column(name = "address", nullable = false,columnDefinition = "NVARCHAR(255)")
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)

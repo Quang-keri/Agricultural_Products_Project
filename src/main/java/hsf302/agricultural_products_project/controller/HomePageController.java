@@ -1,7 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 
-import hsf302.agricultural_products_project.model.Role;
+
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ public class HomePageController {
     @GetMapping("/index")
     public String index(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
-        System.out.println("Session Account: " + account);
+
         if (account != null) {
             model.addAttribute("account", account);
             return "index";
@@ -28,13 +28,18 @@ public class HomePageController {
     }
 
     @GetMapping("/about-us")
-    public String aboutUs(Model model, HttpSession session) {
+    public String aboutUs(HttpSession session,Model model) {
         User account = (User) session.getAttribute("account");
-
         if (account != null) {
             model.addAttribute("account", account);
             return "about_us";
         }
-        return "redirect:/403";
+
+            return "about_us";
+    }
+
+    @GetMapping("/403")
+    public String accessDenied() {
+        return "403";
     }
 }

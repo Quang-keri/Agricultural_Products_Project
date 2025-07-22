@@ -1,10 +1,8 @@
 package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.Nationalized;
 
 import java.util.List;
 
@@ -23,7 +21,8 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)",unique = true)
+    @Nationalized
+    @Column(name = "user_name", length = 50,unique = true)
     private String userName;
 
     @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")

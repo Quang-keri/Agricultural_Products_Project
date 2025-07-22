@@ -161,6 +161,8 @@ public class ProductController {
         List<AgriculturalProduct> products = productService.getAllProducts();
         model.addAttribute("products", products);
         model.addAttribute("account", account);
+
+
         return "product/all-product";
     }
 

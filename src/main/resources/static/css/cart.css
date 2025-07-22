@@ -11,10 +11,10 @@
     padding: 15px 0;
     border-bottom: 1px solid #f1f1f1;
 }
-/* Product info column */
+
 .item-info,
 .cart-item-info {
-    flex: 0 0 300px; /* Fixed width for consistent alignment */
+    flex: 0 0 300px;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -36,19 +36,19 @@
 .cart-item-info a:hover {
     text-decoration: underline;
 }
-/* Price column */
+
 .cart-header-price,
 .cart-item-price {
-    flex: 0 0 150px; /* Fixed width for price column */
+    flex: 0 0 150px;
     text-align: center;
     font-weight: bold;
     color: #28a745;
 }
 
-/* Quantity column */
+
 .cart-header-qty,
 .cart-item-qty {
-    flex: 0 0 150px; /* Fixed width for quantity column */
+    flex: 0 0 150px;
     display: flex;
     justify-content: center;
     align-items: center;

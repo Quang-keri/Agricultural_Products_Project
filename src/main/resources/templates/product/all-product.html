@@ -184,7 +184,7 @@
                     <div class="product-desc" th:text="${product.description}">Mô tả sản phẩm</div>
                     <div class="mt-auto">
                         <span class="badge bg-secondary" th:text="'SL: ' + ${product.quantityAvailable}">Số lượng</span>
-                        <form action="/add-to-cart" method="post" class="d-flex align-items-center">
+                        <form th:action="@{/add-to-cart}" method="post" class="d-flex align-items-center">
                             <input type="number" name="quantity" value="1" min="1" class="form-control w-25 me-2"/>
                             <input type="hidden" name="productId" th:value="${product.agriculturalProductId}"/>
                             <button type="submit" class="btn btn-outline-primary w-100 btn-cart mt-2">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <title>Đăng nhập</title>
     <link rel="icon" type="image/png" href="/image/logo-web.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +99,7 @@
             font-style: italic;
         }
 
-        button { /* Áp dụng cho cả nút submit và nút đăng ký mới */
+        button {
             background-color: #56ab2f;
             color: white;
             padding: 14px 25px;
@@ -118,14 +118,14 @@
             transform: translateY(-2px);
         }
 
-        /* Style riêng cho nút Register để phân biệt */
+
         .register-button {
-            background-color: #f7931e; /* Màu cam đất hoặc màu nâu gợi nhớ hạt cà phê, đất... */
-            box-shadow: 0 4px 10px rgba(247, 147, 30, 0.4);
+
+
         }
 
         .register-button:hover {
-            background-color: #e08316; /* Màu cam đậm hơn khi hover */
+            color: #28a745;
         }
 
         .message-container {
@@ -188,7 +188,7 @@
     </form>
     <div th:if="${errorMessage}" class="message-container message-error" th:text="${errorMessage}"></div>
 
-    <a th:href="@{/register}" class="register-button button">Đăng ký</a>
+    <a th:href="@{/register}" class="register-button button">Đăng ký ngay</a>
 
     <div class="link-back">
         <a th:href="@{/}" >Quay lại trang chủ</a>

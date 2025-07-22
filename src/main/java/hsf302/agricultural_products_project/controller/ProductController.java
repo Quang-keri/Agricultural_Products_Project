@@ -116,33 +116,27 @@ public class ProductController {
         return "redirect:/403";
     }
 
-    @GetMapping("/product/rau-la")
-    public String showProductRauLa(Model model,
-                                   HttpSession session) {
+    @GetMapping("/product/category/{type}")
+    public String showProductType(@PathVariable("type") String type,
+                                  Model model,
+                                  HttpSession session) {
         User account = (User) session.getAttribute("account");
-        List<AgriculturalProduct> products = productService.getProductsByCategory(1);
-        model.addAttribute("product", products.get(0).getCategory().getName());
-        model.addAttribute("products", products);
-        model.addAttribute("account", account);
-        return "/product/list";
-    }
-
-    @GetMapping("/product/rau-cu")
-    public String showProductraucu(Model model,
-                                   HttpSession session) {
-        User account = (User) session.getAttribute("account");
-        List<AgriculturalProduct> products = productService.getProductsByCategory(2);
-        model.addAttribute("product", products.get(0).getCategory().getName());
-        model.addAttribute("products", products);
-        model.addAttribute("account", account);
-        return "/product/list";
-    }
-
-    @GetMapping("/product/nong-san-kho")
-    public String showProductnongsankho(Model model,
-                                        HttpSession session) {
-        User account = (User) session.getAttribute("account");
-        List<AgriculturalProduct> products = productService.getProductsByCategory(3);
+        List<AgriculturalProduct> products = null;
+        int cateId;
+        switch (type) {
+            case "rau-la":
+                cateId = 1;
+                break;
+            case "rau-cu":
+                cateId = 2;
+                break;
+            case "nong-san-kho":
+                cateId = 3;
+                break;
+            default:
+                return "redirect:/product/all-product";
+        }
+        products = productService.getProductsByCategory(cateId);
         model.addAttribute("product", products.get(0).getCategory().getName());
         model.addAttribute("products", products);
         model.addAttribute("account", account);
@@ -168,6 +162,18 @@ public class ProductController {
         model.addAttribute("products", products);
         model.addAttribute("account", account);
         return "product/all-product";
+    }
+
+    @PostMapping("/product/search")
+    public String searchProducts(@RequestParam("keyword") String keyword,
+                                 Model model,
+                                 HttpSession session) {
+        User account = (User) session.getAttribute("account");
+        List<AgriculturalProduct> products = productService.getProductsByName(keyword);
+        model.addAttribute("products", products);
+        model.addAttribute("account", account);
+        model.addAttribute("keyword", keyword);
+        return "product/list";
     }
 
 }

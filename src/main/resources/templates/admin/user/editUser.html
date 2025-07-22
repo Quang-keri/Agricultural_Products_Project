@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{admin/layout :: common-styles}">
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa người dùng</title>
+    <link href="./css/user.css" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
+
+<div class="container-wrapper">
+    <nav th:replace="~{admin/layout :: sidebar(currentPage='users')}"></nav>
+
+    <main>
+        <div class="card">
+            <h2>Chỉnh sửa người dùng</h2>
+            <form th:action="@{'/admin/users/edit/' + ${user.userId}}" method="post" th:object="${user}">
+            <input type="hidden" th:field="*{userId}" />
+
+                <table class="form-table">
+                    <tr>
+                        <td><label>Tên đăng nhập:</label></td>
+                        <td><input type="text" th:field="*{userName}" readonly /></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="hidden" th:field="*{password}" readonly /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Họ tên:</label></td>
+                        <td><input type="text" th:field="*{userFullName}" placeholder="Họ và tên" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Địa chỉ:</label></td>
+                        <td><input type="text" th:field="*{address}" placeholder="Địa chỉ" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Trạng thái:</label></td>
+                        <td>
+                            <select th:field="*{status}">
+                                <option value="true">Hoạt động</option>
+                                <option value="false">Không hoạt động</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Số điện thoại:</label></td>
+                        <td><input type="text" th:field="*{phoneNumber}" placeholder="Số điện thoại" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Vai trò:</label></td>
+                        <td>
+                            <select th:field="*{role}">
+                                <option value="ROLE_ADMIN">Quản trị viên</option>
+                                <option value="ROLE_MEMBER">Người dùng</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form-actions">
+                    <button type="submit">Cập nhật</button>
+                    <a th:href="@{/admin/users}">❌ Hủy</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

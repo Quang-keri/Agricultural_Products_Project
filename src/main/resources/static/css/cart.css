@@ -128,25 +128,3 @@ body {
 .cart-item-info {
     flex: 0 0 300px;
 }
-
-/* Dịch đều cả header và item sang trái, và tạo khoảng cách giữa 2 cột */
-.cart-header-price,
-.cart-item-price {
-    flex: 0 0 150px;
-    text-align: center;
-    font-weight: bold;
-    color: #28a745;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 60px; /* Adjust this value to create space between columns */
-}
-
-.cart-header-qty,
-.cart-item-qty {
-    flex: 0 0 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 120px;
-}

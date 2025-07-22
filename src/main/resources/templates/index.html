@@ -42,8 +42,8 @@
         </a>
 
         <!-- Thanh tìm kiếm -->
-        <form class="d-flex ms-auto me-3 w-50">
-            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
+        <form class="d-flex ms-auto me-3 w-50" th:action="@{/product/search}" method="post">
+            <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" required/>
             <button class="btn btn-outline-success" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -90,14 +90,25 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                     </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="/product/all-product"><i class="bi bi-shop"></i> Sản phẩm</a>
+                    <li class="nav-item dropdown d-flex align-items-center mx-2">
+                        <a class="nav-link text-white" href="/product/all-product">
+                            <i class="bi bi-shop"></i> Sản phẩm
+                        </a>
+                        <a class="nav-link dropdown-toggle text-white ps-1" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-la')}">Rau lá</a></li>
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-cu')}">Rau củ</a></li>
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='nong-san-kho')}">Nông sản khô</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
+                        <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng
+                            tôi</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên hệ</a>
+                        <a class="nav-link text-white" href="#"><i class="bi bi-telephone-fill text-pink"></i> Liên
+                            hệ</a>
                     </li>
 
                 </ul>
@@ -112,44 +123,53 @@
 
     <div class="introduction">
 
-      <!-- Nội dung chính -->
-      <div class="container header-content">
-          <h1>Chào mừng
-          <span th:if="${account != null}" th:text="${account.userName}"></span>
-          <span th:unless="${account != null}">bạn</span>
-              đến với Nông Sản Sạch!
-          </h1>
+        <!-- Nội dung chính -->
+        <div class="container header-content">
+            <h1>Chào mừng
+                <span th:if="${account != null}" th:text="${account.userName}"></span>
+                <span th:unless="${account != null}">bạn</span>
+                đến với Nông Sản Sạch!
+            </h1>
 
-          <h3>
-              Chúng tôi cung cấp những sản phẩm nông sản tươi, sạch và an toàn cho sức khỏe. Trực tiếp từ nông trại đến bàn ăn của bạn.
-          </h3>
-          <div class="info-header-btn">
-              <form action="/mua-sam">
-                  <button type="submit" class="btn btn-success btn-buy-now">Mua sắm ngay</button>
-              </form>
+            <h3>
+                Chúng tôi cung cấp những sản phẩm nông sản tươi, sạch và an toàn cho sức khỏe. Trực tiếp từ nông trại
+                đến bàn ăn của bạn.
+            </h3>
+            <div class="info-header-btn">
+                <form action="/mua-sam">
+                    <button type="submit" class="btn btn-success btn-buy-now">Mua sắm ngay</button>
+                </form>
 
-              <form action="/about-us" class="">
-                  <button type="submit" class="btn btn-success btn-info">Tìm hiểu ngay</button>
-              </form>
-          </div>
+                <form action="/about-us" class="">
+                    <button type="submit" class="btn btn-success btn-info">Tìm hiểu ngay</button>
+                </form>
+            </div>
 
         </div>
 
-      <!-- Auto Slide   -->
-      <div class="auto-slide">
-          <div class="swiper mySwiper">
-              <div class="swiper-wrapper">
-                  <div class="swiper-slide"><img src="https://shopnongsansach.com/wp-content/uploads/thuc-pham-sach-nong-san-sach.jpg" alt="ảnh quảng cáo 1"/></div>
-                  <div class="swiper-slide"><img src="https://shopnongsansach.com/wp-content/uploads/slide1b.jpg" alt="ảnh quảng cáo 2"/></div>
-                  <div class="swiper-slide"><img src="https://thegioinongsan.com/wp-content/uploads/2024/08/tra-xanh.jpg" alt="ảnh quảng cáo 3"/></div>
-                  <div class="swiper-slide"><img  src="https://thegioinongsan.com/wp-content/uploads/2024/08/tieu-xanh.jpg" alt="ảnh quảng cáo 4"/></div>
-                  <div class="swiper-slide"><img  src="https://thegioinongsan.com/wp-content/uploads/2024/08/cafe.jpg" alt="ảnh quảng cáo 5"/></div>
+        <!-- Auto Slide   -->
+        <div class="auto-slide">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img
+                            src="https://shopnongsansach.com/wp-content/uploads/thuc-pham-sach-nong-san-sach.jpg"
+                            alt="ảnh quảng cáo 1"/></div>
+                    <div class="swiper-slide"><img src="https://shopnongsansach.com/wp-content/uploads/slide1b.jpg"
+                                                   alt="ảnh quảng cáo 2"/></div>
+                    <div class="swiper-slide"><img
+                            src="https://thegioinongsan.com/wp-content/uploads/2024/08/tra-xanh.jpg"
+                            alt="ảnh quảng cáo 3"/></div>
+                    <div class="swiper-slide"><img
+                            src="https://thegioinongsan.com/wp-content/uploads/2024/08/tieu-xanh.jpg"
+                            alt="ảnh quảng cáo 4"/></div>
+                    <div class="swiper-slide"><img src="https://thegioinongsan.com/wp-content/uploads/2024/08/cafe.jpg"
+                                                   alt="ảnh quảng cáo 5"/></div>
 
-              </div>
-              <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
-              <div class="swiper-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
-              <div class="swiper-pagination"></div>
-          </div>
+                </div>
+                <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="swiper-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+                <div class="swiper-pagination"></div>
+            </div>
 
         </div>
     </div>
@@ -240,7 +260,8 @@
                      alt="ảnh bẹ xanh"/>
                 <p class="product-name">Cải bẹ xanh </p>
                 <p class="product-price">300.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
+                    chi tiết</a></button>
             </div>
             <div class="product-2 clickable-product">
                 <img class="product-img"
@@ -248,7 +269,8 @@
                      alt="ảnh rau muống"/>
                 <p class="product-name">Rau muống</p>
                 <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
+                    chi tiết</a></button>
             </div>
             <div class="product-3 clickable-product">
                 <img class="product-img"
@@ -256,7 +278,8 @@
                      alt="ảnh tiêu xay"/>
                 <p class="product-name">Tiêu đen xay nhiễn 50g
                 <p class="product-price">25.000đ/1 gói</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem chi tiết</a></button>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
+                    chi tiết</a></button>
             </div>
             <div class="product-4 clickable-product">
                 <img class="product-img"
@@ -264,7 +287,8 @@
                      alt="ảnh cà chua"/>
                 <p class="product-name">Cà chua beef</p>
                 <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white ">Xem chi tiết</a></button>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white ">Xem
+                    chi tiết</a></button>
             </div>
             <div class="product-5 clickable-product">
                 <img class="product-img"
@@ -272,19 +296,19 @@
                      alt="ảnh bí xanh "/>
                 <p class="product-name">Bí xanh </p>
                 <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none text-white">Xem chi tiết</a></button>
+                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none text-white">Xem
+                    chi tiết</a></button>
             </div>
         </div>
     </section>
 
 
-
     <div class="mt-3 contact-us text-center">
-        <h3><strong>Đăng kí nhận tin tức </strong> </h3>
+        <h3><strong>Đăng kí nhận tin tức </strong></h3>
         <p>Nhận thông tin về sản phẩm và ưu đãi </p>
         <form action="#">
-            <input type="email" class="contact-us-mail" name="contact"  placeholder="Nhập email của bạn"/>
-            <input type="submit" class="btn btn-success btn-contact"  value="Gửi mail"/>
+            <input type="email" class="contact-us-mail" name="contact" placeholder="Nhập email của bạn"/>
+            <input type="submit" class="btn btn-success btn-contact" value="Gửi mail"/>
         </form>
     </div>
 
@@ -328,15 +352,15 @@
         <div class="footer-content-bottom">
             <div class="footer-company">
                 <p>
-                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
-                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                    <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br/>
+                    Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br/>
                     Điện thoại: 1800 6821 - Email: cskh@nulti.vn
                 </p>
             </div>
 
             <div>
                 <p>
-                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                    GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br/>
                     GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
                 </p>
             </div>

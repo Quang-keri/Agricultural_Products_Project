@@ -70,9 +70,11 @@
         <img src="/image/logo-web.png"  alt="Logo" style="height: 40px;"/>
         <strong class="ms-2">Nông Sản Sạch</strong>
     </a>
-    <form class="d-flex ms-auto me-3 w-50">
-        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."/>
-        <button class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+    <form class="d-flex ms-auto me-3 w-50" th:action="@{/product/search}" method="post">
+        <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" required/>
+        <button class="btn btn-outline-success" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
     </form>
     <ul class="navbar-nav">
         <li class="nav-item" th:if="${account == null}">
@@ -108,8 +110,17 @@
                 <li class="nav-item mx-2">
                     <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-white" href="/product/all-product"><i class="bi bi-shop"></i> Sản phẩm</a>
+                <li class="nav-item dropdown d-flex align-items-center mx-2">
+                    <a class="nav-link text-white" href="/product/all-product">
+                        <i class="bi bi-shop"></i> Sản phẩm
+                    </a>
+                    <a class="nav-link dropdown-toggle text-white ps-1" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-la')}">Rau lá</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-cu')}">Rau củ</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='nong-san-kho')}">Nông sản khô</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
@@ -128,46 +139,16 @@
     </div>
 </nav>
 
-<div class="mt-3 py-5 text-center text-light" style="background-color:white;">
-    <div class="">
-        <h2 class="mb-3 text-black"><strong>Danh mục sản phẩm</strong></h2>
-
-
-        <div class="menu-bar">
-            <!-- Rau lá -->
-            <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
-                <div>
-                    <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
-                    <p>Rau lá</p>
-                </div>
-            </a>
-
-
-            <!-- Rau củ -->
-            <a th:href="@{/product/rau-cu}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
-                    <p>Rau củ</p>
-                </div>
-            </a>
-
-            <!-- Gia vị -->
-            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
-                <div class="">
-                    <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
-                    <p>nông sản khô</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-
 <!-- Danh sách sản phẩm -->
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success"
-        th:text="'🌿 Danh sách sản phẩm - ' + ${product}">
-    </h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <h2 class="text-center mb-4 text-success">Kết quả tìm kiếm</h2>
+
+    <div th:if="${#lists.isEmpty(products)}" class="text-center text-danger fs-5">
+        Không tìm thấy sản phẩm có tên "<span th:text="${keyword}"></span>"
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+         th:if="${!#lists.isEmpty(products)}">
         <div class="col" th:each="product : ${products}">
             <div class="product-card h-100 d-flex flex-column">
                 <a th:href="@{'/products/' + ${product.agriculturalProductId}}" class="text-decoration-none">
@@ -179,11 +160,15 @@
                          th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ
                     </div>
                     <div class="product-desc" th:text="${product.description}">Mô tả sản phẩm</div>
-                    <div class="mt-auto">
-                        <span class="badge bg-secondary" th:text="'SL: ' + ${product.quantityAvailable}">Số lượng</span>
-                        <button class="btn btn-outline-primary w-100 btn-cart mt-2">
-                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                        </button>
+                    <div>
+                        <span th:text="'SL: ' + ${product.quantityAvailable}">Số lượng</span>
+                        <form th:action="@{/add-to-cart}" method="post" class="mt-auto"
+                              onclick="return confirm('Thêm vào giỏ hàng thành công');">
+                            <input type="hidden" name="productId" th:value="${product.agriculturalProductId}" />
+                            <button type="submit" class="btn btn-outline-success w-100">
+                                <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                            </button>
+                        </form>
                     </div>
                 </a>
             </div>
@@ -192,12 +177,59 @@
 </div>
 
 <!-- Footer -->
-<div class="footer text-center mt-5">
-    <p><strong>Công Ty Cổ Phần Nông sản Nulti</strong></p>
-    <p>248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.HCM | 1800 6821 | cskh@nulti.vn</p>
-    <p>GCNDKDN: 0311770883 - Cấp ngày 05/05/2012</p>
-</div>
+<div class="footer">
 
+    <div class="footer-content-top">
+
+        <div class="footer-about-us">
+            <p><strong>Về chúng tôi</strong></p>
+            <p>Giới thiệu công ty</p>
+            <p>Tuyển dụng</p>
+            <p>Chính sách bảo mật</p>
+        </div>
+
+
+        <div class="footer-menu">
+            <p><strong>Danh mục</strong></p>
+            <p><a href="#">Rau củ sạch</a></p>
+            <p><a href="#">Trái cây tươi</a></p>
+            <p><a href="#">Gói combo</a></p>
+        </div>
+
+
+        <div class="footer-support-customer">
+            <p><strong>Hỗ trợ khách hàng</strong></p>
+            <p>Hướng dẫn mua hàng</p>
+            <p>Chính sách đổi trả</p>
+            <p>Phương thức thanh toán</p>
+        </div>
+
+
+        <div class="footer-follow-us">
+            <p><strong>Theo dõi chúng tôi</strong></p>
+            <p><a href="https://www.facebook.com/quangwashi">Facebook</a></p>
+            <p><a href="https://github.com/Quang-keri/Agricultural_Products_Project">Github</a></p>
+        </div>
+    </div>
+
+
+    <div class="footer-content-bottom">
+        <div class="footer-company">
+            <p>
+                <strong>Công Ty Cổ Phần Nông sản Nulti</strong><br />
+                Trụ sở: 248A Nơ Trang Long, P.12, Q.Bình Thạnh, TP.Hồ Chí Minh<br />
+                Điện thoại: 1800 6821 - Email: cskh@nulti.vn
+            </p>
+        </div>
+
+        <div>
+            <p>
+                GCNDKDN: 0311770883 do sở KH & ĐT TP.HCM cấp ngày 05/05/2012<br />
+                GCNDDKKDD: 6782/DDKKDDD-ĐNai cấp ngày 26/4/2022 Sở Y Tế Tỉnh Đồng Nai.
+            </p>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

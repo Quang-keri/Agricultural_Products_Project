@@ -23,4 +23,5 @@ public interface OrderService {
     void updateOrderStatus(Long orderId, OrderStatus status);
     Order getOrderById(Long orderId);
 
+    long countOrders();
 }

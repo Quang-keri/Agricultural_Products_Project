@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="vi" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Bảng điều khiển quản trị</title>
     <head th:replace="~{admin/layout :: common-styles}"></head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -140,46 +139,46 @@
 
     <main>
 
-        <!-- 📊 Tổng quan -->
+        <!-- 📊 Thống kê tổng quan -->
         <div class="stats-grid">
             <div class="stat-card">
-                <h3>Total Users</h3>
+                <h3>Tổng người dùng</h3>
                 <p th:text="${userId}" class="blue"></p>
             </div>
             <div class="stat-card">
-                <h3>Total Orders</h3>
+                <h3>Tổng đơn hàng</h3>
                 <p th:text="${orderId}" class="green">567</p>
             </div>
             <div class="stat-card">
-                <h3>Total Product</h3>
-                <p  th:text="${productId}" class="orange"></p>
+                <h3>Tổng sản phẩm</h3>
+                <p th:text="${productId}" class="orange"></p>
             </div>
         </div>
 
-        <!-- 🔍 Bộ lọc thời gian -->
+        <!-- 🔍 Bộ lọc theo thời gian -->
         <form method="get" th:action="@{/admin/dashboard}" class="filter-form">
-            <label for="range">Filter by time:</label>
+            <label for="range">Lọc theo thời gian:</label>
             <select id="range" name="range">
-                <option value="">-- Select --</option>
-                <option value="this-week" th:selected="${range} == 'this-week'">This Week</option>
-                <option value="last-week" th:selected="${range} == 'last-week'">Last Week</option>
-                <option value="this-month" th:selected="${range} == 'this-month'">This Month</option>
-                <option value="last-month" th:selected="${range} == 'last-month'">Last Month</option>
-                <option value="this-year" th:selected="${range} == 'this-year'">This Year</option>
-                <option value="last-year" th:selected="${range} == 'last-year'">Last Year</option>
+                <option value="">-- Chọn --</option>
+                <option value="this-week" th:selected="${range} == 'this-week'">Tuần này</option>
+                <option value="last-week" th:selected="${range} == 'last-week'">Tuần trước</option>
+                <option value="this-month" th:selected="${range} == 'this-month'">Tháng này</option>
+                <option value="last-month" th:selected="${range} == 'last-month'">Tháng trước</option>
+                <option value="this-year" th:selected="${range} == 'this-year'">Năm nay</option>
+                <option value="last-year" th:selected="${range} == 'last-year'">Năm trước</option>
             </select>
-            <button type="submit">Filter</button>
+            <button type="submit">Lọc</button>
         </form>
 
         <!-- 📈 Biểu đồ đơn hàng theo trạng thái -->
         <div class="chart-container">
-            <h2>Orders by Status</h2>
+            <h2>Đơn hàng theo trạng thái</h2>
             <canvas id="orderStatusChart"></canvas>
         </div>
 
-        <!-- 🧾 Danh sách người dùng mới -->
+        <!-- 🧾 Danh sách người dùng mới đăng ký -->
         <div class="card">
-            <h2>Recent Registered Users</h2>
+            <h2>Người dùng mới đăng ký</h2>
             <table>
                 <thead>
                 <tr>
@@ -214,9 +213,9 @@
     const orderStatusChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'],
+            labels: ['Chờ xử lý', 'Đã xác nhận', 'Đã giao', 'Đã nhận', 'Đã hủy'],
             datasets: [{
-                label: 'Number of Orders',
+                label: 'Số lượng đơn hàng',
                 data: [
                     [[${pendingCount}]],
                     [[${confirmedCount}]],

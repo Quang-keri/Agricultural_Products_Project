@@ -71,7 +71,7 @@ public class AgriculturalProductsProjectApplication {
 
                 // Thêm sản phẩm cho từng danh mục
                 List<AgriculturalProduct> rauLaProducts = List.of(
-                        createProduct("Rau Muống", "Tươi xanh mỗi ngày", "https://trungtamthuocdantoc.com/wp-content/uploads/2019/10/rau-muong.jpg", new BigDecimal("8000"), 100, rauLa),
+                        createProduct("Rau Muống", "Tươi xanh mỗi ngày", "https://trungtamthuocdantoc.com/wp-content/uploads/2019/10/rau-muong.jpg", new BigDecimal("8000"), 2, rauLa),
                         createProduct("Cải Ngọt", "Cải ngọt vườn nhà", "https://chotaigia.com.vn/public/images/images/san-pham/rau/cai-ngot.jpg", new BigDecimal("10000"), 80, rauLa),
                         createProduct("Rau Dền", "Mềm mịn, dễ ăn", "https://bizweb.dktcdn.net/100/382/694/products/752d07b5-29bc-4418-af7b-2d2ede0aee05.jpg?v=1675558589917", new BigDecimal("7000"), 70, rauLa),
                         createProduct("Xà Lách", "Giòn mát", "https://www.vinmec.com/static/uploads/medium_20210106_041321_793265_hat_giong_rau_xa_la_max_1800x1800_jpg_c51fb39d72.jpg", new BigDecimal("12000"), 90, rauLa)

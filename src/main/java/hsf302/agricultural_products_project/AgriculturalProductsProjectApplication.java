@@ -59,9 +59,9 @@ public class AgriculturalProductsProjectApplication {
         return args -> {
             if (categoryService.findByName("Rau lá") == null) {
                 // Tạo các danh mục
-                Category rauLa = new Category(null, "Rau lá", "Bài viết về rau lá", null, null);
-                Category rauCuTuoi = new Category(null, "Rau củ tươi", "Bài viết về rau củ tươi", null, null);
-                Category nongSanKho = new Category(null, "Nông sản khô", "Bài viết về nông sản khô", null, null);
+                Category rauLa = new Category("Rau lá");
+                Category rauCuTuoi = new Category("Rau củ tươi");
+                Category nongSanKho = new Category("Nông sản khô");
 
                 categoryService.saveAll(List.of(rauLa, rauCuTuoi, nongSanKho));
 

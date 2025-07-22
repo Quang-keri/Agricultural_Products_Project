@@ -22,4 +22,14 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryByLong(Long id) {
         return categoryRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void saveAll(List<Category> categories) {
+        categoryRepository.saveAll(categories);
+    }
+
+    @Override
+    public Category findByName(String name) {
+        return categoryRepository.findByName(name);
+    }
 }

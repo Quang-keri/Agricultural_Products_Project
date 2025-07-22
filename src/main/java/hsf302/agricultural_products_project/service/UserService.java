@@ -3,6 +3,7 @@ package hsf302.agricultural_products_project.service;
 import hsf302.agricultural_products_project.dto.UserDTO;
 import hsf302.agricultural_products_project.dto.UserProfileDTO;
 import hsf302.agricultural_products_project.model.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 

@@ -24,7 +24,7 @@ public class OrderController {
     public String createOrder(@ModelAttribute CustomerOrderDto customerOrderDto, HttpSession session, Model model, HttpServletRequest request) {
         User account = (User) session.getAttribute("account");
         if (account == null) {
-            // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+
             return "redirect:/login";
         }
         Order order = orderService.createOrder(account, customerOrderDto);

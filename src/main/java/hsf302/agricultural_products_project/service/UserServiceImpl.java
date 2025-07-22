@@ -7,6 +7,9 @@ import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

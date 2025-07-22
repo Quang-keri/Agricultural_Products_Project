@@ -25,4 +25,24 @@ public class UserController {
         userService.updateStatus(id);
         return "redirect:/admin/users";
     }
+
+//        @GetMapping("/users")
+//    public String userManagement(Model model) {
+//        model.addAttribute("users", userService.findAll());
+//        return "admin/manageUser";
+//    }
+
+
+//       @GetMapping("/page/{pageNo}")
+//    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,Model model ){
+//        int pageSize = 5; // có thể change số bất kì
+//        Page<Employee> page = employeeService.findpaginated(pageNo, pageSize);
+//        List<Employee> listEmployees = page.getContent();
+//        model.addAttribute("currentPage",pageNo);
+//        model.addAttribute("totalPages",page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//        model.addAttribute("listEmployees",listEmployees);
+//        return  "index";
+//
+//    }
 }

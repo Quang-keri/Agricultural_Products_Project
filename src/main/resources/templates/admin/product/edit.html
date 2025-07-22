@@ -5,6 +5,13 @@
     <title>Chỉnh sửa sản phẩm</title>
     <link rel="icon" type="image/png" href="/image/logo-web.png">
     <link href="./css/product.css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
@@ -25,19 +32,33 @@
                     </tr>
                     <tr>
                         <td><label>Giá:</label></td>
-                        <td><input type="number" step="0.01" th:field="*{price}" placeholder="Giá sản phẩm"/></td>
+                        <td>
+                            <input type="number" step="0.01" th:field="*{price}" placeholder="Giá sản phẩm"/>
+                            <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                        </td>
                     </tr>
                     <tr>
                         <td><label>Số lượng tồn:</label></td>
-                        <td><input type="number" th:field="*{quantityAvailable}" placeholder="Số lượng tồn"/></td>
+                        <td>
+                            <input type="number" th:field="*{quantityAvailable}" placeholder="Số lượng tồn"/>
+                            <div class="error" th:if="${#fields.hasErrors('quantityAvailable')}"
+                                 th:errors="*{quantityAvailable}"></div>
+                        </td>
                     </tr>
                     <tr>
                         <td><label>Mô tả:</label></td>
-                        <td><input type="text" th:field="*{description}" placeholder="Mô tả sản phẩm"/></td>
+                        <td>
+                            <input type="text" th:field="*{description}" placeholder="Mô tả sản phẩm"/>
+                            <div class="error" th:if="${#fields.hasErrors('description')}"
+                                 th:errors="*{description}"></div>
+                        </td>
                     </tr>
                     <tr>
                         <td><label>Ảnh:</label></td>
-                        <td><input type="text" th:field="*{imageUrl}" placeholder="Link ảnh hoặc tên file ảnh"/></td>
+                        <td>
+                            <input type="text" th:field="*{imageUrl}" placeholder="Link ảnh hoặc tên file ảnh"/>
+                            <div class="error" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
+                        </td>
                     </tr>
                 </table>
 

@@ -18,4 +18,6 @@ public interface ProductService {
     List<AgriculturalProduct> getProductsByCategory(int categoryId);
 
     List<AgriculturalProduct> getAllProductsById(List<Long> productIds);
+
+    void saveAll(List<AgriculturalProduct> products);
 }

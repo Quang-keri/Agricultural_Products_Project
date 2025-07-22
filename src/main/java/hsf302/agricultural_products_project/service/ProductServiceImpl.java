@@ -59,4 +59,9 @@ public class ProductServiceImpl implements ProductService {
     public void saveAll(List<AgriculturalProduct> products) {
         productRepository.saveAll(products);
     }
+
+    @Override
+    public List<AgriculturalProduct> getProductsByName(String name) {
+        return productRepository.findByNameContainingIgnoreCase(name);
+    }
 }

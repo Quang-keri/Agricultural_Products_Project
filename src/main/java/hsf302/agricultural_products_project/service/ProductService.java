@@ -20,4 +20,6 @@ public interface ProductService {
     List<AgriculturalProduct> getAllProductsById(List<Long> productIds);
 
     void saveAll(List<AgriculturalProduct> products);
+
+    List<AgriculturalProduct> getProductsByName(String name);
 }

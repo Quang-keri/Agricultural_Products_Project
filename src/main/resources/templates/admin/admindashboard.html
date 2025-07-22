@@ -156,19 +156,29 @@
         </div>
 
         <!-- 🔍 Bộ lọc theo thời gian -->
+        <!-- 🔍 Bộ lọc theo tháng và năm -->
         <form method="get" th:action="@{/admin/dashboard}" class="filter-form">
-            <label for="range">Lọc theo thời gian:</label>
-            <select id="range" name="range">
-                <option value="">-- Chọn --</option>
-                <option value="this-week" th:selected="${range} == 'this-week'">Tuần này</option>
-                <option value="last-week" th:selected="${range} == 'last-week'">Tuần trước</option>
-                <option value="this-month" th:selected="${range} == 'this-month'">Tháng này</option>
-                <option value="last-month" th:selected="${range} == 'last-month'">Tháng trước</option>
-                <option value="this-year" th:selected="${range} == 'this-year'">Năm nay</option>
-                <option value="last-year" th:selected="${range} == 'last-year'">Năm trước</option>
+            <label for="month">Chọn tháng:</label>
+            <select id="month" name="month">
+                <option value="">-- Tháng --</option>
+                <option th:each="m : ${#numbers.sequence(1,12)}"
+                        th:value="${m}"
+                        th:text="'Tháng ' + ${m}"
+                        th:selected="${month} == ${m}"></option>
             </select>
+
+            <label for="year">Chọn năm:</label>
+            <select id="year" name="year">
+                <option value="">-- Năm --</option>
+                <option th:each="y : ${years}"
+                        th:value="${y}"
+                        th:text="${y}"
+                        th:selected="${year} == ${y}"></option>
+            </select>
+
             <button type="submit">Lọc</button>
         </form>
+
 
         <!-- 📈 Biểu đồ đơn hàng theo trạng thái -->
         <div class="chart-container">

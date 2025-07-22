@@ -37,14 +37,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Số lượng tồn:</label></td>
-                        <td>
-                            <input type="number" th:field="*{quantityAvailable}" placeholder="Số lượng tồn"/>
-                            <div class="error" th:if="${#fields.hasErrors('quantityAvailable')}"
-                                 th:errors="*{quantityAvailable}"></div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><label>Mô tả:</label></td>
                         <td>
                             <input type="text" th:field="*{description}" placeholder="Mô tả sản phẩm"/>

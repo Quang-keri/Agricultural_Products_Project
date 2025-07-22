@@ -20,7 +20,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Long OrderId;
+    private Long orderId;
 
     @Column(name = "customer_name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String customerName;

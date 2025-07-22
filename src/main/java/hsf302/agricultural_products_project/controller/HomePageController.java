@@ -19,7 +19,7 @@ public class HomePageController {
     @GetMapping("/index")
     public String index(HttpSession session, Model model) {
         User account = (User) session.getAttribute("account");
-        System.out.println("Session Account: " + account);
+
         if (account != null) {
             model.addAttribute("account", account);
             return "index";
@@ -28,7 +28,12 @@ public class HomePageController {
     }
 
     @GetMapping("/about-us")
-    public String aboutUs() {
+    public String aboutUs(HttpSession session,Model model) {
+        User account = (User) session.getAttribute("account");
+        if (account != null) {
+            model.addAttribute("account", account);
+            return "about_us";
+        }
 
             return "about_us";
     }

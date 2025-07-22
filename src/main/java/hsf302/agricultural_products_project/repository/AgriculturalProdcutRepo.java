@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AgriculturalProdcutRepo extends JpaRepository<AgriculturalProduct, Long> {
     List<AgriculturalProduct> findAllByCategory_CategoryId(int categoryId);
+
+    List<AgriculturalProduct> findByNameContainingIgnoreCase(String name);
 }

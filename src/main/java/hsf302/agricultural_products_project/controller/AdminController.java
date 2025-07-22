@@ -130,12 +130,12 @@ public class AdminController {
         model.addAttribute("orderDates", orderDates);
 
 
-        return "admin/manageOrder"; // File HTML bạn gửi bên trên
+        return "admin/manageOrder";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // Xóa toàn bộ session, bao gồm cả "loggedInUser"
-        return "redirect:/login"; // Chuyển hướng về trang đăng nhập
+        session.invalidate();
+        return "redirect:/login";
     }
 }

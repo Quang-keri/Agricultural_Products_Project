@@ -21,4 +21,5 @@ public interface ProductService {
     long countProducts();
     void saveAll(List<AgriculturalProduct> products);
 
+    List<AgriculturalProduct> getProductsByName(String name);
 }

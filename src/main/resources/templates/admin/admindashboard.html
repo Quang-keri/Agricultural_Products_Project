@@ -1,10 +1,136 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="vi" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="icon" type="image/png" href="/image/logo-web.png">
+    <title>Bảng điều khiển quản trị</title>
     <head th:replace="~{admin/layout :: common-styles}"></head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 800px; /* Limit the maximum width to prevent overflow */
+            height: 300px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensure proper positioning context */
+            overflow: hidden; /* Prevent overflow of chart */
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 300px; /* Ensure canvas doesn't exceed container height */
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #1e1e1e;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 0.5rem;
+            color: #a0a0a0;
+            font-size: 1rem;
+        }
+
+        .stat-card p {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .blue { color: #1e90ff; }
+        .green { color: #32cd32; }
+        .orange { color: #ffa500; }
+
+        .card {
+            margin-top: 20px;
+            background-color: #1e1e1e;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e0e0e0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #333;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2a2a2a;
+            font-weight: bold;
+        }
+
+        .filter-form {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-form label {
+            color: #a0a0a0;
+            margin-right: 10px;
+        }
+
+        .filter-form select {
+            padding: 0.5rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .filter-form select option {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .filter-form button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #1e90ff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-form button:hover {
+            background-color: #1c86ee;
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
@@ -12,49 +138,135 @@
     <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>
 
     <main>
+
+        <!-- 📊 Thống kê tổng quan -->
         <div class="stats-grid">
             <div class="stat-card">
-                <h3>Total Users</h3>
-                <p class="blue">1,234</p>
+                <h3>Tổng người dùng</h3>
+                <p th:text="${userId}" class="blue"></p>
             </div>
             <div class="stat-card">
-                <h3>Total Orders</h3>
-                <p class="green">567</p>
+                <h3>Tổng đơn hàng</h3>
+                <p th:text="${orderId}" class="green">567</p>
             </div>
             <div class="stat-card">
-                <h3>Revenue</h3>
-                <p class="orange">$12,345</p>
+                <h3>Tổng sản phẩm</h3>
+                <p th:text="${productId}" class="orange"></p>
             </div>
         </div>
 
+        <!-- 🔍 Bộ lọc theo thời gian -->
+        <!-- 🔍 Bộ lọc theo tháng và năm -->
+        <form method="get" th:action="@{/admin/dashboard}" class="filter-form">
+            <label for="month">Chọn tháng:</label>
+            <select id="month" name="month">
+                <option value="">-- Tháng --</option>
+                <option th:each="m : ${#numbers.sequence(1,12)}"
+                        th:value="${m}"
+                        th:text="'Tháng ' + ${m}"
+                        th:selected="${month} == ${m}"></option>
+            </select>
+
+            <label for="year">Chọn năm:</label>
+            <select id="year" name="year">
+                <option value="">-- Năm --</option>
+                <option th:each="y : ${years}"
+                        th:value="${y}"
+                        th:text="${y}"
+                        th:selected="${year} == ${y}"></option>
+            </select>
+
+            <button type="submit">Lọc</button>
+        </form>
+
+
+        <!-- 📈 Biểu đồ đơn hàng theo trạng thái -->
+        <div class="chart-container">
+            <h2>Đơn hàng theo trạng thái</h2>
+            <canvas id="orderStatusChart"></canvas>
+        </div>
+
+        <!-- 🧾 Danh sách người dùng mới đăng ký -->
         <div class="card">
-            <h2>Recent Activity</h2>
+            <h2>Người dùng mới đăng ký</h2>
             <table>
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Action</th>
-                    <th>User</th>
-                    <th>Date</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ tên</th>
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>SĐT</th>
+                    <th>Vai trò</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>#123</td>
-                    <td>New Order</td>
-                    <td>John Doe</td>
-                    <td>2025-06-13</td>
-                </tr>
-                <tr>
-                    <td>#124</td>
-                    <td>User Registration</td>
-                    <td>Jane Smith</td>
-                    <td>2025-06-13</td>
+                <tr th:each="user : ${recentUsers}">
+                    <td th:text="${user.userId}"></td>
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.userFullName}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td th:text="${user.status}"></td>
+                    <td th:text="${user.phoneNumber}"></td>
+                    <td th:text="${user.role.name}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </main>
 </div>
+
+<!-- 🧠 Script biểu đồ trạng thái -->
+<script th:inline="javascript">
+    const ctx = document.getElementById('orderStatusChart').getContext('2d');
+    const orderStatusChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Chờ xử lý', 'Đã xác nhận', 'Đã giao', 'Đã nhận', 'Đã hủy'],
+            datasets: [{
+                label: 'Số lượng đơn hàng',
+                data: [
+                    [[${pendingCount}]],
+                    [[${confirmedCount}]],
+                    [[${shippedCount}]],
+                    [[${deliveredCount}]],
+                    [[${cancelledCount}]]
+                ],
+                backgroundColor: [
+                    'orange',
+                    'blue',
+                    'purple',
+                    'green',
+                    'red'
+                ],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        color: "#ffffff"
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: "#ffffff"
+                    }
+                }
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

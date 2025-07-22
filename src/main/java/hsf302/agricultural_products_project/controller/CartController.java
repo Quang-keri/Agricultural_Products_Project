@@ -1,7 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 import hsf302.agricultural_products_project.dto.AgriculturalProductCartDto;
-
+import hsf302.agricultural_products_project.dto.CartCheckoutDto;
 import hsf302.agricultural_products_project.dto.CustomerOrderDto;
 import hsf302.agricultural_products_project.model.PaymentStatus;
 import hsf302.agricultural_products_project.model.User;
@@ -35,12 +35,12 @@ public class CartController {
     @GetMapping("/cart")
     public String viewCart(HttpSession session, @CookieValue(value = "cart", defaultValue = "") String cartCookie, Model model) {
         User account = (User) session.getAttribute("account");
-
+        // Check if the user is logged in
         if (account == null) {
             List<AgriculturalProductCartDto> cartItems = cartService.getCartItemsForCookie(cartCookie);
             double totalPrice = cartService.calculateTotalPriceFromCookie(cartCookie);
 
-
+            // Add command object for form binding
             CustomerOrderDto checkoutDto = CustomerOrderDto.builder()
                     .items(cartItems)
                     .total(totalPrice)

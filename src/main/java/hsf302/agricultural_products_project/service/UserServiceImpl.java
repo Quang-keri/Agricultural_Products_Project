@@ -7,9 +7,9 @@ import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.repository.UserRepository;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,4 +76,25 @@ public class UserServiceImpl implements UserService {
             userRepository.save(existingUser);
         }
     }
+
+
+    @Override
+    public void updateUser(User user) {
+        User existingUser = userRepository.findById(user.getUserId()).orElse(null);
+        if(existingUser != null){
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public List<User> getRecentUsers(int count) {
+        return userRepository.findTop5ByOrderByUserIdDesc();
+    }
+
+    @Override
+    public long countUsers() {
+        return userRepository.count();
+    }
+
+
 }

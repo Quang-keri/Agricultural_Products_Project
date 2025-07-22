@@ -3,7 +3,6 @@ package hsf302.agricultural_products_project.service;
 import hsf302.agricultural_products_project.dto.UserDTO;
 import hsf302.agricultural_products_project.dto.UserProfileDTO;
 import hsf302.agricultural_products_project.model.User;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,6 +13,10 @@ public interface UserService {
     User findById(Long id);
     User save(User user);
     void updateStatus(Long id);
+    void updateUser(User user);
+    List<User> getRecentUsers(int count);
+    long  countUsers();
+
     void updateProfile(UserProfileDTO user);
 
 }

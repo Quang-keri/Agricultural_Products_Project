@@ -152,7 +152,7 @@
             </a>
 
             <!-- Gia vị -->
-            <a th:href="@{/product/trai-cay}" class="menu-bar-item">
+            <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
                 <div class="">
                     <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
                     <p>nông sản khô</p>
@@ -164,7 +164,9 @@
 
 <!-- Danh sách sản phẩm -->
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success">🌿 Danh sách sản phẩm Rau Lá</h2>
+    <h2 class="text-center mb-4 text-success"
+        th:text="'🌿 Danh sách sản phẩm - ' + ${product}">
+    </h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col" th:each="product : ${products}">
             <div class="product-card h-100 d-flex flex-column">

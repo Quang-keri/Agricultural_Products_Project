@@ -71,24 +71,24 @@ public class AgriculturalProductsProjectApplication {
 
                 // Thêm sản phẩm cho từng danh mục
                 List<AgriculturalProduct> rauLaProducts = List.of(
-                        createProduct("Rau Muống", "Tươi xanh mỗi ngày", "https://example.com/rau_muong.jpg", new BigDecimal("8000"), 100, rauLa),
-                        createProduct("Cải Ngọt", "Cải ngọt vườn nhà", "https://example.com/cai_ngot.jpg", new BigDecimal("10000"), 80, rauLa),
-                        createProduct("Rau Dền", "Mềm mịn, dễ ăn", "https://example.com/rau_den.jpg", new BigDecimal("7000"), 70, rauLa),
-                        createProduct("Xà Lách", "Giòn mát", "https://example.com/xa_lach.jpg", new BigDecimal("12000"), 90, rauLa)
+                        createProduct("Rau Muống", "Tươi xanh mỗi ngày", "https://trungtamthuocdantoc.com/wp-content/uploads/2019/10/rau-muong.jpg", new BigDecimal("8000"), 100, rauLa),
+                        createProduct("Cải Ngọt", "Cải ngọt vườn nhà", "https://chotaigia.com.vn/public/images/images/san-pham/rau/cai-ngot.jpg", new BigDecimal("10000"), 80, rauLa),
+                        createProduct("Rau Dền", "Mềm mịn, dễ ăn", "https://bizweb.dktcdn.net/100/382/694/products/752d07b5-29bc-4418-af7b-2d2ede0aee05.jpg?v=1675558589917", new BigDecimal("7000"), 70, rauLa),
+                        createProduct("Xà Lách", "Giòn mát", "https://www.vinmec.com/static/uploads/medium_20210106_041321_793265_hat_giong_rau_xa_la_max_1800x1800_jpg_c51fb39d72.jpg", new BigDecimal("12000"), 90, rauLa)
                 );
 
                 List<AgriculturalProduct> rauCuProducts = List.of(
-                        createProduct("Cà Rốt", "Ngọt, giàu Vitamin A", "https://example.com/ca_rot.jpg", new BigDecimal("15000"), 120, rauCuTuoi),
-                        createProduct("Khoai Tây", "Khoai tươi, ngon", "https://example.com/khoai_tay.jpg", new BigDecimal("13000"), 150, rauCuTuoi),
-                        createProduct("Củ Dền", "Giàu dinh dưỡng", "https://example.com/cu_den.jpg", new BigDecimal("17000"), 60, rauCuTuoi),
-                        createProduct("Su Hào", "Tươi giòn", "https://example.com/su_hao.jpg", new BigDecimal("11000"), 100, rauCuTuoi)
+                        createProduct("Cà Rốt", "Ngọt, giàu Vitamin A", "https://product.hstatic.net/200000423303/product/ca-rot-huu-co_051657cb99144443bac8015f6dd34dae.jpg", new BigDecimal("15000"), 120, rauCuTuoi),
+                        createProduct("Khoai Tây", "Khoai tươi, ngon", "https://bosvietnam.com/wp-content/uploads/2023/03/khoai-tay.jpg", new BigDecimal("13000"), 150, rauCuTuoi),
+                        createProduct("Củ Dền", "Giàu dinh dưỡng", "https://www.vinmec.com/static/uploads/20210519_081753_529664_cho_be_an_rau_cu_de_max_1800x1800_jpg_e77bfe6a3d.jpg", new BigDecimal("17000"), 60, rauCuTuoi),
+                        createProduct("Su Hào", "Tươi giòn", "https://thanhnien.mediacdn.vn/Uploaded/2014/Pictures201211/CongDong/161112/su-hao-d.jpg", new BigDecimal("11000"), 100, rauCuTuoi)
                 );
 
                 List<AgriculturalProduct> nongSanKhoProducts = List.of(
-                        createProduct("Đậu xanh", "Khô, sạch", "https://example.com/dau_xanh.jpg", new BigDecimal("25000"), 200, nongSanKho),
-                        createProduct("Nếp cái hoa vàng", "Dẻo thơm", "https://example.com/nep.jpg", new BigDecimal("35000"), 180, nongSanKho),
-                        createProduct("Mè đen", "Ngon, bổ", "https://example.com/me_den.jpg", new BigDecimal("22000"), 90, nongSanKho),
-                        createProduct("Ngô khô", "Ngô ta phơi khô", "https://example.com/ngo_kho.jpg", new BigDecimal("20000"), 140, nongSanKho)
+                        createProduct("Đậu xanh", "Khô, sạch", "https://bizweb.dktcdn.net/thumb/1024x1024/100/390/808/products/ddd-47ecea0a-ac73-41fa-9b47-8548e154f4c3.png?v=1592986236187", new BigDecimal("25000"), 200, nongSanKho),
+                        createProduct("Nếp cái hoa vàng", "Dẻo thơm", "https://gaohungthinh.com.vn/wp-content/uploads/2023/12/Nep-cai-hoa-vang-2-scaled.jpg", new BigDecimal("35000"), 180, nongSanKho),
+                        createProduct("Mè đen", "Ngon, bổ", "https://gaohungthinh.com.vn/wp-content/uploads/2023/12/Nep-cai-hoa-vang-2-scaled.jpg", new BigDecimal("22000"), 90, nongSanKho),
+                        createProduct("Ngô khô", "Ngô ta phơi khô", "https://png.pngtree.com/thumb_back/fh260/background/20220227/pngtree-corn-cobs-drying-on-a-beam-closeup-market-organic-photo-image_3500785.jpg", new BigDecimal("20000"), 140, nongSanKho)
                 );
 
                 productService.saveAll(rauLaProducts);

@@ -196,7 +196,7 @@
 </div>
 
 <div class="container py-5">
-    <h2 class="text-center mb-4 text-success">🌿 Danh sách sản phẩm Trái cây</h2>
+    <h2 class="text-center mb-4 text-success">🌿 Danh sách Nông sản khô</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div th:each="product : ${products}" th:if="${product.category.name == 'Nông sản khô'}">
             <div class="product-card h-100 d-flex flex-column">

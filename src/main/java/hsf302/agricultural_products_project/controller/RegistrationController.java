@@ -1,7 +1,7 @@
 package hsf302.agricultural_products_project.controller;
 
 import hsf302.agricultural_products_project.dto.UserDTO;
-import hsf302.agricultural_products_project.model.Role;
+
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
 import jakarta.validation.Valid;
@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegistrationController {

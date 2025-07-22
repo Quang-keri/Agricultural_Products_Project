@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Về Chúng Tôi - Nông Sản Sạch</title>
+    <link rel="icon" type="image/png" href="/image/logo-web.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootrap link   -->
@@ -25,7 +26,7 @@
     <!-- Navbar trên cùng -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4 nav-header">
         <a class="navbar-brand d-flex align-items-center" href="/index">
-            <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Logo"/>
+            <img  src="/image/logo-web.png" alt="Logo"/>
             <strong>Nông Sản Sạch</strong>
         </a>
 
@@ -38,42 +39,48 @@
         </form>
 
         <!-- Tài khoản và giỏ hàng -->
-        <ul class="navbar-nav nav-header">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
+        <ul class="navbar-nav">
+            <li class="nav-item" th:if="${account == null}">
+                <a class="nav-link login-link" href="/login">
                     <i class="bi bi-person-circle"></i> Đăng nhập
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+            </li>
+            <li class="nav-item dropdown" th:if="${account != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
+                </a>
+                <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
                     <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                    <li>    <!--logout-->
+                    <li th:if="${account != null}">    <!--logout-->
                         <form action="/logout" method="post">
-                            <button type="submit">
-                                Logout
+                            <button class="btn-logout" type="submit">
+                                Đăng xuất
                             </button>
                         </form>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-cart3"></i> Giỏ hàng</a>
+                <a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a>
             </li>
         </ul>
     </nav>
 
 
-    <!-- Thanh menu xanh lá -->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container d-flex justify-content-between">
-            <!-- Menu bên trái -->
+
             <div class="collapse navbar-collapse show">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="#"><i class="bi bi-shop"></i> Sản phẩm</a>
+                        <a class="nav-link text-white" href="/product/all-product"><i class="bi bi-shop"></i> Sản phẩm</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>
@@ -85,16 +92,12 @@
                 </ul>
             </div>
 
-            <!-- Hotline bên phải -->
+
             <div class="text-white d-none d-lg-block">
                 <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
             </div>
         </div>
     </nav>
-<!--    <div class="line">-->
-
-<!--    </div>-->
-    <!-- Giới thiệu Hero -->
     <section class="text-white text-center py-5" style="background-color: #136c34;">
         <div class="container">
             <h1 class="display-4">Về Chúng Tôi</h1>
@@ -122,7 +125,7 @@
     <div class="line">
 
     </div>
-<!--    -->
+
     <section class="py-5 text-white" style="background-color: #136c34;">
         <div class="container text-center">
             <h2 class="fw-bold mb-3">Thành tựu của chúng tôi</h2>
@@ -168,7 +171,7 @@
             </div>
         </div>
     </section>
-<!---->
+
     <div class="line">
 
     </div>
@@ -223,11 +226,10 @@
         <div class="container">
             <h2 class="mb-3">Cùng chúng tôi xây dựng tương lai xanh</h2>
             <p class="mb-4">Hãy trở thành một phần của cộng đồng yêu thích nông sản sạch và sống khỏe mạnh</p>
-            <a href="/san-pham" class="btn btn-light btn-custom me-3">Mua sắm ngay</a>
-            <a href="https://www.facebook.com/quangwashi" class="btn btn-outline-light btn-custom">Liên hệ hợp tác</a>
+            <a href="#" class="btn btn-light btn-custom me-3">Mua sắm ngay</a>
+            <a href="#" class="btn btn-outline-light btn-custom">Liên hệ hợp tác</a>
         </div>
     </section>
-    <!-- CTA cuối trang -->
     <div class="line">
 
     </div>

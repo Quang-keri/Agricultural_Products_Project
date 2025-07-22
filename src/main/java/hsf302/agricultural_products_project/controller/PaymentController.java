@@ -1,21 +1,18 @@
 package hsf302.agricultural_products_project.controller;
 
 
-import hsf302.agricultural_products_project.config.VnPayConfig;
-import hsf302.agricultural_products_project.dto.CustomerOrderDto;
-import hsf302.agricultural_products_project.dto.PaymentRequest;
-import hsf302.agricultural_products_project.dto.PaymentResponse;
-import hsf302.agricultural_products_project.dto.PaymentVerification;
-import hsf302.agricultural_products_project.model.Order;
-import hsf302.agricultural_products_project.model.PaymentStatus;
+
+import hsf302.agricultural_products_project.dto.PaymentResult;
+
 import hsf302.agricultural_products_project.model.User;
-import hsf302.agricultural_products_project.service.OrderService;
-import hsf302.agricultural_products_project.service.UserService;
+
+import hsf302.agricultural_products_project.service.PaymentService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,118 +24,65 @@ import java.util.Map;
 @Slf4j
 public class PaymentController {
 
-    @Autowired
-    private VnPayConfig vnPayConfig;
+
 
     @Autowired
-    private OrderService orderService;
-    @Autowired
-    private UserService userService;
+    private PaymentService paymentService;
+
+
 
     @PostMapping("/create")
     public String createPayment(
             @RequestParam("amount") double amount,
             @RequestParam(value = "bankCode", required = false) String bankCode,
-            HttpServletRequest request, HttpSession session, Model model,@ModelAttribute CustomerOrderDto customerOrderDto
+            HttpServletRequest request,
+            HttpSession session
     ) {
+        User user = (User) session.getAttribute("account");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        Long orderId = (Long) request.getAttribute("orderId");
+        if (orderId == null || orderId < 1) {
+            return "redirect:/cart";
+        }
+
         try {
-            //  Tạo Order trong DB
-            User account = (User) session.getAttribute("account");
-            if (account == null) {
-                System.err.println("User not logged in, redirecting to login page at payment controller line 42.");
-                return "redirect:/login";
-            }
-
-            User user =  userService.findById(account.getUserId());
-            //Long orderId = (Long) request.getAttribute("orderId"); này bỏ
-           Order order = orderService.createOrder(user, customerOrderDto); // tui lấy cái này nè theo cái ô nói
-            if ( order.getOrderId() == null || order.getOrderId() < 1) {
-                return "redirect:/cart";
-            }
-
-            // Tạo yêu cầu thanh toán VNPay
-            PaymentRequest paymentRequest = new PaymentRequest(amount, order.getOrderId() , bankCode, request);
-            PaymentResponse response = vnPayConfig.createPaymentUrl(paymentRequest);
-
-            if (!response.isSuccess()) {
-                log.error("Payment creation failed: {}", response.getErrorMessage());
-                return "redirect:/error?message=payment_creation_failed";
-            }
-
-            //  Redirect đến VNPay
-            return "redirect:" + response.getPaymentUrl();
-
+            String paymentUrl = paymentService.createPaymentUrl(orderId, amount, bankCode, request);
+            return "redirect:" + paymentUrl;
         } catch (Exception e) {
-            log.error("Error creating payment: ", e);
-            return "redirect:/error?message=system_error";
+            log.error("Error creating payment", e);
+            return "redirect:/error?message=payment_creation_failed";
         }
     }
-    //cap nhat lai phuong thuc nay de xu ly thanh toan tra ve tu VNPay, order-confirmation.html
+
     @GetMapping("/vnpayReturn")
-    public String paymentReturn(@RequestParam Map<String, String> queryParams, Model model) {
+    public String handleVnPayReturn(@RequestParam Map<String, String> params, Model model) {
         try {
-            String vnp_TxnRef = queryParams.get("vnp_TxnRef");
-            String vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
-            String vnp_TransactionNo = queryParams.get("vnp_TransactionNo");
-            String vnp_Amount = queryParams.get("vnp_Amount");
-            String vnp_BankCode = queryParams.get("vnp_BankCode");
-            String vnp_OrderInfo = queryParams.get("vnp_OrderInfo");
+            PaymentResult result = paymentService.verifyAndProcessPayment(params);
 
-            // Log the received parameters
-            log.info("Received payment return - TxnRef: {}, ResponseCode: {}, Amount: {}",
-                    vnp_TxnRef, vnp_ResponseCode, vnp_Amount);
+            model.addAttribute("success", result.isSuccess());
 
-            // Verify the payment response
-            PaymentVerification verification = new PaymentVerification(
-                    "00".equals(vnp_ResponseCode),
-                    vnp_OrderInfo,
-                    vnp_TxnRef,
-                    vnp_ResponseCode
-            );
-
-            if (verification.isSuccess()) {
-                try {
-                    String[] parts = vnp_TxnRef.split("_");
-                    Long orderId = Long.parseLong(parts[0]);
-                    orderService.updatePaymentStatus(orderId, PaymentStatus.COMPLETED);
-                    Order order = orderService.findOrderById(orderId);
-                    // Convert amount from VNPay format (x100)
-                    double actualAmount = Double.parseDouble(vnp_Amount) / 100;
-
-
-                    model.addAttribute("success", true);
-                    model.addAttribute("message", "Payment successful");
-                    //Thay orderId bằng Order,
-                    //Trang thông báo nhận một object Order để hiển thị thông tin
-                    // Thông tin orderId, amount, transactionNo, bankCode sẽ được hiển thị trong order-confirmation.html
-                    //Nhớ check  xem trên ui có hiển thị đúng thông tin không
-                    model.addAttribute("order", order);
-                    model.addAttribute("amount", String.format("%,.0f", actualAmount));
-                    model.addAttribute("transactionNo", vnp_TransactionNo);
-                    model.addAttribute("bankCode", vnp_BankCode);
-
-                    log.info("Payment successful for order: {}", orderId);
-
-                } catch (NumberFormatException e) {
-                    log.error("Error parsing order ID: {} - {}", vnp_TxnRef, e.getMessage());
-                    model.addAttribute("success", false);
-                    model.addAttribute("message", "Invalid order reference");
-                }
+            if (result.isSuccess()) {
+                model.addAttribute("paymentMessage", result.getMessage());
+                model.addAttribute("order", result.getOrder());
+                model.addAttribute("amount", result.getFormattedAmount());
+                model.addAttribute("transactionNo", result.getTransactionNo());
+                model.addAttribute("bankCode", result.getBankCode());
             } else {
-                log.warn("Payment failed - ResponseCode: {}", vnp_ResponseCode);
-                model.addAttribute("success", false);
-                model.addAttribute("message", "Payment verification failed");
+                model.addAttribute("errorMessage", result.getMessage());
             }
 
-            return "order-confirmation";
-
         } catch (Exception e) {
-            log.error("Error processing payment return", e);
+            log.error("Error verifying payment", e);
             model.addAttribute("success", false);
-            model.addAttribute("message", "System error occurred");
-            return "order-confirmation";
+            model.addAttribute("errorMessage", "System error occurred");
         }
+        return "order-confirmation";
     }
+
+
     @GetMapping("/payment-form.html")
     public String showPaymentForm() {
         return "payment-form";

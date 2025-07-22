@@ -2,6 +2,8 @@ package hsf302.agricultural_products_project.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Nationalized;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.List;
 
@@ -19,15 +21,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
-
-    @Column(name = "user_name", columnDefinition = "NVARCHAR(50)")
+    
+    @Nationalized
+    @Column(name = "user_name", length = 50)
     private String userName;
 
     @Column(name = "full_name", columnDefinition = "NVARCHAR(100)")
     private String userFullName;
 
     @Column(name = "password", columnDefinition = "NVARCHAR(255)")
-    private  String password;
+    private String password;
 
     @Column(name = "address", columnDefinition = "NVARCHAR(255)")
     private String address;

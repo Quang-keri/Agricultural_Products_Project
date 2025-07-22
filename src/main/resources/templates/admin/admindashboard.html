@@ -8,11 +8,6 @@
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
-<h2>Profile Admin</h2>
-<div th:if="${account != null}" >
-    Tên tài khoản: <span th:text="${account.userName}">Tài khoản</span>
-</div>
-
 <div class="container-wrapper">
     <nav th:replace="~{admin/layout :: sidebar(currentPage='dashboard')}"></nav>
 

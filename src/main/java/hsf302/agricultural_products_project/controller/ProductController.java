@@ -30,6 +30,7 @@ public class ProductController {
         User account = (User) session.getAttribute("account");
         if (account != null && Role.ROLE_ADMIN.equals(account.getRole())) {
             model.addAttribute("products", productService.getAllProducts());
+            model.addAttribute("user", account);
             model.addAttribute("account", account);
             System.err.println("Session Account: " + account);
             return "admin/product/manageProduct";

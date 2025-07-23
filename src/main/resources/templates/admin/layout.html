@@ -155,7 +155,7 @@
 <body>
 
 <header th:fragment="admin-header(user)">
-    <h1 style="margin: 0;">Admin Dashboard</h1>
+    <h1 style="margin: 0;">Tổng quan</h1>
     <div class="header-right">
         <span th:if="${user != null}" th:text="${user.userFullName}" style="font-weight: bold;"></span>
         <a href="/admin/logout" class="logout-btn">Logout</a>
@@ -165,16 +165,16 @@
 <nav th:fragment="sidebar(currentPage)" class="sidebar">
     <ul style="list-style: none; padding: 0; margin: 0;">
         <li style="margin-bottom: 10px;">
-            <a href="/admin/dashboard" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}">Dashboard</a>
+            <a href="/admin/dashboard" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}">Quản lí</a>
         </li>
         <li style="margin-bottom: 10px;">
-            <a href="/admin/users" th:classappend="${currentPage == 'users' ? 'active' : ''}">Users</a>
+            <a href="/admin/users" th:classappend="${currentPage == 'users' ? 'active' : ''}">Người dùng</a>
         </li>
         <li style="margin-bottom: 10px;">
-            <a href="/admin/product" th:classappend="${currentPage == 'products' ? 'active' : ''}">Products</a>
+            <a href="/admin/product" th:classappend="${currentPage == 'products' ? 'active' : ''}">Sản phẩm</a>
         </li>
         <li style="margin-bottom: 10px;">
-            <a href="/admin/orders" th:classappend="${currentPage == 'orders' ? 'active' : ''}">Orders</a>
+            <a href="/admin/orders" th:classappend="${currentPage == 'orders' ? 'active' : ''}">Đơn hàng</a>
         </li>
     </ul>
 </nav>

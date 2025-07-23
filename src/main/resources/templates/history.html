@@ -28,8 +28,8 @@
             <img  src="/image/logo-web.png" alt="Logo"/>
             <strong>Nông Sản Sạch</strong>
         </a>
-        <form class="d-flex ms-auto me-3 w-50">
-            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
+        <form class="d-flex ms-auto me-3 w-50" th:action="@{/product/search}" method="post">
+            <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..." aria-label="Search" required/>
             <button class="btn btn-outline-success" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -68,8 +68,17 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/index"><i class="bi bi-house-door-fill"></i> Trang chủ</a>
                     </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="/products"><i class="bi bi-shop"></i> Sản phẩm</a>
+                    <li class="nav-item dropdown d-flex align-items-center mx-2">
+                        <a class="nav-link text-white" href="/product/all-product">
+                            <i class="bi bi-shop"></i> Sản phẩm
+                        </a>
+                        <a class="nav-link dropdown-toggle text-white ps-1" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-la')}">Rau lá</a></li>
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='rau-cu')}">Rau củ</a></li>
+                            <li><a class="dropdown-item" th:href="@{/product/category/{type}(type='nong-san-kho')}">Nông sản khô</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="/about-us"><i class="bi bi-people-fill"></i> Về chúng tôi</a>

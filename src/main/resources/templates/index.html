@@ -121,7 +121,7 @@
         </div>
     </nav>
 
-    <div class="introduction">
+    <div class=" introduction">
 
         <!-- Nội dung chính -->
         <div class="container header-content">
@@ -220,7 +220,7 @@
 
             <div class="menu-bar">
                 <!-- Rau lá -->
-                <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
+                <a th:href="@{/product/category/{type}(type='rau-la')}" class="menu-bar-item text-decoration-none text-dark">
                     <div>
                         <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
                         <p>Rau lá</p>
@@ -230,7 +230,7 @@
 
 
                 <!-- Rau củ -->
-                <a th:href="@{/product/rau-cu}" class="menu-bar-item">
+                <a th:href="@{/product/category/{type}(type='rau-cu')}" class="menu-bar-item">
                     <div class="">
                         <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
                         <p>Rau củ</p>
@@ -239,7 +239,7 @@
                 </a>
 
                 <!-- Gia vị -->
-                <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
+                <a th:href="@{/product/category/{type}(type='nong-san-kho')}" class="menu-bar-item">
                     <div class="">
                         <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
                         <p>nông sản khô</p>
@@ -253,8 +253,8 @@
     <section class="mt-3 py-5 text-center" style="background-color:white;">
         <h2 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong></h2>
 
-        <div class="product">
-            <div class="product-1 clickable-product">
+        <div class="product ">
+            <div class="product-1 clickable-product" >
                 <img class="product-img"
                      src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335481/bhx/cai-be-xanh-goi-400g_202505151418571429.jpg"
                      alt="ảnh bẹ xanh"/>
@@ -263,7 +263,7 @@
                 <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
                     chi tiết</a></button>
             </div>
-            <div class="product-2 clickable-product">
+            <div class="product-2 clickable-product" >
                 <img class="product-img"
                      src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335480/bhx/rau-muong-nuoc-400gr_202505081440524383.jpg"
                      alt="ảnh rau muống"/>
@@ -272,7 +272,7 @@
                 <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
                     chi tiết</a></button>
             </div>
-            <div class="product-3 clickable-product">
+            <div class="product-3 clickable-product" >
                 <img class="product-img"
                      src="https://cdn.tgdd.vn/Products/Images/2809/227716/bhx/tieu-den-xay-goi-50g-202202121134360066.jpg"
                      alt="ảnh tiêu xay"/>
@@ -281,7 +281,7 @@
                 <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
                     chi tiết</a></button>
             </div>
-            <div class="product-4 clickable-product">
+            <div class="product-4 clickable-product" >
                 <img class="product-img"
                      src="https://cdn.tgdd.vn/Products/Images/8785/233988/bhx/ca-chua-beef-202312281031353659.jpg"
                      alt="ảnh cà chua"/>
@@ -290,7 +290,7 @@
                 <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white ">Xem
                     chi tiết</a></button>
             </div>
-            <div class="product-5 clickable-product">
+            <div class="product-5 clickable-product" >
                 <img class="product-img"
                      src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/332871/bhx/cdntgddvnproductsimages8785233895bhxbi-xanh-202312271414509800_202412041906031779.jpg"
                      alt="ảnh bí xanh "/>

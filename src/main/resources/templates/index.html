@@ -121,7 +121,7 @@
         </div>
     </nav>
 
-    <div class=" introduction">
+    <div class="introduction">
 
         <!-- Nội dung chính -->
         <div class="container header-content">
@@ -220,7 +220,7 @@
 
             <div class="menu-bar">
                 <!-- Rau lá -->
-                <a th:href="@{/product/category/{type}(type='rau-la')}" class="menu-bar-item text-decoration-none text-dark">
+                <a th:href="@{/product/rau-la}" class="menu-bar-item text-decoration-none text-dark">
                     <div>
                         <div class="icon-vegetable"><i class="fa-solid fa-leaf"></i></div>
                         <p>Rau lá</p>
@@ -230,7 +230,7 @@
 
 
                 <!-- Rau củ -->
-                <a th:href="@{/product/category/{type}(type='rau-cu')}" class="menu-bar-item">
+                <a th:href="@{/product/rau-cu}" class="menu-bar-item">
                     <div class="">
                         <div class="icon-vegetable"><i class="fa-solid fa-carrot"></i></div>
                         <p>Rau củ</p>
@@ -239,7 +239,7 @@
                 </a>
 
                 <!-- Gia vị -->
-                <a th:href="@{/product/category/{type}(type='nong-san-kho')}" class="menu-bar-item">
+                <a th:href="@{/product/nong-san-kho}" class="menu-bar-item">
                     <div class="">
                         <div class="icon-vegetable"><i class="fa-solid fa-seedling"></i></div>
                         <p>nông sản khô</p>
@@ -249,58 +249,113 @@
             </div>
         </div>
     </div>
+    <!-- Danh sách sản phẩm -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4 text-success">Danh sách sản phẩm Rau Lá</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 
-    <section class="mt-3 py-5 text-center" style="background-color:white;">
-        <h2 class="text-center mt-3 "><strong>Sản phẩm nổi bật</strong></h2>
+            <div class="col" th:each="product : ${products}" th:if="${product.category.name == 'Rau lá'}">
+                <div class="product-card h-100 d-flex flex-column shadow-sm border rounded p-3 bg-white">
 
-        <div class="product ">
-            <div class="product-1 clickable-product" >
-                <img class="product-img"
-                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335481/bhx/cai-be-xanh-goi-400g_202505151418571429.jpg"
-                     alt="ảnh bẹ xanh"/>
-                <p class="product-name">Cải bẹ xanh </p>
-                <p class="product-price">300.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
-                    chi tiết</a></button>
-            </div>
-            <div class="product-2 clickable-product" >
-                <img class="product-img"
-                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/335480/bhx/rau-muong-nuoc-400gr_202505081440524383.jpg"
-                     alt="ảnh rau muống"/>
-                <p class="product-name">Rau muống</p>
-                <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
-                    chi tiết</a></button>
-            </div>
-            <div class="product-3 clickable-product" >
-                <img class="product-img"
-                     src="https://cdn.tgdd.vn/Products/Images/2809/227716/bhx/tieu-den-xay-goi-50g-202202121134360066.jpg"
-                     alt="ảnh tiêu xay"/>
-                <p class="product-name">Tiêu đen xay nhiễn 50g
-                <p class="product-price">25.000đ/1 gói</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white">Xem
-                    chi tiết</a></button>
-            </div>
-            <div class="product-4 clickable-product" >
-                <img class="product-img"
-                     src="https://cdn.tgdd.vn/Products/Images/8785/233988/bhx/ca-chua-beef-202312281031353659.jpg"
-                     alt="ảnh cà chua"/>
-                <p class="product-name">Cà chua beef</p>
-                <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none  text-white ">Xem
-                    chi tiết</a></button>
-            </div>
-            <div class="product-5 clickable-product" >
-                <img class="product-img"
-                     src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/332871/bhx/cdntgddvnproductsimages8785233895bhxbi-xanh-202312271414509800_202412041906031779.jpg"
-                     alt="ảnh bí xanh "/>
-                <p class="product-name">Bí xanh </p>
-                <p class="product-price">25.000đ/1 kí</p>
-                <button class="btn-buy-product"><a href="/product-detail" class="text-decoration-none text-white">Xem
-                    chi tiết</a></button>
+                    <!-- Ảnh + Thông tin sản phẩm -->
+                    <a th:href="@{'/products/' + ${product.agriculturalProductId}}" class="text-decoration-none text-dark">
+                        <img th:src="${product.imageUrl}" alt="Ảnh sản phẩm" class="product-img mb-2"
+                             onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'" />
+
+                        <div class="product-name fw-bold fs-5" th:text="${product.name}">Tên sản phẩm</div>
+                        <div class="product-desc text-muted small" th:text="${product.description}">Mô tả sản phẩm</div>
+                        <div class="product-price text-danger fw-bold mt-1"
+                             th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</div>
+                    </a>
+
+                    <!-- Số lượng tồn -->
+                    <span th:text="'Số lượng tồn: ' + ${product.quantityAvailable}"></span>
+
+                    <!-- Nút thêm vào giỏ hàng -->
+                    <form th:action="@{/add-to-cart}" method="post" class="mt-auto"
+                          onclick="return confirm('Thêm vào giỏ hàng thành công');">
+                        <input type="hidden" name="productId" th:value="${product.agriculturalProductId}" />
+                        <button type="submit" class="btn btn-outline-success w-100">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-4 text-success">Danh sách sản phẩm Rau Củ</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            <div class="col" th:each="product : ${products}" th:if="${product.category.name == 'Rau củ tươi'}">
+                <div class="product-card h-100 d-flex flex-column shadow-sm border rounded p-3 bg-white">
+
+                    <!-- Ảnh + Thông tin sản phẩm -->
+                    <a th:href="@{'/products/' + ${product.agriculturalProductId}}" class="text-decoration-none text-dark">
+                        <img th:src="${product.imageUrl}" alt="Ảnh sản phẩm" class="product-img mb-2"
+                             onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'" />
+
+                        <div class="product-name fw-bold fs-5" th:text="${product.name}">Tên sản phẩm</div>
+                        <div class="product-desc text-muted small" th:text="${product.description}">Mô tả sản phẩm</div>
+                        <div class="product-price text-danger fw-bold mt-1"
+                             th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</div>
+                    </a>
+
+                    <!-- Số lượng tồn -->
+                    <span th:text="'Số lượng tồn: ' + ${product.quantityAvailable}"></span>
+
+                    <!-- Nút thêm vào giỏ hàng -->
+                    <form th:action="@{/add-to-cart}" method="post" class="mt-auto"
+                          onclick="return confirm('Thêm vào giỏ hàng thành công');">
+                        <input type="hidden" name="productId" th:value="${product.agriculturalProductId}" />
+                        <button type="submit" class="btn btn-outline-success w-100">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-4 text-success">Danh sách sản phẩm Nông sản khô</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            <div class="col" th:each="product : ${products}" th:if="${product.category.name == 'Nông sản khô'}">
+                <div class="product-card h-100 d-flex flex-column shadow-sm border rounded p-3 bg-white">
+
+                    <!-- Ảnh + Thông tin sản phẩm -->
+                    <a th:href="@{'/products/' + ${product.agriculturalProductId}}" class="text-decoration-none text-dark">
+                        <img th:src="${product.imageUrl}" alt="Ảnh sản phẩm" class="product-img mb-2"
+                             onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'" />
+
+                        <div class="product-name fw-bold fs-5" th:text="${product.name}">Tên sản phẩm</div>
+                        <div class="product-desc text-muted small" th:text="${product.description}">Mô tả sản phẩm</div>
+                        <div class="product-price text-danger fw-bold mt-1"
+                             th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</div>
+                    </a>
+
+                    <!-- Số lượng tồn -->
+                    <span th:text="'Số lượng tồn: ' + ${product.quantityAvailable}"></span>
+
+                    <!-- Nút thêm vào giỏ hàng -->
+                    <form th:action="@{/add-to-cart}" method="post" class="mt-auto"
+                          onclick="return confirm('Thêm vào giỏ hàng thành công');">
+                        <input type="hidden" name="productId" th:value="${product.agriculturalProductId}" />
+                        <button type="submit" class="btn btn-outline-success w-100">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
     <div class="mt-3 contact-us text-center">

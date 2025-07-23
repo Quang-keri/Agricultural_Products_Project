@@ -23,6 +23,57 @@ img{
     width: 100%;
 }
 
+.menu-profile {
+    min-width: 180px;
+    padding: 10px 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.menu-profile .dropdown-item {
+    padding: 10px 20px;
+    color: #333;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.menu-profile .dropdown-item:hover {
+    background-color: #e6ffe6;
+    color: #198754;
+}
+.menu-profile .btn-logout {
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    color: black;
+    font-weight: 500;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.menu-profile .btn-logout:hover {
+    background-color: #e6ffe6;
+    color: #198754;
+    cursor: pointer;
+}
+
+form .btn-logout{
+    width: 50px;
+}
+.btn-logout{
+    background-color: #d9534f;
+    color: white;
+    width: 50px;
+    padding: 10px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
 .line{
     width: 100%;
     height: 16px;

@@ -11,6 +11,12 @@
             crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link th:href="@{/css/index.css}" rel="stylesheet">
     <link th:href="@{/css/cart.css}" rel="stylesheet">
     <style>
@@ -25,16 +31,14 @@
     <!-- Navbar trên cùng -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <a class="navbar-brand d-flex align-items-center" href="/index">
-            <img src="/image/logo-web.png" alt="Logo" style="height: 40px"/>
+            <img  src="/image/logo-web.png" alt="Logo"/>
             <strong>Nông Sản Sạch</strong>
         </a>
 
         <!-- Thanh tìm kiếm -->
         <form class="d-flex ms-auto me-3 w-50">
             <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search"/>
-            <button class="btn btn-outline-success" type="submit">
-                <i class="bi bi-search"></i>
-            </button>
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
         </form>
 
         <!-- Tài khoản và giỏ hàng -->
@@ -51,20 +55,13 @@
                     <span th:if="${account != null}" th:text="${account.userName}">Tài khoản</span>
                 </a>
                 <ul class="dropdown-menu text-center menu-profile" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
-                    <li><a class="dropdown-item" href="/orderManagement">Đơn hàng</a></li>
-                    <li th:if="${account != null}">    <!--logout-->
-                        <form action="/logout" method="post">
-                            <button class="btn-logout" type="submit">
-                                Đăng xuất
-                            </button>
-                        </form>
-                    </li>
+                    <li><a class="dropdown-item" th:href="@{/profile}">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" th:href="@{/orderManagement}">Đơn hàng</a></li>
+                    <li><form th:action="@{/logout}" method="post"><button class="btn-logout" type="submit">Đăng xuất</button></form></li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a>
-            </li>
+
+            <li class="nav-item"><a class="nav-link" th:href="@{/cart}"><i class="bi bi-cart3"></i> Giỏ hàng</a></li>
         </ul>
     </nav>
 
@@ -99,18 +96,14 @@
 
                 </ul>
             </div>
-
-            <!-- Hotline bên phải -->
-            <div class="text-white d-none d-lg-block">
-                <i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234
-            </div>
+            <div class="text-white d-none d-lg-block"><i class="bi bi-telephone-fill text-pink"></i> Hotline: 1900-1234</div>
         </div>
     </nav>
 
     <!-- Cart Section -->
     <div class="container my-5">
-        <div class="row g-4">
-            <div class="cart-left col-lg-8 col-12">
+        <div class="row">
+            <div class="cart-left col-lg-7 col-12">
                 <div class="back-link mb-3" onclick="history.back()">
                     <i class="fa fa-arrow-left"></i> <span>Tiếp tục mua sắm</span>
                 </div>
@@ -168,7 +161,7 @@
                     </div>
                 </div>
             </div>
-            <div class="cart-right col-lg-4 col-12">
+            <div class="cart-right col-lg-4 offset-lg-1 col-12">
                 <div class="card p-5 shadow-lg border-0" style="border-radius: 15px; background: linear-gradient(135deg, #ffffff, #f8f9fa);">
                     <div class="text-center mb-4">
                         <h3 class="mb-3 text-primary" style="font-weight: 700; font-size: 1.8rem;">

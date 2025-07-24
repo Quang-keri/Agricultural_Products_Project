@@ -78,10 +78,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getAllUsers(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo - 1, 1);
+    public Page<User> findPageUsers(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return userRepository.findAll(pageable);
     }
+
+
 
     @Override
     public void updateUser(User user) {

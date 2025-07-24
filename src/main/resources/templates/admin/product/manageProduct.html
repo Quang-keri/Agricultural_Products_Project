@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Product Management</title>
     <link rel="icon" type="image/png" href="/image/logo-web.png">
+    <style>
+
+
+    </style>
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
@@ -46,6 +50,26 @@
                 </tr>
                 </tbody>
             </table>
+
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-4">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?pageNo=${currentPage > 1 ? currentPage - 1 : 1}|}">&laquo;</a>
+                    </li>
+
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}"
+                        th:classappend="${currentPage == i} ? 'active'">
+                        <a class="page-link" th:href="@{|?pageNo=${i}|}" th:text="${i}">1</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${currentPage == totalPage} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?pageNo=${currentPage < totalPage ? currentPage + 1 : totalPage}|}">&raquo;</a>
+                    </li>
+                </ul>
+
+            </nav>
         </div>
     </main>
 </div>

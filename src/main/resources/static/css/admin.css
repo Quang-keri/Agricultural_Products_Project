@@ -22,3 +22,31 @@ img{
     object-fit: cover;
     width: 100%;
 }
+
+.pagination-rounded .page-link {
+    border-radius: 50px;
+    margin: 0 3px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #aaa;
+    pointer-events: none;
+    background-color: #f8f9fa;
+}
+
+main {
+    min-height: 75vh; /* để đảm bảo phần main đủ dài */
+    display: flex;
+    flex-direction: column;
+}
+
+.pagination {
+    margin-top: auto;
+}

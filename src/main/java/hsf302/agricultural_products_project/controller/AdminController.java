@@ -12,6 +12,7 @@ import hsf302.agricultural_products_project.service.ProductService;
 import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -120,18 +122,17 @@ public class AdminController {
 
 
     @GetMapping("/orders")
-    public String orderManagement(Model model, HttpSession session) {
+    public String orderManagement(Model model,
+                                  HttpSession session,
+                                  @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
         User user = (User) session.getAttribute("account");
         model.addAttribute("user", user);
 
-        List<Order> orders = orderService.getAllOrders();
-        Map<Long, String> orderDates = new HashMap<>();
-        for (Order order : orders) {
-            orderDates.put(order.getOrderId(), order.getCreateAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        }
+        Page<Order> orders = orderService.getAllOrders(pageNo);
 
+        model.addAttribute("totalPage", orders.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("orders", orders);
-        model.addAttribute("orderDates", orderDates);
 
 
         return "admin/manageOrder";

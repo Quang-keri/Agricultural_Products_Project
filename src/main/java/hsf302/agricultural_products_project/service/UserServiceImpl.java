@@ -8,6 +8,9 @@ import hsf302.agricultural_products_project.repository.UserRepository;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     @Autowired
     private UserRepository userRepository;
-
-
 
     @Override
     public User save(UserDTO userDTO) {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateProfile(UserProfileDTO user) {
         User existingUser = userRepository.findById(user.getUserId()).orElse(null);
-        if(existingUser != null) {
+        if (existingUser != null) {
             existingUser.setUserName(user.getUserName());
             existingUser.setUserFullName(user.getUserFullName());
             existingUser.setPassword(user.getPassword());
@@ -77,11 +77,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Page<User> getAllUsers(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo - 1, 1);
+        return userRepository.findAll(pageable);
+    }
 
     @Override
     public void updateUser(User user) {
         User existingUser = userRepository.findById(user.getUserId()).orElse(null);
-        if(existingUser != null){
+        if (existingUser != null) {
             userRepository.save(user);
         }
     }

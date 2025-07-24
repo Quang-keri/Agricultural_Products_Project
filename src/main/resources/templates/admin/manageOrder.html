@@ -38,7 +38,7 @@
                 <tr th:each="order : ${orders}">
                     <td th:text="'#ORD' + ${order.orderId}"></td>
                     <td th:text="${order.user.userFullName}">Tên KH</td>
-                    <td th:text="${orderDates[order.orderId]}"></td>
+                    <td th:text="${order.createAt}"></td>
                     <td th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
 
                     <td th:switch="${order.orderStatus.name()}">
@@ -61,10 +61,38 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center mt-4 mb-4">
+                <nav>
+                    <ul class="pagination pagination-rounded shadow-sm">
+                        <!-- Prev -->
+                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{|?pageNo=${currentPage - 1}|}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Pages -->
+                        <li class="page-item"
+                            th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1,
+                                                 currentPage + 2 <= totalPage ? currentPage + 2 : totalPage)}"
+                            th:classappend="${i == currentPage} ? 'active'">
+                            <a class="page-link" th:href="@{'?pageNo=' + ${i}}" th:text="${i}">1</a>
+                        </li>
+
+                        <!-- Next -->
+                        <li class="page-item" th:classappend="${currentPage == totalPage} ? 'disabled'">
+                            <a class="page-link" th:href="@{|?pageNo=${currentPage + 1}|}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <!-- Modal Xem Chi Tiết Đơn Hàng -->
-        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,7 +121,8 @@
         </div>
 
         <!-- Modal cập nhật status -->
-        <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+        <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <form th:action="@{/admin/orders/update-status}" method="post" class="modal-content">
                     <div class="modal-header">
@@ -101,7 +130,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="orderId" id="modalOrderId" />
+                        <input type="hidden" name="orderId" id="modalOrderId"/>
                         <div class="mb-3">
                             <label for="modalOrderStatus" class="form-label">Trạng thái mới</label>
                             <select name="orderStatus" id="modalOrderStatus" class="form-select" required>
@@ -200,7 +229,6 @@
         });
     });
 </script>
-
 
 
 </body>

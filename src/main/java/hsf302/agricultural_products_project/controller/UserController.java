@@ -1,10 +1,12 @@
 package hsf302.agricultural_products_project.controller;
 
+import hsf302.agricultural_products_project.model.AgriculturalProduct;
 import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +18,19 @@ public class UserController {
     private UserService userService;
 
    @GetMapping("/admin/users")
-    public String userManagement(Model model, HttpSession session) {
+    public String userManagement(Model model,
+                                 HttpSession session,
+                                 @RequestParam(value = "pageNo", defaultValue = "1") Integer page) {
        User account = (User) session.getAttribute("account");
 
        if (account != null && account.getRole().equals(Role.ROLE_ADMIN)) {
+
+           Page<User> user = userService.getAllUsers(page);
+
+           model.addAttribute("totalPage", user.getTotalPages());
+           model.addAttribute("currentPage", page);
            model.addAttribute("user", account);
-           model.addAttribute("users", userService.findAll());
+           model.addAttribute("users", user);
            return "admin/user/manageUser";
        }
          return "redirect:/403";

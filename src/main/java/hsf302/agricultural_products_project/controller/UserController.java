@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static hsf302.agricultural_products_project.utils.VietnameseAccentRemover.normalize;
+
 @Controller
 public class UserController {
 
@@ -35,11 +37,13 @@ public class UserController {
 
             // Nếu có từ khóa tìm kiếm
             if (search != null && !search.isEmpty()) {
-                userPage = userService.searchUsersByUserName(search, page, size);
-                model.addAttribute("search", search);
+                String normalizedSearch = normalize(search);
+                userPage = userService.searchUsersByUserName(normalizedSearch, page, size);
+                model.addAttribute("search", search); // vẫn giữ nguyên từ khóa hiển thị
             } else {
                 userPage = userService.findPageUsers(page, size);
             }
+
 
             model.addAttribute("users", userPage.getContent());
             model.addAttribute("userPage", userPage);

@@ -126,6 +126,10 @@ public class AdminController {
                                   HttpSession session,
                                   @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
         User user = (User) session.getAttribute("account");
+        if (user == null || !user.getRole().equals(Role.ROLE_ADMIN)) {
+
+            return "redirect:/403";
+        }
         model.addAttribute("user", user);
 
         Page<Order> orders = orderService.getAllOrders(pageNo);
@@ -145,7 +149,12 @@ public class AdminController {
     }
 
     @GetMapping("/orders/update-status/{id}")
-    public String showUpdateStatusForm(@PathVariable("id") Long orderId, Model model) {
+    public String showUpdateStatusForm(@PathVariable("id") Long orderId, Model model,HttpSession session) {
+        User user = (User) session.getAttribute("account");
+        if (user == null || !user.getRole().equals(Role.ROLE_ADMIN)) {
+
+            return "redirect:/403";
+        }
         Order order = orderService.getOrderById(orderId);
         model.addAttribute("order", order);
         model.addAttribute("statuses", OrderStatus.values());
@@ -156,7 +165,11 @@ public class AdminController {
     @PostMapping("/orders/update-status")
     public String updateOrderStatus(@RequestParam("orderId") Long orderId,
                                     @RequestParam("orderStatus") OrderStatus orderStatus,
-                                    RedirectAttributes redirectAttributes) {
+                                    RedirectAttributes redirectAttributes,HttpSession session) {
+        User user = (User) session.getAttribute("account");
+        if (user == null || !user.getRole().equals(Role.ROLE_ADMIN)) {
+            return "redirect:/403";
+        }
         orderService.updateOrderStatus(orderId, orderStatus);
         redirectAttributes.addFlashAttribute("success", "Cập nhật trạng thái thành công!");
         return "redirect:/admin/orders";

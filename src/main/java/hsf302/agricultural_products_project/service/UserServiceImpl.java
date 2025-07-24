@@ -8,6 +8,9 @@ import hsf302.agricultural_products_project.repository.UserRepository;
 import hsf302.agricultural_products_project.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -75,6 +78,12 @@ public class UserServiceImpl implements UserService {
             existingUser.setPhoneNumber(user.getPhoneNumber());
             userRepository.save(existingUser);
         }
+    }
+
+    @Override
+    public Page<User> findPageUsers(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return userRepository.findAll(pageable);
     }
 
 

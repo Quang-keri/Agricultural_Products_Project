@@ -9,6 +9,7 @@ import hsf302.agricultural_products_project.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,13 +27,18 @@ public class ProductController {
     private CategoryService categoryService;
 
     @GetMapping("/admin/product")
-    public String showManageProduct(HttpSession session, Model model) {
+    public String showManageProduct(HttpSession session,
+                                    Model model,
+                                    @RequestParam(value = "pageNo", defaultValue = "1") Integer page) {
         User account = (User) session.getAttribute("account");
         if (account != null && Role.ROLE_ADMIN.equals(account.getRole())) {
-            model.addAttribute("products", productService.getAllProducts());
-            model.addAttribute("user", account);
+
+            Page<AgriculturalProduct> product = productService.getAllProduct(page);
+
+            model.addAttribute("totalPage", product.getTotalPages());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("products", product);
             model.addAttribute("account", account);
-            System.err.println("Session Account: " + account);
             return "admin/product/manageProduct";
         }
         return "redirect:/403";

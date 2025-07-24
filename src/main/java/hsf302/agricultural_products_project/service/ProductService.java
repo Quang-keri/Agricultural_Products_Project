@@ -1,6 +1,7 @@
 package hsf302.agricultural_products_project.service;
 
 import hsf302.agricultural_products_project.model.AgriculturalProduct;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface ProductService {
     void saveAll(List<AgriculturalProduct> products);
 
     List<AgriculturalProduct> getProductsByName(String name);
+    Page<AgriculturalProduct> getAllProduct(int page);
 }

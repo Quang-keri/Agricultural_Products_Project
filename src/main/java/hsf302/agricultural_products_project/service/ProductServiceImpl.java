@@ -1,8 +1,12 @@
 package hsf302.agricultural_products_project.service;
 
 import hsf302.agricultural_products_project.model.AgriculturalProduct;
+import hsf302.agricultural_products_project.model.Order;
 import hsf302.agricultural_products_project.repository.AgriculturalProdcutRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,5 +72,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<AgriculturalProduct> getProductsByName(String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public Page<AgriculturalProduct> getAllProduct(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 10);
+        return productRepository.findAll(pageable);
     }
 }

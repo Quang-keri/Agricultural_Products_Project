@@ -21,5 +21,5 @@ public interface UserService {
     void updateProfile(UserProfileDTO user);
 
     Page<User> findPageUsers(int pageNo, int pageSize);
-
+    Page<User> searchUsersByUserName(String keyword, int page, int size);
 }

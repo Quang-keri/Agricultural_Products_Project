@@ -24,4 +24,6 @@ public interface ProductService {
 
     List<AgriculturalProduct> getProductsByName(String name);
     Page<AgriculturalProduct> getAllProduct(int page);
+
+    Page<AgriculturalProduct> getProductsByName(String name, int page);
 }

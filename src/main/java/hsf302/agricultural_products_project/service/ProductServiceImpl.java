@@ -79,4 +79,9 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(page - 1, 10);
         return productRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<AgriculturalProduct> getProductsByName(String name, int page) {
+        return productRepository.findByNameContainingIgnoreCase(name, PageRequest.of(page - 1, 10));
+    }
 }

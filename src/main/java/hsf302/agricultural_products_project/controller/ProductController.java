@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static hsf302.agricultural_products_project.utils.VietnameseAccentRemover.normalize;
 
 @Controller
 public class ProductController {
@@ -29,20 +32,44 @@ public class ProductController {
     @GetMapping("/admin/product")
     public String showManageProduct(HttpSession session,
                                     Model model,
-                                    @RequestParam(value = "pageNo", defaultValue = "1") Integer page) {
+                                    @RequestParam(value = "pageNo", defaultValue = "1") Integer page,
+                                    @RequestParam(value = "keyword", required = false) String keyword) {
         User account = (User) session.getAttribute("account");
         if (account != null && Role.ROLE_ADMIN.equals(account.getRole())) {
 
-            Page<AgriculturalProduct> product = productService.getAllProduct(page);
+            int pageSize = 5;
+            List<AgriculturalProduct> all = productService.getAllProducts(); // Trả về List, không phân trang DB
 
-            model.addAttribute("totalPage", product.getTotalPages());
+            // Nếu có từ khoá tìm kiếm
+            if (keyword != null && !keyword.isEmpty()) {
+                String normalizedKeyword = normalize(keyword.toLowerCase());
+                List<AgriculturalProduct> filtered = new ArrayList<>();
+                for (AgriculturalProduct p : all) {
+                    String name = normalize(p.getName().toLowerCase());
+                    if (name.contains(normalizedKeyword)) {
+                        filtered.add(p);
+                    }
+                }
+                all = filtered;
+                model.addAttribute("keyword", keyword);
+            }
+
+            // Phân trang thủ công
+            int totalPage = (int) Math.ceil((double) all.size() / pageSize);
+            int fromIndex = (page - 1) * pageSize;
+            int toIndex = Math.min(fromIndex + pageSize, all.size());
+            List<AgriculturalProduct> pageList = all.subList(fromIndex, toIndex);
+
+            model.addAttribute("products", pageList);
             model.addAttribute("currentPage", page);
-            model.addAttribute("products", product);
+            model.addAttribute("totalPage", totalPage);
             model.addAttribute("account", account);
             return "admin/product/manageProduct";
         }
         return "redirect:/403";
     }
+
+
 
     @GetMapping("/admin/product/add")
     public String showCreateForm(HttpSession session,

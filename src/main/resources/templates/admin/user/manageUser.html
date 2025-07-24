@@ -23,6 +23,9 @@
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <head th:replace="~{admin/layout :: common-styles}"></head>
+
+
+
 </head>
 <body>
 <header th:replace="~{admin/layout :: admin-header(user=${user})}"></header>
@@ -33,6 +36,18 @@
     <main>
         <div class="card">
             <h2>Danh sách người dùng</h2>
+            <form class="search-form" method="get" th:action="@{/admin/users}">
+                <div class="search-input-group">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" name="search"
+                           placeholder="Nhập tên đăng nhập để tìm kiếm..."
+                           th:value="${search}">
+                    <input type="hidden" name="page" th:value="${currentPage}" />
+                    <input type="hidden" name="size" th:value="5" />
+                    <button type="submit" class="search-button">Tìm</button>
+                </div>
+            </form>
+
             <table>
                 <thead>
                 <tr>
@@ -98,7 +113,7 @@
                         <a class="page-link" th:href="@{|?pageNo=${currentPage > 1 ? currentPage - 1 : 1}|}">&laquo;</a>
                     </li>
 
-                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}"
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
                         th:classappend="${currentPage == i} ? 'active'">
                         <a class="page-link" th:href="@{|?pageNo=${i}|}" th:text="${i}">1</a>
                     </li>

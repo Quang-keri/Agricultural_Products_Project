@@ -26,8 +26,14 @@
             align-items: center;
         }
         h1 {
-            margin: 0;
-            color: white;
+            display: block;
+            font-size: 2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            unicode-bidi: isolate;
         }
         .header-right {
             display: flex;
@@ -190,12 +196,58 @@
             background-color: #0d6efd;
             color: white;
         }
+        .search-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input-group {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .search-icon {
+            background-color: #f1f1f1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 
 <header th:fragment="admin-header(user)">
-    <h1 style="margin: 0;">Tổng quan</h1>
+    <h1 style="margin: 0;" >Tổng quan</h1>
     <div class="header-right">
         <span th:if="${user != null}" th:text="${user.userFullName}" style="font-weight: bold;"></span>
         <a href="/admin/logout" class="logout-btn">Đăng Xuất</a>

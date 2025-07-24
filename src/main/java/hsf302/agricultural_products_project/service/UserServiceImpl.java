@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<User> searchUsersByUserName(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return userRepository.findByUserNameContainingIgnoreCase(keyword, pageable);
+    }
 
 
     @Override

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static hsf302.agricultural_products_project.utils.VietnameseAccentRemover.normalize;
+
 @Controller
 public class UserController {
 
@@ -25,20 +27,35 @@ public class UserController {
     @GetMapping("/admin/users")
     public String listUsers(@RequestParam(defaultValue = "1") int page,
                             @RequestParam(defaultValue = "5") int size,
+                            @RequestParam(required = false) String search,
                             Model model, HttpSession session) {
         User account = (User) session.getAttribute("account");
+        model.addAttribute("user", account);
+
         if (account != null && account.getRole().equals(Role.ROLE_ADMIN)) {
-            Page<User> userPage = userService.findPageUsers(page, size);
+            Page<User> userPage;
+
+            // Nếu có từ khóa tìm kiếm
+            if (search != null && !search.isEmpty()) {
+                String normalizedSearch = normalize(search);
+                userPage = userService.searchUsersByUserName(normalizedSearch, page, size);
+                model.addAttribute("search", search); // vẫn giữ nguyên từ khóa hiển thị
+            } else {
+                userPage = userService.findPageUsers(page, size);
+            }
+
+
             model.addAttribute("users", userPage.getContent());
             model.addAttribute("userPage", userPage);
             model.addAttribute("currentPage", page);
             model.addAttribute("totalPages", userPage.getTotalPages());
-            model.addAttribute("totalItems", userPage.getTotalElements());
+
             return "admin/user/manageUser";
         }
-        return "redirect:/403";
 
+        return "redirect:/403";
     }
+
 
 
     @GetMapping("/admin/users/delete/{id}")

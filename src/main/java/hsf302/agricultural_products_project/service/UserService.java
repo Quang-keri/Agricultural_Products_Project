@@ -19,5 +19,7 @@ public interface UserService {
     long  countUsers();
 
     void updateProfile(UserProfileDTO user);
+
     Page<User> findPageUsers(int pageNo, int pageSize);
+
 }

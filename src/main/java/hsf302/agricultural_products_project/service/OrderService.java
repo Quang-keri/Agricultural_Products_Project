@@ -6,6 +6,7 @@ import hsf302.agricultural_products_project.model.Order;
 import hsf302.agricultural_products_project.model.OrderStatus;
 import hsf302.agricultural_products_project.model.PaymentStatus;
 import hsf302.agricultural_products_project.model.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +25,6 @@ public interface OrderService {
     Order getOrderById(Long orderId);
 
     long countOrders();
+
+    Page<Order> getAllOrders(int page);
 }

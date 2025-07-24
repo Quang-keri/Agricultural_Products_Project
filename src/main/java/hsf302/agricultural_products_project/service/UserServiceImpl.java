@@ -20,11 +20,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     @Autowired
     private UserRepository userRepository;
-
-
 
     @Override
     public User save(UserDTO userDTO) {
@@ -70,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateProfile(UserProfileDTO user) {
         User existingUser = userRepository.findById(user.getUserId()).orElse(null);
-        if(existingUser != null) {
+        if (existingUser != null) {
             existingUser.setUserName(user.getUserName());
             existingUser.setUserFullName(user.getUserFullName());
             existingUser.setPassword(user.getPassword());
@@ -87,10 +84,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
     @Override
     public void updateUser(User user) {
         User existingUser = userRepository.findById(user.getUserId()).orElse(null);
-        if(existingUser != null){
+        if (existingUser != null) {
             userRepository.save(user);
         }
     }

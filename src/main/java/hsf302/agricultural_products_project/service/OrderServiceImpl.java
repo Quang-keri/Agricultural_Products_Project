@@ -8,6 +8,9 @@ import hsf302.agricultural_products_project.model.*;
 import hsf302.agricultural_products_project.repository.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
@@ -22,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepo;
     @Autowired
     private ProductService productService;
+
     @Override
     @Transactional
     public Order createOrder(User user, CustomerOrderDto order) {
@@ -30,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
                 .customerName(order.getName())
                 .phoneNumber(order.getPhoneNumber())
                 .address(order.getAddress())
-                .totalPrice(BigDecimal.valueOf(order.getTotal()+30000))
+                .totalPrice(BigDecimal.valueOf(order.getTotal() + 30000))
                 .paymentStatus(order.getPaymentStatus())
                 .paymentMethod(order.getPaymentMethod())
                 .orderStatus(OrderStatus.PENDING)
@@ -45,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<AgriculturalProduct> productList = productService.getAllProductsById(productIds);
         List<OrderDetail> orderDetails = new ArrayList<>();
-        for( AgriculturalProduct item :productList){
+        for (AgriculturalProduct item : productList) {
             OrderDetailId orderDetailId = new OrderDetailId();
             orderDetailId.setOrderId(newOrder.getOrderId());
             orderDetailId.setAgriculturalProductId(item.getAgriculturalProductId());
@@ -141,6 +146,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public long countOrders() {
         return orderRepo.count();
+    }
+
+    @Override
+    public Page<Order> getAllOrders(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 2);
+        return this.orderRepo.findAll(pageable);
     }
 
     private OrderProcessDTO convertToDto(Order order) {

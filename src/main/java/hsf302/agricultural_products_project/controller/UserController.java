@@ -1,5 +1,6 @@
 package hsf302.agricultural_products_project.controller;
 
+import hsf302.agricultural_products_project.model.AgriculturalProduct;
 import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
 import hsf302.agricultural_products_project.service.UserService;
@@ -18,17 +19,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//   @GetMapping("/admin/users")
-//    public String userManagement(Model model, HttpSession session) {
-//       User account = (User) session.getAttribute("account");
-//
-//       if (account != null && account.getRole().equals(Role.ROLE_ADMIN)) {
-//           model.addAttribute("user", account);
-//           model.addAttribute("users", userService.findAll());
-//           return "admin/user/manageUser";
-//       }
-//         return "redirect:/403";
-//    }
+
+
 
     @GetMapping("/admin/users")
     public String listUsers(@RequestParam(defaultValue = "1") int page,
@@ -45,6 +37,7 @@ public class UserController {
             return "admin/user/manageUser";
         }
         return "redirect:/403";
+
     }
 
 

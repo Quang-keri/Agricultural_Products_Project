@@ -356,4 +356,10 @@ public class CartImpl implements  CartService {
         return errors;
     }
 
+    @Override
+    @Transactional
+    public void deleteCart(User user) {
+        cartItemRepo.deleteAllByCart_User(user);
+    }
+
 }

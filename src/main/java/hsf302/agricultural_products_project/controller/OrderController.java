@@ -5,6 +5,7 @@ import hsf302.agricultural_products_project.dto.OrderProcessDTO;
 import hsf302.agricultural_products_project.model.Order;
 import hsf302.agricultural_products_project.model.Role;
 import hsf302.agricultural_products_project.model.User;
+import hsf302.agricultural_products_project.service.CartService;
 import hsf302.agricultural_products_project.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,9 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private CartService cartService;
     @PostMapping("order/submit")
     public String createOrder(@ModelAttribute CustomerOrderDto customerOrderDto, HttpSession session, Model model, HttpServletRequest request) {
         User account = (User) session.getAttribute("account");
@@ -35,6 +39,7 @@ public class OrderController {
         }
         model.addAttribute("order", order);
         model.addAttribute("success", true);
+        cartService.deleteCart(account);
         return "order-confirmation";
     }
 

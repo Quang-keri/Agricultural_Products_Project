@@ -6,6 +6,7 @@ import hsf302.agricultural_products_project.dto.PaymentResult;
 
 import hsf302.agricultural_products_project.model.User;
 
+import hsf302.agricultural_products_project.service.CartService;
 import hsf302.agricultural_products_project.service.PaymentService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,8 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-
+    @Autowired
+    private CartService cartService;
 
     @PostMapping("/create")
     public String createPayment(
@@ -50,6 +52,7 @@ public class PaymentController {
 
         try {
             String paymentUrl = paymentService.createPaymentUrl(orderId, amount, bankCode, request);
+            cartService.deleteCart(user);
             return "redirect:" + paymentUrl;
         } catch (Exception e) {
             log.error("Error creating payment", e);

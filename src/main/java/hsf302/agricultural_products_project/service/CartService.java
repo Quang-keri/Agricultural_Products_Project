@@ -20,4 +20,5 @@ public interface CartService {
     void removeFromCartForUser(Long productId, User user);
     void transferCartFromCookieToDatabase(String cartCookie, User user, HttpServletResponse response);
     Map<String, String> checkStockDetails(List<AgriculturalProductCartDto> cartItems);
+    void deleteCart(User user);
 }

@@ -170,6 +170,7 @@ public class AdminController {
         if (user == null || !user.getRole().equals(Role.ROLE_ADMIN)) {
             return "redirect:/403";
         }
+        
         orderService.updateOrderStatus(orderId, orderStatus);
         redirectAttributes.addFlashAttribute("success", "Cập nhật trạng thái thành công!");
         return "redirect:/admin/orders";
